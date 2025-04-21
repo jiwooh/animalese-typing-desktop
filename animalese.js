@@ -1,11 +1,31 @@
-window.api.onPlaySound( (key) => {
-	let audioPath = 'assets/audio/animalese/female/voice_1/'+getAlphaSound(key)+file_type;
+window.api.onKeyPress( (key, e) => {
 
-	window.api.playSound(audioPath);
+    switch(true) {
+        case (isWhitespace(key)):break;
+
+        case ( isAlpha(key) ):
+            if (e.shiftKey) key = key.toUpperCase()
+            window.api.playAudio( getAlphaSound(key) );
+            console.log(key, e);
+        break;
+
+        default:
+            //Default sound to play
+            //window.api.playAudio(audio_special["default"]);
+            console.log(key, e);
+        break;
+    }
 });
 
+//temp settings
 
-const file_type = ".aac";
+function isAlpha(str) {return (str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false;}
+
+const isUpperCase = str => str === str.toUpperCase();
+
+function isMoney(str) {return (str.length === 1)?(/[$£€¥₩₱¢\u0024\u00a3\u20ac\u00a5\u20a9\u20b1\u00a2]/).test(str.charAt(0)):false;}
+
+function isWhitespace(str) {return (str.length === 1)?(/\s/).test(str.charAt(0)):false;}
 
 function getAlphaSound(key) {
 	key = key.toLowerCase().charAt(0);// Set to lowercase
@@ -13,6 +33,7 @@ function getAlphaSound(key) {
     for (const { letter, regex } of regexMap) if (regex.test(key)) return letter;// If special letter check regexMap and return basic letter
     return key;// Default case for unmatched keys
 }
+
 
 // #region Regex checks
 const regexMap = [
@@ -43,6 +64,31 @@ const regexMap = [
     { letter: "y", regex: /[\u00fd\u00ff\u0177\u0233\u1e8f\u1e99\u1ef3\u1ef5\u1ef7\u1ef9]/ },
     { letter: "z", regex: /[\u017a\u017c\u017e\u1e91\u1e93\u1e95\u0225]/ },
 ];
+
+const audio_special = {
+    "default": 'assets/audio/sfx/default',
+    "back": 'assets/audio/sfx/backspace',
+    "enter": 'assets/audio/sfx/enter',
+    "tab": 'assets/audio/sfx/tab',
+    "?": 'assets/audio/sfx/question',
+    "~": 'assets/audio/sfx/tilde',
+    "!": 'assets/audio/sfx/exclamation',
+    "@": 'assets/audio/sfx/at',
+    "#": 'assets/audio/sfx/pound',
+    "$": 'assets/audio/sfx/dollar',
+    "%": 'assets/audio/sfx/percent',
+    "^": 'assets/audio/sfx/caret',
+    "&": 'assets/audio/sfx/ampersand',
+    "*": 'assets/audio/sfx/asterisk',
+    "(": 'assets/audio/sfx/parenthesis_open',
+    ")": 'assets/audio/sfx/parenthesis_closed',
+    "[": 'assets/audio/sfx/bracket_open',
+    "]": 'assets/audio/sfx/bracket_closed',
+    "{": 'assets/audio/sfx/brace_open',
+    "}": 'assets/audio/sfx/brace_closed',
+    "/": 'assets/audio/sfx/slash_forward',
+    "\\": 'assets/audio/sfx/slash_back'
+}
 
 
 

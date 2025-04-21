@@ -1,5 +1,3 @@
-//main.js
-
 const { app, Tray, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const iohook = require('iohook');
@@ -7,7 +5,6 @@ const os = require("os");
 
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
-
 
 var win = null;
 var tray = null;
@@ -22,10 +19,9 @@ function createWindow() {
             contextIsolation: true,
             nodeIntegration: false
         },
-        resizable: false
+        opacity: 0
     });
-
-    // remove menu bar
+    win.hide();
     win.removeMenu();
 
     win.loadFile('index.html');
@@ -46,11 +42,8 @@ function createWindow() {
     });
 
     win.webContents.openDevTools();
-    win.resizable=true;
 
     createTrayIcon();
-
-    console.log("START")
 }
 
 //TODO
@@ -58,21 +51,12 @@ function createTrayIcon() {
     // prevent dupe tray icons
     if(tray !== null) return;
 
-    // start tray icon
     tray = new Tray(SYSTRAY_ICON);
-
-    // tray icon tooltip
-    tray.setToolTip('Animalese Typing');
 
     const contextMenu = Menu.buildFromTemplate([
         {
             label: 'Settings',
-            click: () => {
-            if (win) {
-                win.show(); // You could load a settings page instead
-                win.focus();
-            }
-            }
+            click: () => {}
         },
         {
             label: 'Exit',
@@ -82,17 +66,21 @@ function createTrayIcon() {
             }
         }
     ]);
-
-    tray.setContextMenu(contextMenu);
-
-    // Left click: show the app
     tray.on('click', () => {
         if (win) {
+            win.setOpacity(1.0)
             win.show();
             win.focus();
         }
     });
 
+    tray.setToolTip('Animalese Typing');
+    tray.setContextMenu(contextMenu);
+
+    tray.displayBalloon({
+        title: "Animalese Typing",
+        content: "Animalese Typing is Running!"
+    });    
 }
 
 app.whenReady().then(createWindow);

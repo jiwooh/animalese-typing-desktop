@@ -46,7 +46,6 @@ function createWindow() {
     createTrayIcon();
 }
 
-//TODO
 function createTrayIcon() {
     // prevent dupe tray icons
     if(tray !== null) return;

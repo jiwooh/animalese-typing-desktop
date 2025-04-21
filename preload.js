@@ -3,14 +3,17 @@ const { Howl } = require('howler');
 const path = require('path');
 const keycodesMap = require('./keycode-map');
 
+// context bridge setup
 contextBridge.exposeInMainWorld('api', {
     onKeyPress: (callback) => ipcRenderer.on('play-sound', (_event, e) => callback(keycodesMap.win32[e.keycode], e)),
     playAudio: (audioPath) => play(audioPath)
 });
 
+
+// TODO: probably move the sprite maps elsewhere and have one for each voice type file
+//#region Audio Maps
 const file_type = ".wav";
 const voice_type = "f1";
-
 const audioVoice = new Howl({
     src: ['assets/audio/'+voice_type+'/voice'+file_type],
     // (60,000/2) / 150bpm = 200
@@ -109,6 +112,7 @@ const audioSfx = new Howl({
     },
     onloaderror: (id, err) => console.error('Load error:', err)
 });
+//#endregion
 
 function play(key) {
     audioVoice.play(key);

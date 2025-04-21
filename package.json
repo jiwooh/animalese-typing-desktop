@@ -1,16 +1,41 @@
 {
-  "name": "Animalese Typing",
-  "version": "1.0.0",
-  "main": "src/main.js",
+  "name": "animalese-typing",
+  "version": "0.0.1",
+  "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": {
+    "name": "joshxviii",
+    "email": "dagexviii.dev@gmail.com"
+  },
+  "license": "MIT",
+  "description": "\"Animalese Typing App\"",
+  "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
-    "electron": "^34.1.1"
+    "electron-fetch": "^1.9.1",
+    "electron-log": "^4.4.8",
+    "electron-store": "^6.0.0",
+    "howler": "^2.2.4",
+    "iohook": "^0.9.3",
+    "play-sound": "^1.1.6"
+  },
+  "devDependencies": {
+    "electron": "^12.2.3",
+    "electron-builder": "~24.13.3"
+  },
+  "iohook": {
+    "targets": [
+      "electron-87"
+    ],
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "arches": [
+      "x64"
+    ]
   }
 }

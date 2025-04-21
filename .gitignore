@@ -4,3 +4,4 @@ dist
 gist
 *.
 .DS_Store
+.vscode

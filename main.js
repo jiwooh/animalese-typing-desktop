@@ -23,8 +23,8 @@ function createWindow() {
     });
     win.hide();
     win.removeMenu();
-
     win.loadFile('index.html');
+    
 
     win.on('close', function (event) {
         if (!app.isQuiting) {
@@ -40,8 +40,7 @@ function createWindow() {
     win.on('closed', function () {
         win = null;
     });
-
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     createTrayIcon();
 }
@@ -74,7 +73,7 @@ function createTrayIcon() {
     });
 
     tray.setToolTip('Animalese Typing');
-    //tray.setContextMenu(contextMenu);
+    tray.setContextMenu(contextMenu);
 
     tray.displayBalloon({
         title: "Animalese Typing",

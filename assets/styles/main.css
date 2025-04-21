@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Arial Rounded Bold";
+    src: url('../fonts/Arial Rounded MT Bold Regular.ttf');
+}
+
+body {
+    font-family: "Arial Rounded Bold";
+    font-size: 100%;
+}

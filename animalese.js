@@ -1,6 +1,6 @@
 window.api.onKeyPress( (key, e) => {
 
-    // where to magic begins
+    // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
             if (e.shiftKey) key = key.toUpperCase()

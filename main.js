@@ -74,7 +74,7 @@ function createTrayIcon() {
     });
 
     tray.setToolTip('Animalese Typing');
-    tray.setContextMenu(contextMenu);
+    //tray.setContextMenu(contextMenu);
 
     tray.displayBalloon({
         title: "Animalese Typing",

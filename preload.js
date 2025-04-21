@@ -5,7 +5,7 @@ const keycodesMap = require('./keycode-map');
 
 // context bridge setup
 contextBridge.exposeInMainWorld('api', {
-    onKeyPress: (callback) => ipcRenderer.on('play-sound', (_event, e) => callback(keycodesMap.win32[e.keycode], e)),
+    onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => callback(keycodesMap.win32[e.keycode], e)),
     playAudio: (audioPath) => play(audioPath)
 });
 

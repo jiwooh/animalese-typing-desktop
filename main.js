@@ -6,43 +6,45 @@ const os = require("os");
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
 
-var win = null;
+var popup = null;
 var tray = null;
 
-function createWindow() {
-    win = new BrowserWindow({
-        width: 318,
-        height: 280,
+function createPopup() {
+    popup = new BrowserWindow({
+        width: 400,
+        height: 300,
         icon: ICON,
+        resizable: false,
+        frame: false,
+        alwaysOnTop: true,
+        skipTaskbar: true,
+        show: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false
-        },
-        opacity: 0
+        }
     });
-    win.hide();
-    win.removeMenu();
-    win.loadFile('index.html');
+    popup.removeMenu();
+    popup.loadFile('index.html');
     
-
-    win.on('close', function (event) {
+    popup.on('close', function (e) {
         if (!app.isQuiting) {
-          if (process.platform === 'darwin') {
-            app.dock.hide();
-          }
-          event.preventDefault();
-          win.hide();
+            if (process.platform === 'darwin') app.dock.hide();
+            e.preventDefault();
+            popup.hide();
         }
         return false;
     });
 
-    win.on('closed', function () {
-        win = null;
+    popup.on('closed', function () {
+        popup = null;
     });
-    //win.webContents.openDevTools();
 
-    createTrayIcon();
+    popup.on('blur', () => {
+        popup.close();
+    });
+    //popup.webContents.openDevTools();
 }
 
 function createTrayIcon() {
@@ -59,16 +61,16 @@ function createTrayIcon() {
         {
             label: 'Exit',
             click: () => {
+            iohook.unload();
             iohook.stop();
             app.quit();
             }
         }
     ]);
     tray.on('click', () => {
-        if (win) {
-            win.setOpacity(1.0)
-            win.show();
-            win.focus();
+        if (popup) {
+            popup.show();
+            popup.focus();
         }
     });
 
@@ -81,21 +83,24 @@ function createTrayIcon() {
     });    
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    createPopup();
+    createTrayIcon();
+});
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit();
 });
 
 app.on('activate', function () {
-    if (mainWindow === null) createWindow();
+    if (popup === null) createPopup();
 });
 
 app.on('ready', () => {
     iohook.start(true);
 
     iohook.on('keydown', e => {
-        win.webContents.send('play-sound', e);
+        popup.webContents.send('keydown', e);
     });
 });
 

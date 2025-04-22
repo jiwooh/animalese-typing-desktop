@@ -10,6 +10,7 @@ var popup = null;
 var tray = null;
 
 function createPopup() {
+    if(popup !== null) return;
     popup = new BrowserWindow({
         width: 400,
         height: 300,
@@ -44,8 +45,17 @@ function createPopup() {
     popup.on('blur', () => {
         popup.close();
     });
-    //popup.webContents.openDevTools();
+
+    popup.webContents.on('before-input-event', (e, input) => {
+        if (input.control && input.shift && input.key.toLowerCase() === 'i') {
+            const wc = popup.webContents;
+            if (wc.isDevToolsOpened()) wc.closeDevTools();
+            else  wc.openDevTools({ mode: 'detach' });
+            e.preventDefault();
+        }
+    });
 }
+
 
 function createTrayIcon() {
     // prevent dupe tray icons
@@ -98,7 +108,6 @@ app.on('activate', function () {
 
 app.on('ready', () => {
     iohook.start(true);
-
     iohook.on('keydown', e => {
         popup.webContents.send('keydown', e);
     });

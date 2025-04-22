@@ -23,8 +23,9 @@ function getAlphaSound(key) {
     return key;// Default case for unmatched keys
 }
 
-
-
+document.addEventListener('keydown', (e)=> {
+    console.log(e);
+})
 
 
 

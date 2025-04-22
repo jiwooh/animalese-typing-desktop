@@ -5,3 +5,4 @@ gist
 *.
 .DS_Store
 .vscode
+/exports

@@ -1,0 +1,24 @@
+{
+    "footer":"どうぶつの森のライフスタイル",
+    "description":"タイピングするたびに、どうぶつの森の音が鳴ります！",
+
+    "volume":"音量",
+
+    "config_1":"両方",
+    "config_2":"声",
+    "config_3":"効果音",
+     
+    "editor_title":"編集ソフト",
+    "editor_1":"ピッチシフト",
+    "editor_2":"抑揚",
+    "editor_3":"音程変化",
+
+    "f_voice_1":"ふつう",
+    "f_voice_2":"元気",
+    "f_voice_3":"アネキ",
+    "f_voice_4":"オトナ",
+    "m_voice_1":"はきはき",
+    "m_voice_2":"ぼんやり",
+    "m_voice_3":"キザ",
+    "m_voice_4":"コワイ"
+}

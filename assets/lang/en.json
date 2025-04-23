@@ -1,0 +1,24 @@
+{
+    "footer":"Animal Crossing lifestyle.",
+    "description":"Plays Animal Crossing sounds whenever you type!",
+    
+    "volume":"Volume",
+
+    "config_1":"All",
+    "config_2":"Animalese",
+    "config_3":"Soundfx",
+
+    "editor_title":"Editor",
+    "editor_1":"Pitch Shift",
+    "editor_2":"Intonation",
+    "editor_3":"Pitch Variation",
+
+    "f_voice_1":"Sweet",
+    "f_voice_2":"Peppy",
+    "f_voice_3":"Big sister",
+    "f_voice_4":"Snooty",
+    "m_voice_1":"Jock",
+    "m_voice_2":"Lazy",
+    "m_voice_3":"Smug",
+    "m_voice_4":"Cranky"
+}

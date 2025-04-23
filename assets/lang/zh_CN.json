@@ -1,0 +1,24 @@
+{
+    "footer":"《动物森友会》生活方式",
+    "description":"每次输入时都会播放《动物森友会》的声音！",
+    
+    "volume":"音量",
+
+    "config_1":"两者",
+    "config_2":"声音",
+    "config_3":"音效",
+
+    "editor_title":"编辑器",
+    "editor_1":"音调变化",
+    "editor_2":"语调",
+    "editor_3":"音高变化",
+
+    "f_voice_1":"Sweet",
+    "f_voice_2":"Peppy",
+    "f_voice_3":"Big sister",
+    "f_voice_4":"Snooty",
+    "m_voice_1":"Jock",
+    "m_voice_2":"Lazy",
+    "m_voice_3":"Smug",
+    "m_voice_4":"Cranky"
+}

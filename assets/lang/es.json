@@ -1,0 +1,24 @@
+{
+    "footer":"Estilo de vida de Animal Crossing.",
+    "description":"Reproduce sonidos de Animal Crossing cada vez que escribes.",
+
+    "volume":"Volumen",
+
+    "config_1":"Ambos",
+    "config_2":"Voz",
+    "config_3":"Efectos de sonido",
+
+    "editor_title":"Editor",
+    "editor_1":"Cambio de tono",
+    "editor_2":"Entonación",
+    "editor_3":"Variación de tono",
+
+    "f_voice_1":"Normal",
+    "f_voice_2":"Animada",
+    "f_voice_3":"Hermana",
+    "f_voice_4":"Estirada",
+    "m_voice_1":"Atlético",
+    "m_voice_2":"Perezoso",
+    "m_voice_3":"Enteradillo",
+    "m_voice_4":"Gruñón"
+}

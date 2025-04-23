@@ -13,9 +13,9 @@ function createPopup() {
     if(popup !== null) return;
     popup = new BrowserWindow({
         width: 400,
-        height: 300,
+        height: 220,
         icon: ICON,
-        resizable: false,
+        resizable: true,
         frame: false,
         alwaysOnTop: true,
         skipTaskbar: true,

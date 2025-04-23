@@ -1,0 +1,24 @@
+{
+    "footer":"동물의 숲 라이프스타일",
+    "description":"타이핑할 때마다 동물의 숲 소리가 재생됩니다!",
+
+    "volume":"볼륨",
+
+    "config_1":"둘 다",
+    "config_2":"목소리",
+    "config_3":"사운드 이펙트",
+
+    "editor_title":"편집기",
+    "editor_1":"음정 변경",
+    "editor_2":"억양",
+    "editor_3":"음높이 변화",
+
+    "f_voice_1":"친절함",
+    "f_voice_2":"건강한",
+    "f_voice_3":"누님",
+    "f_voice_4":"어른",
+    "m_voice_1":"운동광",
+    "m_voice_2":"먹보",
+    "m_voice_3":"느끼하긴",
+    "m_voice_4":"무뚝뚝"
+}

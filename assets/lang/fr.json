@@ -1,0 +1,24 @@
+{
+    "footer":"Mode de vie Animal Crossing.",
+    "description":"Joue des sons d'Animal Crossing chaque fois que vous tapez !",
+
+    "volume":"Volume",
+
+    "config_1":"Les deux",
+    "config_2":"Voix",
+    "config_3":"Effets sonores",
+
+    "editor_title":"Éditeur",
+    "editor_1":"Déplacement de hauteur",
+    "editor_2":"Intonation",
+    "editor_3":"Variation de ton",
+
+    "f_voice_1":"Normal",
+    "f_voice_2":"Impétueuse",
+    "f_voice_3":"Modèle",
+    "f_voice_4":"Arrogante",
+    "m_voice_1":"Sportif",
+    "m_voice_2":"Paresseux",
+    "m_voice_3":"Star",
+    "m_voice_4":"Versatile"
+}

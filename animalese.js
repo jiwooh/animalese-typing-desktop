@@ -27,6 +27,17 @@ document.addEventListener('keydown', (e)=> {
     console.log(e);
 })
 
+customElements.define('svg-icon', class extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      fetch(`assets/images/${name}.svg`)
+        .then(res => res.text())
+        .then(svg => {
+            this.innerHTML = svg;
+            this.querySelector('svg').classList.add('svg-icon');
+        });
+    }
+});
 
 
 

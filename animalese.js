@@ -1,5 +1,4 @@
 window.api.onKeyPress( (key, e) => {
-
     // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
@@ -29,13 +28,14 @@ document.addEventListener('keydown', (e)=> {
 
 customElements.define('svg-icon', class extends HTMLElement {
     connectedCallback() {
-      const name = this.getAttribute('name');
-      fetch(`assets/images/${name}.svg`)
+        const name = this.getAttribute('name');
+        fetch(`assets/images/${name}.svg`)
         .then(res => res.text())
         .then(svg => {
             this.innerHTML = svg;
             this.querySelector('svg').classList.add('svg-icon');
-        });
+            if (name === 'female' || name === 'male') this.querySelector('svg').id = `${name}`
+        });   
     }
 });
 

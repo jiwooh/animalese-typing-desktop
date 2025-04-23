@@ -6,14 +6,14 @@ const os = require("os");
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
 
-var popup = null;
+var bgwin = null;
 var tray = null;
 
 function createPopup() {
-    if(popup !== null) return;
-    popup = new BrowserWindow({
-        width: 400,
-        height: 220,
+    if(bgwin !== null) return;
+    bgwin = new BrowserWindow({
+        width: 0,
+        height: 0,
         icon: ICON,
         resizable: true,
         frame: false,
@@ -26,29 +26,31 @@ function createPopup() {
             nodeIntegration: false
         }
     });
-    popup.removeMenu();
-    popup.loadFile('index.html');
+    bgwin.removeMenu();
+    bgwin.loadFile('editor.html');
+    bgwin.setAspectRatio(16 / 9);
+    bgwin.setMinimumSize(640, 360);
     
-    popup.on('close', function (e) {
+    bgwin.on('close', function (e) {
         if (!app.isQuiting) {
             if (process.platform === 'darwin') app.dock.hide();
             e.preventDefault();
-            popup.hide();
+            bgwin.hide();
         }
         return false;
     });
 
-    popup.on('closed', function () {
-        popup = null;
+    bgwin.on('closed', function () {
+        bgwin = null;
     });
 
-    popup.on('blur', () => {
-        popup.close();
+    bgwin.on('blur', () => {
+        bgwin.close();
     });
 
-    popup.webContents.on('before-input-event', (e, input) => {
+    bgwin.webContents.on('before-input-event', (e, input) => {
         if (input.control && input.shift && input.key.toLowerCase() === 'i') {
-            const wc = popup.webContents;
+            const wc = bgwin.webContents;
             if (wc.isDevToolsOpened()) wc.closeDevTools();
             else  wc.openDevTools({ mode: 'detach' });
             e.preventDefault();
@@ -78,9 +80,9 @@ function createTrayIcon() {
         }
     ]);
     tray.on('click', () => {
-        if (popup) {
-            popup.show();
-            popup.focus();
+        if (bgwin) {
+            bgwin.show();
+            bgwin.focus();
         }
     });
 
@@ -103,13 +105,13 @@ app.on('window-all-closed', function () {
 });
 
 app.on('activate', function () {
-    if (popup === null) createPopup();
+    if (bgwin === null) createPopup();
 });
 
 app.on('ready', () => {
     iohook.start(true);
     iohook.on('keydown', e => {
-        popup.webContents.send('keydown', e);
+        bgwin.webContents.send('keydown', e);
     });
 });
 

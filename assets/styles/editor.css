@@ -1,0 +1,52 @@
+:root {
+    --key-size: 6vw;
+}
+
+#keyboard {
+    margin: 1vw;
+}
+
+.key-label-wrapper {
+    position: relative;
+    display:inline-block;
+}
+
+.key-label {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    text-align: center;
+    white-space: nowrap;
+
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #d9bd96;
+    font-size: calc(.45*var(--key-size));
+}
+
+.key-row {
+    height: calc(1.05 * var(--key-size));
+}
+
+key-button, .key_s, .key_m, .key_l, .key_blank {
+    min-width: calc(var(--key-size));
+    min-height: calc(var(--key-size));
+    width: calc(var(--key-size));
+    height: calc(var(--key-size));
+    display: inline-block;
+}
+.key_s {min-width: calc(1* var(--key-size));}
+.key_m {min-width: calc(2* var(--key-size));}
+.key_l {min-width: calc(3* var(--key-size));}
+
+.button-top {
+    fill:#ece0d0;
+}
+key-button.pressed svg .button-top  {
+    transform: translate(0px,4px);
+    fill:#eedbc2;
+}
+key-button.pressed .key-label {
+    transform: translate(-50%, -35%);
+}

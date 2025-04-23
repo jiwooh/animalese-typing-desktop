@@ -5,23 +5,43 @@
 
 body {
     font-family: "Arial Rounded Bold";
-    margin: 0px;
+    margin: 0vw;
     background-color: #fffae4;
+    overflow: hidden;
 }
 
 .drag-region {
     width: 100%;
-    height: 50px;
+    height: 3vw;
     -webkit-app-region: drag;
     z-index: 9999;
     background-color: #e0c49e;
 }
 
 .svg-icon {
-    width: 20vw;
-    height: 20vw;
+    display: inline-block;
+    position: relative;
+    width: 12vw;
+    height: 12vw;
+    filter: drop-shadow(0 0 2px #0000005d);
 }
 
-.main-win {
-    margin: 8px;
+#male {
+    --alt1-color: #f3f3f3;
+    --alt2-color: #4b4b4b;
+}
+#female {
+    --alt1-color: #f3f3f3;
+    --alt2-color: #4b4b4b;
+}
+
+#male:hover {
+    --alt1-color: #f0feff;
+    --alt2-color: #52e1fa;
+    filter: drop-shadow(0 0 6px #00aaff8c);
+}
+#female:hover {
+    --alt1-color: #fff1ff;
+    --alt2-color: #fd4ee6;
+    filter: drop-shadow(0 0 6px #f700ff8c);
 }

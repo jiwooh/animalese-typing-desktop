@@ -1,9 +1,56 @@
 :root {
-    --key-size: 6vw;
+    --key-size: 32px;
+}
+
+
+
+
+#master-volume {
+    height: 160px;
+    margin: 0px;
+}
+
+input[type=range] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 8.4px;
+    cursor: pointer;
+    background: #ece4c1;
+    border-radius: 10px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    border-style: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 6px;
+    background: #e0c49e;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -4.5px;
+    transition: box-shadow 0.5s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    transition: box-shadow 0.05s ease;
+    box-shadow: 0 0 0 3px #109145ad;
 }
 
 #keyboard {
-    margin: 1vw;
+    margin: 8px;
+    padding: 8px;
+    background-color: bisque;
+    display:inline-block;
+    user-select: none;
 }
 
 .key-label-wrapper {
@@ -14,7 +61,6 @@
 .key-label {
     position: absolute;
     pointer-events: none;
-    user-select: none;
     text-align: center;
     white-space: nowrap;
 
@@ -45,8 +91,10 @@ key-button, .key_s, .key_m, .key_l, .key_blank {
 }
 key-button.pressed svg .button-top  {
     transform: translate(0px,4px);
+    transition: transform 0.05s ease;
     fill:#eedbc2;
 }
 key-button.pressed .key-label {
     transform: translate(-50%, -35%);
+    transition: transform 0.05s ease;
 }

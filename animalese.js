@@ -26,18 +26,38 @@ document.addEventListener('keydown', (e)=> {
     console.log(e);
 })
 
-customElements.define('svg-icon', class extends HTMLElement {
+function scaleApp() {
+    const wrapper = document.getElementById('main-win');
+    const scaleX = window.innerWidth / 800;
+    const scaleY = window.innerHeight / 600;
+    const scale = Math.min(scaleX, scaleY); // maintain aspect ratio
+    wrapper.style.transform = `scale(${scale*1.8})`;
+}
+window.addEventListener('resize', scaleApp);
+window.addEventListener('load', scaleApp);
+
+
+// custom svg button element
+customElements.define('svg-button', class extends HTMLElement {
     connectedCallback() {
+        this.setAttribute('pressed','false');
         const name = this.getAttribute('name');
+        if (name === 'female' || name === 'male') this.id = `${name}`
+        this.style.userSelect = 'none';
         fetch(`assets/images/${name}.svg`)
         .then(res => res.text())
         .then(svg => {
             this.innerHTML = svg;
-            this.querySelector('svg').classList.add('svg-icon');
-            if (name === 'female' || name === 'male') this.querySelector('svg').id = `${name}`
-        });   
+            this.querySelector('svg').classList.add('svg-button');
+        });
+        this.addEventListener('mousedown', () => {
+            const pressed = this.getAttribute('pressed')==='true';
+            this.setAttribute('pressed', pressed?'false':'true');
+        });
     }
 });
+
+
 
 
 

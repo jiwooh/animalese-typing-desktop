@@ -10,9 +10,12 @@
 <body>
     <div class="drag-region"></div>
 
-    <div id="keyboard"></div>
-    <svg-icon name="male"></svg-icon>
-    <svg-icon name="female"></svg-icon>
+    <div id="main-win">
+        <div id="keyboard"></div>
+        <input id="master-volume" orient="vertical" type="range">
+        <svg-button name="male"></svg-button>
+        <svg-button name="female"></svg-button>
+    </div>
 
     <script src="./assets/jquery.js"></script>
     <script type="module" src="./editor.js"></script>

@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const path = require('path');
 const keycodesMap = require('./keycode-map');
-const { createAudioManager } = require('./renderer/audio-manager');
+const { createAudioManager } = require('./renderer/audioManager');
 
 // context bridge setup
 contextBridge.exposeInMainWorld('api', {

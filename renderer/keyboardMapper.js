@@ -32,8 +32,11 @@ customElements.define('key-button', class extends HTMLElement {
 });
 
 function press(btn) {
-    btn.classList.add('pressed');
-    setTimeout(() => btn.classList.remove('pressed'), 200);
+    if (!btn.classList.contains('pressed')) {
+        btn.classList.add('pressed');
+        window.audio.play('sfx.brace_open')
+        setTimeout(() => btn.classList.remove('pressed'), 200);
+    }
 }
 
 function keyboardBuilder() {

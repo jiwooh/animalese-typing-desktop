@@ -3,12 +3,12 @@ window.api.onKeyPress( (key, e) => {
     switch(true) {
         case ( isAlpha(key) ):
             if (e.shiftKey) key = key.toUpperCase()
-            window.audio.play('f1.sing.C5', {channel: 1});
-            console.log(key, e);
+            window.audio.play(`f1.voice.${getAlphaSound(key)}`, {channel: 1});
+            //console.log(key, e);
         break;
 
         default:
-            console.log(key, e);
+            //console.log(key, e);
         break;
     }
 });

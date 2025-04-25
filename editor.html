@@ -22,8 +22,8 @@
         </div>
         <div id="keyboard"></div>
 
-        <svg-button name="male"></svg-button>
-        <svg-button name="female"></svg-button>
+        <svg-button name="male" onclick="window.audio.play('f1.special.OK', {channel: 2})"></svg-button>
+        <svg-button name="female" onclick="window.audio.play('m1.special.OK', {channel: 2})"></svg-button>
 
         <input type="text">
         <input type="text">
@@ -33,7 +33,7 @@
     </div>
 
     <script src="./assets/jquery.js"></script>
-    <script type="module" src="./renderer/keyboard-mapper.js"></script>
+    <script type="module" src="./renderer/keyboardMapper.js"></script>
     <script src="./renderer/animalese.js"></script>
 </body>
 </html>

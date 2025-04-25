@@ -100,8 +100,7 @@ const sfx_sprite = {
 
 function createAudioInstance(path, sprite = null) {
     return new Howl({
-        src: [audio_path + path + file_type],
-        sprite,
+        src: [audio_path + path + file_type], sprite,
         onloaderror: (id, err) => console.error('Load error:', err)
     });
 }
@@ -121,17 +120,15 @@ function buildSoundBanks() {
 
 //#region Init Audio Manager
 function createAudioManager() {
-
     const audioFileCache = {};
-    const channelMap = {};// map of currently playing sounds on a given channel (only one sound per channel)
+    const activeChannels = {};// map of currently playing sounds on a given channel (only one sound per channel)
     const soundBanks = buildSoundBanks();
 
-    //#region Play Sound Func
     // main audio playback function
     function playSound(path, options = {}) {
         const parts = path.split(".");
         let bank, sprite;
-        
+
         //parse audio identifier
         switch (parts.length) {
             case 1: {
@@ -167,17 +164,24 @@ function createAudioManager() {
             return;
         }
 
-        // audio channel cutoff
-        if (options.channel !== undefined) {
-            const prevId = channelMap[options.channel];
-            if (prevId !== undefined) bank.stop(prevId);
-        }
+        // audio channel cutoff logic
+        CUTOFF_DURATION=0.025;
+        const fadeOutPrevious = (channel) => {
+            const prev = activeChannels[channel];
+            if (!prev || !prev.bank.playing(prev.id)) return;
+        
+            prev.bank.fade(prev.bank.volume(prev.id), 0, CUTOFF_DURATION * 1000, prev.id);
+            setTimeout(() => prev.bank.stop(prev.id), CUTOFF_DURATION * 1000);
+        };
+        if (options.channel !== undefined) fadeOutPrevious(options.channel);
 
         const id = (bank._sprite) ? bank.play(sprite) : bank.play();
 
         if (options.volume !== undefined) bank.volume(options.volume, id);
         if (options.pitch !== undefined) bank.rate(Math.pow(2, options.pitch / 12), id);
-        if (options.channel !== undefined) channelMap[options.channel] = id
+        if (options.channel !== undefined) {
+            activeChannels[options.channel] = { bank, id };
+        }
     }
     return { play: playSound };
 }

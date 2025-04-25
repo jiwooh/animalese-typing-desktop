@@ -9,6 +9,13 @@ const ICON = path.join(__dirname, '/assets/images/icon.png');
 var bgwin = null;
 var tray = null;
 
+ipcMain.on('close-window', (e) => {
+    if (bgwin) bgwin.close();
+});
+ipcMain.on('minimize-window', (e) => {
+    if (bgwin) bgwin.minimize();
+});
+
 function createPopup() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({
@@ -18,7 +25,7 @@ function createPopup() {
         resizable: true,
         frame: false,
         alwaysOnTop: true,
-        skipTaskbar: true,
+        skipTaskbar: false,
         show: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -28,8 +35,8 @@ function createPopup() {
     });
     bgwin.removeMenu();
     bgwin.loadFile('editor.html');
-    bgwin.setAspectRatio(16 / 9);
-    bgwin.setMinimumSize(640, 360);
+    bgwin.setAspectRatio(17 / 9);
+    bgwin.setMinimumSize(680, 360);
     
     bgwin.on('close', function (e) {
         if (!app.isQuiting) {
@@ -44,9 +51,9 @@ function createPopup() {
         bgwin = null;
     });
 
-    bgwin.on('blur', () => {
-        bgwin.close();
-    });
+    // bgwin.on('blur', () => {
+    //     bgwin.close();
+    // });
 
     bgwin.webContents.on('before-input-event', (e, input) => {
         if (input.control && input.shift && input.key.toLowerCase() === 'i') {

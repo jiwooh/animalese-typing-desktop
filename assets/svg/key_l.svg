@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="48mm"
+   width="144mm"
    height="48mm"
-   viewBox="0 0 48 48"
+   viewBox="0 0 144 48"
    version="1.1"
    id="svg1"
    inkscape:version="1.4 (86a8ad7, 2024-10-11)"
-   sodipodi:docname="key_small.svg"
+   sodipodi:docname="key_l.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showguides="true"
-     inkscape:zoom="1.4378367"
-     inkscape:cx="170.39487"
-     inkscape:cy="85.892925"
+     inkscape:zoom="0.71891835"
+     inkscape:cx="232.29342"
+     inkscape:cy="200.9964"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -45,7 +45,42 @@
        inkscape:locked="false" />
   </sodipodi:namedview>
   <defs
-     id="defs1" />
+     id="defs1">
+    <linearGradient
+       id="swatch8"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop8" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2">
+      <rect
+         class="button-top"
+         style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
+         id="rect3"
+         width="144"
+         height="42.396782"
+         x="0"
+         y="0"
+         ry="15.484062" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7">
+      <rect
+         class="button-top"
+         style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
+         id="rect8"
+         width="144"
+         height="42.396782"
+         x="0"
+         y="8.8817842e-16"
+         ry="15.484062" />
+    </clipPath>
+  </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
@@ -53,7 +88,7 @@
     <rect
        style="fill:#d9bd96;fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
        id="rect4"
-       width="48"
+       width="144"
        height="40"
        x="0"
        y="8"
@@ -62,10 +97,20 @@
        class="button-top"
        style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
        id="rect5"
-       width="47.998669"
+       width="144"
        height="42.396782"
        x="0"
-       y="0"
+       y="8.8817842e-16"
        ry="15.484061" />
+    <rect
+       class="button-outline"
+       style="fill-opacity:1;fill:none;stroke-width:var(--outline-width)"
+       id="rect7"
+       width="144"
+       height="42.396782"
+       x="0"
+       y="8.8817842e-16"
+       ry="15.484061"
+       clip-path="url(#clipPath7)" />
   </g>
 </svg>

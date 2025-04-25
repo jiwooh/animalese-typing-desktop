@@ -2,62 +2,32 @@
     --key-size: 32px;
 }
 
-
-
-
+/*MASTER VOLUME*/
 #master-volume {
-    height: 160px;
-    margin: 0px;
+    position: absolute;
+    display: inline-block;
+    left: 100%;
+}
+#master-volume-slider {
+    width: 180px;
+    transform: rotate(90deg);
+    transform-origin: left;
 }
 
-input[type=range] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-input[type=range]:focus {
-    outline: none;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-    height: 8.4px;
-    cursor: pointer;
-    background: #ece4c1;
-    border-radius: 10px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    appearance: none;
-    border-style: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 6px;
-    background: #e0c49e;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -4.5px;
-    transition: box-shadow 0.5s ease;
-}
-
-input[type=range]::-webkit-slider-thumb:hover {
-    transition: box-shadow 0.05s ease;
-    box-shadow: 0 0 0 3px #109145ad;
-}
-
+/* KEYBOARD */
 #keyboard {
     margin: 8px;
     padding: 8px;
     background-color: bisque;
     display:inline-block;
     user-select: none;
+    border-radius: 6px;
+    filter: drop-shadow(0 6px 0px #d1b48b);
 }
-
 .key-label-wrapper {
     position: relative;
     display:inline-block;
 }
-
 .key-label {
     position: absolute;
     pointer-events: none;
@@ -70,11 +40,9 @@ input[type=range]::-webkit-slider-thumb:hover {
     color: #d9bd96;
     font-size: calc(.45*var(--key-size));
 }
-
 .key-row {
     height: calc(1.05 * var(--key-size));
 }
-
 key-button, .key_s, .key_m, .key_l, .key_blank {
     min-width: calc(var(--key-size));
     min-height: calc(var(--key-size));
@@ -86,15 +54,24 @@ key-button, .key_s, .key_m, .key_l, .key_blank {
 .key_m {min-width: calc(2* var(--key-size));}
 .key_l {min-width: calc(3* var(--key-size));}
 
-.button-top {
+key-button svg .button-top, key-button svg .button-outline {
     fill:#ece0d0;
+    stroke: #0d944500;
+    --outline-width: 10px;
+    transition: all 0.33s ease;
 }
-key-button.pressed svg .button-top  {
+key-button:hover svg .button-top, key-button:hover svg .button-outline {
+    fill:#f6e6d1;
+    stroke: #08a74a3d;
+    transition: fill 0.1s ease;
+    transition: stroke 0.1s ease;
+}
+key-button.pressed svg .button-top, key-button.pressed svg .button-outline   {
     transform: translate(0px,4px);
-    transition: transform 0.05s ease;
     fill:#eedbc2;
+    transition: transform 0.07s ease;
 }
 key-button.pressed .key-label {
     transform: translate(-50%, -35%);
-    transition: transform 0.05s ease;
+    transition: transform 0.07s ease;
 }

@@ -3,7 +3,7 @@ window.api.onKeyPress( (key, e) => {
     switch(true) {
         case ( isAlpha(key) ):
             if (e.shiftKey) key = key.toUpperCase()
-            window.api.playAudio( getAlphaSound(key) );
+            window.audio.play('f1.sing.C5', {channel: 1});
             console.log(key, e);
         break;
 
@@ -13,6 +13,7 @@ window.api.onKeyPress( (key, e) => {
     }
 });
 
+// function from og extension
 function isAlpha(str) {return (str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false;}
 
 function getAlphaSound(key) {
@@ -22,33 +23,31 @@ function getAlphaSound(key) {
     return key;// Default case for unmatched keys
 }
 
-document.addEventListener('keydown', (e)=> {
-    console.log(e);
-})
-
-function scaleApp() {
+// keep consistant aspect ratio and scales all elements on the window
+function scaleWindow() {
     const wrapper = document.getElementById('main-win');
-    const scaleX = window.innerWidth / 800;
-    const scaleY = window.innerHeight / 600;
-    const scale = Math.min(scaleX, scaleY); // maintain aspect ratio
-    wrapper.style.transform = `scale(${scale*1.8})`;
+    const scaleX = window.innerWidth / 680;
+    const scaleY = window.innerHeight / 360;
+    const scale = Math.min(scaleX, scaleY);
+    wrapper.style.transform = `scale(${scale*1})`;
 }
-window.addEventListener('resize', scaleApp);
-window.addEventListener('load', scaleApp);
-
+window.addEventListener('resize', scaleWindow);
+window.addEventListener('load', scaleWindow);
 
 // custom svg button element
 customElements.define('svg-button', class extends HTMLElement {
     connectedCallback() {
         this.setAttribute('pressed','false');
         const name = this.getAttribute('name');
-        if (name === 'female' || name === 'male') this.id = `${name}`
-        this.style.userSelect = 'none';
-        fetch(`assets/images/${name}.svg`)
+        this.id = `${name}`
+        
+        fetch(`assets/svg/${name}.svg`)
         .then(res => res.text())
         .then(svg => {
             this.innerHTML = svg;
-            this.querySelector('svg').classList.add('svg-button');
+            const svgEl = this.querySelector('svg');
+            svgEl.classList.add('svg-button');
+           
         });
         this.addEventListener('mousedown', () => {
             const pressed = this.getAttribute('pressed')==='true';
@@ -56,7 +55,6 @@ customElements.define('svg-button', class extends HTMLElement {
         });
     }
 });
-
 
 
 

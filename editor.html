@@ -5,20 +5,35 @@
     <meta charset="UTF-8">
     <title>Animalese Typing Desktop!</title>
     <link rel="stylesheet" href="assets\styles\main.css">
-    <link rel="stylesheet" href="assets\styles\editor.css">
+    <link rel="stylesheet" href="assets\styles\keyboard.css">
 </head>
 <body>
-    <div class="drag-region"></div>
+    <div class="title-bar">
+        <div id="title" title="Animalese Typing - Desktop">Animalese Typing - Desktop</div>
+        <div style="padding: 0px 10px;">
+            <svg-button onclick="window.api.minimizeWindow()" name="minimize" title="Minimize"></svg-button>
+            <svg-button onclick="window.api.closeWindow();" name="close" title="Close"></svg-button>
+        </div>
+    </div>
 
     <div id="main-win">
+        <div id="master-volume">
+            <input id="master-volume-slider" orient="vertical" type="range">
+        </div>
         <div id="keyboard"></div>
-        <input id="master-volume" orient="vertical" type="range">
+
         <svg-button name="male"></svg-button>
         <svg-button name="female"></svg-button>
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        
+        
     </div>
 
     <script src="./assets/jquery.js"></script>
-    <script type="module" src="./editor.js"></script>
-    <script src="animalese.js"></script>
+    <script type="module" src="./renderer/keyboard-mapper.js"></script>
+    <script src="./renderer/animalese.js"></script>
 </body>
 </html>

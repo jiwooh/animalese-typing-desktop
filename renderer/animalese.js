@@ -5,7 +5,14 @@ const voiceProfile = preferences.get('voice_profile')
 const masterVolumeSlider = document.getElementById("master-volume-slider");
 masterVolumeSlider.value = preferences.get('volume');
 masterVolumeSlider.addEventListener('input', (e) => {
-    preferences.set('volume', e.target.value);// flip value cause i made the slide upside down, oops
+    preferences.set('volume', e.target.value);
+});
+
+const voicetypeSelector = document.getElementById("voice-type-selector");
+voicetypeSelector.value = voiceProfile.type;
+voicetypeSelector.addEventListener('change', (e) => {
+    voiceProfile.type = voicetypeSelector.value;
+    preferences.set('voice_profile', voiceProfile);
 });
 
 window.api.onKeyPress( (key, e) => {
@@ -13,7 +20,7 @@ window.api.onKeyPress( (key, e) => {
     switch(true) {
         case ( isAlpha(key) ):
             if (e.shiftKey) key = key.toUpperCase()
-            window.audio.play(`${voiceProfile.voice_type}.voice.${getAlphaSound(key)}`, {channel: 1});
+            window.audio.play(`${voiceProfile.type}.voice.${getAlphaSound(key)}`, {channel: 1});
             //console.log(key, e);
         break;
 

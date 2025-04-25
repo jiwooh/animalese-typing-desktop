@@ -14,7 +14,7 @@ const store = new Store({
     defaults: {
         volume: 0.5,
         voice_profile: {
-            voice_type: 'f2',
+            type: 'f2',
             pitch_shift: 0.0,
             pitch_variation: 0.2,
             intonation: 0.0

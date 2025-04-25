@@ -15,8 +15,8 @@ const store = new Store({
         volume: 0.5,
         voice_profile: {
             type: 'f2',
-            pitch_shift: 0.0,
-            pitch_variation: 0.2,
+            shift: 0.0,
+            variation: 0.2,
             intonation: 0.0
         }
     }
@@ -59,14 +59,14 @@ function createPopup() {
     bgwin.setAspectRatio(17 / 9);
     bgwin.setMinimumSize(680, 360);
     
-    bgwin.on('close', function (e) {
-        if (!app.isQuiting) {
-            if (process.platform === 'darwin') app.dock.hide();
-            e.preventDefault();
-            bgwin.hide();
-        }
-        return false;
-    });
+    // bgwin.on('close', function (e) {
+    //     if (!app.isQuiting) {
+    //         if (process.platform === 'darwin') app.dock.hide();
+    //         e.preventDefault();
+    //         bgwin.hide();
+    //     }
+    //     return false;
+    // });
 
     bgwin.on('closed', function () {
         bgwin = null;
@@ -101,9 +101,9 @@ function createTrayIcon() {
         {
             label: 'Exit',
             click: () => {
-            iohook.unload();
-            iohook.stop();
-            app.quit();
+                iohook.unload();
+                iohook.stop();
+                app.quit();
             }
         }
     ]);

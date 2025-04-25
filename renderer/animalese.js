@@ -15,13 +15,30 @@ voicetypeSelector.addEventListener('change', (e) => {
     preferences.set('voice_profile', voiceProfile);
 });
 
-window.api.onKeyPress( (key, e) => {
+
+window.api.onKeyPress( (key, e, isCapsLockOn) => {
+    console.log("", key, e, isCapsLockOn);
     // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
-            if (e.shiftKey) key = key.toUpperCase()
-            window.audio.play(`${voiceProfile.type}.voice.${getAlphaSound(key)}`, {channel: 1});
-            //console.log(key, e);
+            let sound_id = `${voiceProfile.type}.voice.${getAlphaSound(key)}`;
+            // Uppercase
+            if (isCapsLockOn !== e.shiftKey) window.audio.play(sound_id, {
+                channel: 1,
+                volume: 1,
+                pitch: voiceProfile.shift,
+                pitch_variation: 1 + voiceProfile.variation,
+
+                intonation: voiceProfile.intonation
+            });
+            // Lowercase
+            else window.audio.play(sound_id, {
+                channel: 1,
+                volume: .7,
+                pitch: voiceProfile.shift,
+                pitch_variation: voiceProfile.variation,
+                intonation: voiceProfile.intonation
+            });
         break;
 
         default:

@@ -134,7 +134,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
     const soundBanks = buildSoundBanks();
 
     // main audio playback function
-    function playSound(path, options = {}) {
+    function playSound(path, options = {/*volume, pitch, pitch_variation, intonation, channel*/}) {
         const parts = path.split(".");
         let bank, sprite;
 
@@ -175,19 +175,28 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
 
         // audio channel cutoff logic
         CUTOFF_DURATION=0.025;
-        const fadeOutPrevious = (channel) => {
+        const cutOffPrevious = (channel) => {
             const prev = activeChannels[channel];
             if (!prev || !prev.bank.playing(prev.id)) return;
         
             prev.bank.fade(prev.bank.volume(prev.id), 0, CUTOFF_DURATION * 1000, prev.id);
             setTimeout(() => prev.bank.stop(prev.id), CUTOFF_DURATION * 1000);
         };
-        if (options.channel !== undefined) fadeOutPrevious(options.channel);
+        if (options.channel !== undefined) cutOffPrevious(options.channel);
 
         const id = (bank._sprite) ? bank.play(sprite) : bank.play();
 
+        // AUDIO OPTIONS
+        // apply volume
         if (options.volume !== undefined) bank.volume(options.volume, id);
-        if (options.pitch !== undefined) bank.rate(Math.pow(2, options.pitch / 12), id);
+        // calculate pitch with variation
+        if (options.pitch !== undefined || options.pitch_variation !== undefined) {
+            const basePitch = options.pitch ?? 0;
+            const variation = options.pitch_variation ?? 0;
+            const finalPitch = basePitch + (Math.random() * 2 - 1) * variation;
+            bank.rate(Math.pow(2, finalPitch / 12), id);
+        }
+        // add this sound to a cutoff channel
         if (options.channel !== undefined) {
             activeChannels[options.channel] = { bank, id };
         }

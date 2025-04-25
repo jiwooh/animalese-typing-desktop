@@ -2,18 +2,6 @@
     --key-size: 32px;
 }
 
-/*MASTER VOLUME*/
-#master-volume {
-    position: absolute;
-    display: inline-block;
-    left: 100%;
-}
-#master-volume-slider {
-    width: 180px;
-    transform: rotate(90deg);
-    transform-origin: left;
-}
-
 /* KEYBOARD */
 #keyboard {
     margin: 8px;

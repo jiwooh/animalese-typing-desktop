@@ -78,6 +78,19 @@ html, body {
 /*#endregion BUTTONS */
 
 /*#region SLIDERS */
+/*MASTER VOLUME*/
+#master-volume {
+    position: absolute;
+    display: inline-block;
+    left: 72%;
+    bottom: 92%;
+}
+#master-volume-slider {
+    width: 180px;
+    transform: rotate(-90deg);
+    transform-origin: right;
+}
+
 input[type=range] {
     outline: none;
     -webkit-appearance: none;

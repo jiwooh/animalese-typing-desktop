@@ -1,9 +1,19 @@
+const preferences = window.settings;
+
+const voiceProfile = preferences.get('voice_profile')
+
+const masterVolumeSlider = document.getElementById("master-volume-slider");
+masterVolumeSlider.value = preferences.get('volume');
+masterVolumeSlider.addEventListener('input', (e) => {
+    preferences.set('volume', e.target.value);// flip value cause i made the slide upside down, oops
+});
+
 window.api.onKeyPress( (key, e) => {
     // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
             if (e.shiftKey) key = key.toUpperCase()
-            window.audio.play(`f1.voice.${getAlphaSound(key)}`, {channel: 1});
+            window.audio.play(`${voiceProfile.voice_type}.voice.${getAlphaSound(key)}`, {channel: 1});
             //console.log(key, e);
         break;
 
@@ -17,9 +27,9 @@ window.api.onKeyPress( (key, e) => {
 function isAlpha(str) {return (str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false;}
 
 function getAlphaSound(key) {
-	key = key.toLowerCase().charAt(0);// Set to lowercase
-	if ((/[a-z]/).test(key)) return key;// If basic letter return letter
-    for (const { letter, regex } of regexMap) if (regex.test(key)) return letter;// If special letter check regexMap and return basic letter
+	key = key.toLowerCase().charAt(0);
+	if ((/[a-z]/).test(key)) return key;
+    for (const { letter, regex } of regexMap) if (regex.test(key)) return letter;// if special letter check regexMap and return basic letter
     return key;// Default case for unmatched keys
 }
 
@@ -55,7 +65,6 @@ customElements.define('svg-button', class extends HTMLElement {
         });
     }
 });
-
 
 
 

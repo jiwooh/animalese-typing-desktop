@@ -2,12 +2,33 @@ const { app, Tray, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const iohook = require('iohook');
 const os = require("os");
+const Store = require('electron-store');
 
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
 
 var bgwin = null;
 var tray = null;
+
+const store = new Store({
+    defaults: {
+        volume: 0.5,
+        voice_profile: {
+            voice_type: 'f2',
+            pitch_shift: 0.0,
+            pitch_variation: 0.2,
+            intonation: 0.0
+        }
+    }
+});
+ipcMain.on('get-store-data-sync', (event) => {
+    event.returnValue = store.store; // Returns entire store as an object
+});
+
+ipcMain.handle('store-set', async (e, key, value) => {
+    store.set(key, value);
+    bgwin.webContents.send(`updated-${key}`, value);
+});
 
 ipcMain.on('close-window', (e) => {
     if (bgwin) bgwin.close();

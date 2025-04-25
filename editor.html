@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
     <title>Animalese Typing Desktop!</title>
     <link rel="stylesheet" href="assets\styles\main.css">
     <link rel="stylesheet" href="assets\styles\keyboard.css">
@@ -18,7 +19,7 @@
 
     <div id="main-win">
         <div id="master-volume">
-            <input id="master-volume-slider" orient="vertical" type="range">
+            <input id="master-volume-slider" min="0" max="1" step=".01" orient="vertical" type="range">
         </div>
         <div id="keyboard"></div>
 
@@ -28,8 +29,6 @@
         <input type="text">
         <input type="text">
         <input type="text">
-        
-        
     </div>
 
     <script src="./assets/jquery.js"></script>

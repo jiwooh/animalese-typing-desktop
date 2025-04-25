@@ -1,7 +1,14 @@
-const { Howl } = require('howler');
+const { Howl, Howler } = require('howler');
 const path = require('path');
+const { ipcRenderer } = require('electron');
 
-const audio_path = path.join(__dirname, '../assets/audio/');
+// listens for volume changes and update master volume
+ipcRenderer.on('updated-volume', (_, volume) => {
+    Howler.volume(volume);
+});
+
+//TODO: convert file type from .wav to .acc
+const audio_path = path.join(__dirname, './assets/audio/');
 const file_type = ".wav";
 
 //#region Audio Sprite Maps
@@ -119,7 +126,9 @@ function buildSoundBanks() {
 }
 
 //#region Init Audio Manager
-function createAudioManager() {
+function createAudioManager(userVolume /* volume settings are passed in from [preload.js] */) {
+    Howler.volume(userVolume);
+
     const audioFileCache = {};
     const activeChannels = {};// map of currently playing sounds on a given channel (only one sound per channel)
     const soundBanks = buildSoundBanks();

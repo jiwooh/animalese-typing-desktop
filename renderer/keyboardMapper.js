@@ -1,3 +1,4 @@
+
 const keyboardLayout = [
     [ {label:'esc', size:'s'},          {label:'1', size:'s'}, 			{label:'2', size:'s'}, 			{label:'3', size:'s'}, 			{label:'4', size:'s'}, 			{label:'5', size:'s'}, 			{label:'6', size:'s'}, 			{label:'7', size:'s'}, 			{label:'8', size:'s'}, 			{label:'9', size:'s'}, 			{label:'0', size:'s'}, 			{label:'*', size:'s'}, 			{label:'*', size:'s'}],
     [ {label:'tab', size:'m'}, 		    {}, 			                {label:'a', size:'s'}, 			{label:'b', size:'s'}, 			{label:'c', size:'s'}, 			{label:'d', size:'s'}, 			{label:'e', size:'s'}, 			{label:'back', size:'m'}, 		{}, 			                {}, 			                {}, 			                {label:'*', size:'s'}, 			{label:'*', size:'s'}],
@@ -34,11 +35,12 @@ customElements.define('key-button', class extends HTMLElement {
 function press(btn) {
     if (!btn.classList.contains('pressed')) {
         btn.classList.add('pressed');
-        window.audio.play('sfx.brace_open')
+        window.audio.play('sfx.default')
         setTimeout(() => btn.classList.remove('pressed'), 200);
     }
 }
 
+//TODO: option to give keys svg image labels
 function keyboardBuilder() {
     const keyboardElement = $('#keyboard');
     keyboardElement.html('');

@@ -5,7 +5,7 @@ const voiceProfile = preferences.get('voice_profile')
 const masterVolumeSlider = document.getElementById("master-volume-slider");
 masterVolumeSlider.value = preferences.get('volume');
 masterVolumeSlider.addEventListener('input', (e) => {
-    preferences.set('volume', e.target.value);
+    preferences.set('volume', parseFloat(e.target.value));
 });
 
 const voicetypeSelector = document.getElementById("voice-type-selector");
@@ -15,9 +15,28 @@ voicetypeSelector.addEventListener('change', (e) => {
     preferences.set('voice_profile', voiceProfile);
 });
 
+const voicePitchSlider = document.getElementById("pitch-shift");
+voicePitchSlider.value = voiceProfile.shift;
+voicePitchSlider.addEventListener('change', (e) => {
+    voiceProfile.shift = parseFloat(voicePitchSlider.value);
+    preferences.set('voice_profile', voiceProfile);
+});
+
+const voiceVariationSlider = document.getElementById("pitch-variation");
+voiceVariationSlider.value = voiceProfile.variation;
+voiceVariationSlider.addEventListener('change', (e) => {
+    voiceProfile.variation = parseFloat(voiceVariationSlider.value);
+    preferences.set('voice_profile', voiceProfile);
+});
+
+const voiceIntonationSlider = document.getElementById("intonation");
+voiceIntonationSlider.value = voiceProfile.intonation;
+voiceIntonationSlider.addEventListener('change', (e) => {
+    voiceProfile.intonation = parseFloat(voiceIntonationSlider.value);
+    preferences.set('voice_profile', voiceProfile);
+});
 
 window.api.onKeyPress( (key, e, isCapsLockOn) => {
-    console.log("", key, e, isCapsLockOn);
     // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
@@ -25,16 +44,15 @@ window.api.onKeyPress( (key, e, isCapsLockOn) => {
             // Uppercase
             if (isCapsLockOn !== e.shiftKey) window.audio.play(sound_id, {
                 channel: 1,
-                volume: 1,
+                volume: .9,
                 pitch: voiceProfile.shift,
-                pitch_variation: 1 + voiceProfile.variation,
-
+                pitch_variation: 1.5 + voiceProfile.variation,
                 intonation: voiceProfile.intonation
             });
             // Lowercase
             else window.audio.play(sound_id, {
                 channel: 1,
-                volume: .7,
+                volume: .65,
                 pitch: voiceProfile.shift,
                 pitch_variation: voiceProfile.variation,
                 intonation: voiceProfile.intonation
@@ -42,6 +60,7 @@ window.api.onKeyPress( (key, e, isCapsLockOn) => {
         break;
 
         default:
+            window.audio.play(key, {volume:0.9});
             //console.log(key, e);
         break;
     }

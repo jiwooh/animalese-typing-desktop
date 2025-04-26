@@ -21,22 +21,22 @@ const standard = {
 
   41: '`',
 
-  2: '1',
-  3: '2',
-  4: '3',
-  5: '4',
-  6: '5',
-  7: '6',
-  8: '7',
-  9: '8',
-  10: '9',
-  11: '0',
+  2: '1', // '1'
+  3: '2', // '2'
+  4: '3', // '3'
+  5: '4', // '4'
+  6: '5', // '5'
+  7: '6', // '6'
+  8: '7', // '7'
+  9: '8', // '8'
+  10: '9',// '9'
+  11: '0',// '0'
 
   12: '-',
   13: '=',
-  14: 'Backspace',
+  14: 'sfx.backspace',// 'Backspace'
 
-  15: 'Tab',
+  15: 'sfx.tab',// 'Tab'
   58: 'CapsLock',
 
   30: 'a',
@@ -66,17 +66,18 @@ const standard = {
   21: 'y',
   44: 'z',
 
-  26: '[',
-  27: ']',
-  43: '\\',
+  26: 'sfx.bracket_open',   // '['
+  27: 'sfx.bracket_closed', // ']'
+  43: 'sfx.slash_back',     // '\'
+  53: 'sfx.slash_forward',  // '/'
 
   39: ';',
   40: "'",
-  28: 'Enter',
+  28: 'sfx.enter', // 'Enter'
 
   51: ',',
   52: '.',
-  53: '/',
+
 
   57: 'Space',
 
@@ -91,10 +92,10 @@ const standard = {
   3657: 'PgUp',
   3665: 'PgDn',
 
-  57416: '↑',
-  57419: '←',
-  57421: '→',
-  57424: '↓',
+  57416: 'sfx.arrow_up',    // '↑'
+  57419: 'sfx.arrow_left',  // '←'
+  57421: 'sfx.arrow_right', // '→'
+  57424: 'sfx.arrow_down',  // '↓'
 
   42: 'Shift',
   54: 'Shift',
@@ -113,7 +114,7 @@ const standard = {
   74: '-', // Numpad
   3597: '=', // Numpad
   78: '+', // Numpad
-  3612: 'Enter', // Numpad
+  3612: 'sfx.enter', // Numpad
   83: '.', // Numpad
 
   79: '1', // Numpad
@@ -149,10 +150,10 @@ Object.assign(win32, {
   61007: 'End',
   61001: 'PgUp',
   61009: 'PgDn',
-  61000: '↑',
-  61003: '←',
-  61005: '→',
-  61008: '↓',
+  61000: 'sfx.arrow_up',    // '↑'
+  61003: 'sfx.arrow_left',  // '←'
+  61005: 'sfx.arrow_right', // '→'
+  61008: 'sfx.arrow_down',  // '↓'
 });
 
 const linux = JSON.parse(JSON.stringify(standard));

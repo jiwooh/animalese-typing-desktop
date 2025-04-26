@@ -124,13 +124,39 @@ function buildSoundBanks() {
     bank['sfx'] = createAudioInstance('sfx', sfx_sprite);
     return bank;
 }
+// audio intonation logic
+function applyIntonation(bank, id, intonation) {
+    if (intonation==0.0) return;
+    const duration = 400; // ms duration for ramp
+    const startRate = bank.rate(id);
+    const endRate = 1 + intonation * 0.8;
+    const steps = 20;
+    const interval = duration / steps;
+
+    for (let i = 1; i <= steps; i++) {
+        const progress = i / steps;
+        const rate = startRate * Math.pow(endRate / startRate, progress);
+        setTimeout(() => {
+            bank.rate(rate, id);
+        }, i * interval);
+    }
+}
+// audio channel cutoff logic
+const activeChannels = {};// map of currently playing sounds on a given channel (only one sound per channel)
+function cutOffPrevious(channel) {
+    CUTOFF_DURATION=0.025;
+    const prev = activeChannels[channel];
+    if (!prev || !prev.bank.playing(prev.id)) return;
+
+    prev.bank.fade(prev.bank.volume(prev.id), 0, CUTOFF_DURATION * 1000, prev.id);
+    setTimeout(() => prev.bank.stop(prev.id), CUTOFF_DURATION * 1000);
+};
 
 //#region Init Audio Manager
 function createAudioManager(userVolume /* volume settings are passed in from [preload.js] */) {
     Howler.volume(userVolume);
 
     const audioFileCache = {};
-    const activeChannels = {};// map of currently playing sounds on a given channel (only one sound per channel)
     const soundBanks = buildSoundBanks();
 
     // main audio playback function
@@ -145,7 +171,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
                 else {
                     bank = new Howl({
                         src: [audio_path + path + file_type],
-                        onloaderror: (id, err) => console.error('Load error:', err)
+                        onloaderror: (id, err) => console.warn(`Load error for ${path}:`)
                     });
                     audioFileCache[path] = bank;
                 }
@@ -173,33 +199,26 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
             return;
         }
 
-        // audio channel cutoff logic
-        CUTOFF_DURATION=0.025;
-        const cutOffPrevious = (channel) => {
-            const prev = activeChannels[channel];
-            if (!prev || !prev.bank.playing(prev.id)) return;
-        
-            prev.bank.fade(prev.bank.volume(prev.id), 0, CUTOFF_DURATION * 1000, prev.id);
-            setTimeout(() => prev.bank.stop(prev.id), CUTOFF_DURATION * 1000);
-        };
+        // AUDIO OPTIONS
         if (options.channel !== undefined) cutOffPrevious(options.channel);
 
         const id = (bank._sprite) ? bank.play(sprite) : bank.play();
 
-        // AUDIO OPTIONS
         // apply volume
         if (options.volume !== undefined) bank.volume(options.volume, id);
         // calculate pitch with variation
         if (options.pitch !== undefined || options.pitch_variation !== undefined) {
             const basePitch = options.pitch ?? 0;
             const variation = options.pitch_variation ?? 0;
-            const finalPitch = basePitch + (Math.random() * 2 - 1) * variation;
-            bank.rate(Math.pow(2, finalPitch / 12), id);
+            const finalPitch = basePitch + (Math.random()*2-1.0)*variation;
+            //const finalPitch =  Math.pow(2, basePitch / 12.0) + Math.pow(2, () / 12.0 );
+            rate = Math.min(Math.max( Math.pow(2, finalPitch / 12.0) , 0.5), 2.0);
+            bank.rate(rate, id);
         }
+        // apply intonation
+        if (options.intonation !== undefined) applyIntonation(bank, id, options.intonation);
         // add this sound to a cutoff channel
-        if (options.channel !== undefined) {
-            activeChannels[options.channel] = { bank, id };
-        }
+        if (options.channel !== undefined) activeChannels[options.channel] = { bank, id };
     }
     return { play: playSound };
 }

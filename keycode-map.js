@@ -76,7 +76,7 @@ const standard = {
   28: 'sfx.enter', // 'Enter'
 
   51: ',',
-  52: '.',
+  52: 'sfx.default', // '.'
 
 
   57: 'Space',

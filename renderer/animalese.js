@@ -2,59 +2,59 @@ const preferences = window.settings;
 
 const voiceProfile = preferences.get('voice_profile')
 
+//#region Initialize controls and listeners
 const masterVolumeSlider = document.getElementById("master-volume-slider");
 masterVolumeSlider.value = preferences.get('volume');
 masterVolumeSlider.addEventListener('input', (e) => {
     preferences.set('volume', parseFloat(e.target.value));
 });
+const controls = [
+    'voice_type',
+    'pitch_shift',
+    'pitch_variation',
+    'intonation'
+];
+for (const control of controls) {
+    const el = document.getElementById(control);
 
-const voicetypeSelector = document.getElementById("voice-type-selector");
-voicetypeSelector.value = voiceProfile.type;
-voicetypeSelector.addEventListener('change', (e) => {
-    voiceProfile.type = voicetypeSelector.value;
-    preferences.set('voice_profile', voiceProfile);
-});
+    if (!el) continue;
+    // Get saved values and initilize sliders
+    el.value = voiceProfile[control];
+    if (el.type === 'range') document.getElementById(control+'_out').value = String(voiceProfile[control])
 
-const voicePitchSlider = document.getElementById("pitch-shift");
-voicePitchSlider.value = voiceProfile.shift;
-voicePitchSlider.addEventListener('change', (e) => {
-    voiceProfile.shift = parseFloat(voicePitchSlider.value);
-    preferences.set('voice_profile', voiceProfile);
-});
+    // Add event listeners or updating values
+    el.addEventListener('input', (e) => {
+        if (el.type === 'range') {
+            document.getElementById(control+'_out').value = String(parseFloat(e.target.value));
+            voiceProfile[control] = parseFloat(e.target.value);
+        }
+        else voiceProfile[control] = e.target.value;
 
-const voiceVariationSlider = document.getElementById("pitch-variation");
-voiceVariationSlider.value = voiceProfile.variation;
-voiceVariationSlider.addEventListener('change', (e) => {
-    voiceProfile.variation = parseFloat(voiceVariationSlider.value);
-    preferences.set('voice_profile', voiceProfile);
-});
+        preferences.set('voice_profile', voiceProfile);
+    });
+}
+//#endregion
 
-const voiceIntonationSlider = document.getElementById("intonation");
-voiceIntonationSlider.value = voiceProfile.intonation;
-voiceIntonationSlider.addEventListener('change', (e) => {
-    voiceProfile.intonation = parseFloat(voiceIntonationSlider.value);
-    preferences.set('voice_profile', voiceProfile);
-});
-
+//#region Key press detect
 window.api.onKeyPress( (key, e, isCapsLockOn) => {
     // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
-            let sound_id = `${voiceProfile.type}.voice.${getAlphaSound(key)}`;
+            let sound_id = `${voiceProfile.voice_type}.voice.${getAlphaSound(key)}`;
             // Uppercase
             if (isCapsLockOn !== e.shiftKey) window.audio.play(sound_id, {
                 channel: 1,
                 volume: .9,
-                pitch: voiceProfile.shift,
-                pitch_variation: 1.5 + voiceProfile.variation,
+                pitch_shift: voiceProfile.pitch_shift,
+                pitch_variation: 1.5 + voiceProfile.pitch_variation,
                 intonation: voiceProfile.intonation
             });
             // Lowercase
             else window.audio.play(sound_id, {
                 channel: 1,
                 volume: .65,
-                pitch: voiceProfile.shift,
-                pitch_variation: voiceProfile.variation,
+                pitch_shift: voiceProfile.pitch_shift,
+                pitch_variation: voiceProfile.pitch_variation,
                 intonation: voiceProfile.intonation
             });
         break;
@@ -65,6 +65,8 @@ window.api.onKeyPress( (key, e, isCapsLockOn) => {
         break;
     }
 });
+//#endregion
+
 
 // function from og extension
 function isAlpha(str) {return (str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false;}
@@ -76,6 +78,7 @@ function getAlphaSound(key) {
     return key;// Default case for unmatched keys
 }
 
+// general setup
 // keep consistant aspect ratio and scales all elements on the window
 function scaleWindow() {
     const wrapper = document.getElementById('main-win');

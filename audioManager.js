@@ -124,12 +124,11 @@ function buildSoundBanks() {
     bank['sfx'] = createAudioInstance('sfx', sfx_sprite);
     return bank;
 }
-// audio intonation logic
-function applyIntonation(bank, id, intonation) {
-    if (intonation==0.0) return;
+// audio intonation logic TODO
+function applyIntonation(bank, id, intonation, currentRate) {
     const duration = 400; // ms duration for ramp
-    const startRate = bank.rate(id);
-    const endRate = 1 + intonation * 0.8;
+    const startRate = currentRate;
+    const endRate = startRate*(1 + intonation * 0.8);
     const steps = 20;
     const interval = duration / steps;
 
@@ -160,7 +159,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
     const soundBanks = buildSoundBanks();
 
     // main audio playback function
-    function playSound(path, options = {/*volume, pitch, pitch_variation, intonation, channel*/}) {
+    function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
         const parts = path.split(".");
         let bank, sprite;
 
@@ -207,8 +206,8 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
         // apply volume
         if (options.volume !== undefined) bank.volume(options.volume, id);
         // calculate pitch with variation
-        if (options.pitch !== undefined || options.pitch_variation !== undefined) {
-            const basePitch = options.pitch ?? 0;
+        if (options.pitch_shift !== undefined || options.pitch_variation !== undefined) {
+            const basePitch = options.pitch_shift ?? 0;
             const variation = options.pitch_variation ?? 0;
             const finalPitch = basePitch + (Math.random()*2-1.0)*variation;
             //const finalPitch =  Math.pow(2, basePitch / 12.0) + Math.pow(2, () / 12.0 );
@@ -216,7 +215,8 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
             bank.rate(rate, id);
         }
         // apply intonation
-        if (options.intonation !== undefined) applyIntonation(bank, id, options.intonation);
+        // TODO: needs some tweaks
+        if (options.intonation !== undefined) applyIntonation(bank, id, options.intonation, bank.rate(id));
         // add this sound to a cutoff channel
         if (options.channel !== undefined) activeChannels[options.channel] = { bank, id };
     }

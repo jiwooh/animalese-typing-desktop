@@ -20,18 +20,45 @@ for (const control of controls) {
     if (!el) continue;
     // Get saved values and initilize sliders
     el.value = voiceProfile[control];
-    if (el.type === 'range') document.getElementById(control+'_out').value = String(voiceProfile[control])
+    if (el.type === 'range') { // if slider then set value to slider and output
+        const outputEl = document.getElementById(control + '_out');
+        outputEl.value = String(voiceProfile[control]);
+
+        const updateValue = (value) => {
+            el.value = value;
+            outputEl.value = value;
+            voiceProfile[control] = parseFloat(value);
+            preferences.set('voice_profile', voiceProfile);
+        };
+
+        el.addEventListener('input', (e) => updateValue(e.target.value));
+        el.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const step = parseFloat((el.max - el.min) * 0.05);
+            const delta = e.deltaY < 0 ? step : -step;
+            const newValue = Math.min(Math.max(parseFloat(el.value) + delta, parseFloat(el.min)), parseFloat(el.max));
+            updateValue(newValue);
+        });
+        el.addEventListener('dblclick', () => updateValue(el.defaultValue));
+    }
+    else {
+        el.addEventListener('input', (e) => {
+            voiceProfile[control] = e.target.value;
+            el.value = e.target.value;
+            preferences.set('voice_profile', voiceProfile);
+        });
+    }
 
     // Add event listeners or updating values
-    el.addEventListener('input', (e) => {
-        if (el.type === 'range') {
-            document.getElementById(control+'_out').value = String(parseFloat(e.target.value));
-            voiceProfile[control] = parseFloat(e.target.value);
-        }
-        else voiceProfile[control] = e.target.value;
+    // el.addEventListener('input', (e) => {
+    //     if (el.type === 'range') {
+    //         document.getElementById(control+'_out').value = String(parseFloat(e.target.value));
+    //         voiceProfile[control] = parseFloat(e.target.value);
+    //     }
+    //     else voiceProfile[control] = e.target.value;
 
-        preferences.set('voice_profile', voiceProfile);
-    });
+    //     preferences.set('voice_profile', voiceProfile);
+    // });
 }
 //#endregion
 

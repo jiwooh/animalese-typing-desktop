@@ -210,12 +210,10 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
             const basePitch = options.pitch_shift ?? 0;
             const variation = options.pitch_variation ?? 0;
             const finalPitch = basePitch + (Math.random()*2-1.0)*variation;
-            //const finalPitch =  Math.pow(2, basePitch / 12.0) + Math.pow(2, () / 12.0 );
             rate = Math.min(Math.max( Math.pow(2, finalPitch / 12.0) , 0.5), 2.0);
             bank.rate(rate, id);
         }
         // apply intonation
-        // TODO: needs some tweaks
         if (options.intonation !== undefined) applyIntonation(bank, id, options.intonation, bank.rate(id));
         // add this sound to a cutoff channel
         if (options.channel !== undefined) activeChannels[options.channel] = { bank, id };

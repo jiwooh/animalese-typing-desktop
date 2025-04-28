@@ -1,5 +1,6 @@
 :root {
     --key-size: 32px;
+    --outline-width: 10px;
 }
 
 /* KEYBOARD */
@@ -7,14 +8,14 @@
     margin: 8px;
     padding: 8px;
     background-color: bisque;
-    display:inline-block;
+    display: inline-block;
     user-select: none;
     border-radius: 6px;
     filter: drop-shadow(0 6px 0px #d1b48b);
 }
 .key-label-wrapper {
     position: relative;
-    display:inline-block;
+    display: inline-block;
 }
 .key-label {
     position: absolute;
@@ -42,21 +43,24 @@ key-button, .key_s, .key_m, .key_l, .key_blank {
 .key_m {min-width: calc(2* var(--key-size));}
 .key_l {min-width: calc(3* var(--key-size));}
 
-key-button svg .button-top, key-button svg .button-outline {
+svg .button-top
+{
+    transform: translate(0px,0px);
     fill:#ece0d0;
     stroke: #0d944500;
-    --outline-width: 10px;
     transition: all 0.33s ease;
 }
-key-button:hover svg .button-top, key-button:hover svg .button-outline {
+key-button:hover svg .button-top
+{
     fill:#f6e6d1;
     stroke: #08a74a3d;
     transition: fill 0.1s ease;
     transition: stroke 0.1s ease;
 }
-key-button.pressed svg .button-top, key-button.pressed svg .button-outline   {
-    transform: translate(0px,4px);
+key-button.pressed svg .button-top
+{
     fill:#eedbc2;
+    transform: translate(0px,4px);
     transition: transform 0.07s ease;
 }
 key-button.pressed .key-label {

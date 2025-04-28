@@ -2,8 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 const path = require('path');
 const keycodesMap = require('./keycode-map');
 const { createAudioManager } = require('./audioManager');
-const { initCapsLockTracker, isCapsLockActive } = require('./capsLockTracker');
-initCapsLockTracker();
+const { initCapsLockState, isCapsLockActive } = require('./capsLockState');
+initCapsLockState();
 
 const settingsData = ipcRenderer.sendSync('get-store-data-sync');
 

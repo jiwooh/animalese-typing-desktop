@@ -56,22 +56,8 @@
     </linearGradient>
     <clipPath
        clipPathUnits="userSpaceOnUse"
-       id="clipPath2">
+       id="clipPath3">
       <rect
-         class="button-top"
-         style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
-         id="rect3"
-         width="144"
-         height="42.396782"
-         x="0"
-         y="0"
-         ry="15.484062" />
-    </clipPath>
-    <clipPath
-       clipPathUnits="userSpaceOnUse"
-       id="clipPath7">
-      <rect
-         class="button-top"
          style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
          id="rect8"
          width="144"
@@ -93,24 +79,25 @@
        x="0"
        y="8"
        ry="15.484061" />
-    <rect
-       class="button-top"
-       style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
-       id="rect5"
-       width="144"
-       height="42.396782"
-       x="0"
-       y="8.8817842e-16"
-       ry="15.484061" />
-    <rect
-       class="button-outline"
-       style="fill-opacity:1;fill:none;stroke-width:var(--outline-width)"
-       id="rect7"
-       width="144"
-       height="42.396782"
-       x="0"
-       y="8.8817842e-16"
-       ry="15.484061"
-       clip-path="url(#clipPath7)" />
+      <g class="button-top">
+         <rect
+            style="fill-opacity:1;stroke:none;stroke-width:0.47625;stroke-linecap:round;stroke-linejoin:round"
+            id="rect5"
+            width="144"
+            height="42.396782"
+            x="0"
+            y="8.8817842e-16"
+            ry="15.484061" />
+         <rect
+            class="button-outline"
+            style="fill-opacity:1;fill:none;stroke-width:var(--outline-width)"
+            id="rect7"
+            width="144"
+            height="42.396782"
+            x="0"
+            y="8.8817842e-16"
+            ry="15.484061"
+            clip-path="url(#clipPath3)" />
+      </g>
   </g>
 </svg>

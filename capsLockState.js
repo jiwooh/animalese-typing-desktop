@@ -3,7 +3,15 @@ const os = require('os');
 const { execSync } = require('child_process');
 const { ipcRenderer } = require('electron');
 
-let capsActive = false;
+capsActive = getInitialCapsState();
+
+function initCapsLockState() {
+    ipcRenderer.on('keydown', (_event, e) => {
+        if (e.keycode === 58) { // 58 = CapsLock
+            capsActive = !capsActive;
+        }
+    });
+}
 
 function getInitialCapsState() {
     const platform = os.platform();
@@ -26,19 +34,10 @@ function getInitialCapsState() {
     return false;
 }
 
-function initCapsLockTracker() {
-    capsActive = getInitialCapsState();
-
-    ipcRenderer.on('keydown', (_event, e) => {
-        if (e.keycode === 58) { // 58 = CapsLock
-            capsActive = !capsActive;
-        }
-    });
-}
 
 function isCapsLockActive() {return capsActive;}
 
 module.exports = {
-    initCapsLockTracker,
+    initCapsLockState,
     isCapsLockActive,
 };

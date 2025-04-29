@@ -1,3 +1,6 @@
+<!--
+author: joshxvii
+ -->
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64", viewBox="0 0 64 64">
   <path d="M41.068 10.658c8.775.51 7.74 9.093 10.504 16.34 3.264 5 7.522 1.685 7.522 1.685-.76 4.97-3.127 8.471-6.854 8.284-3.727-.187-13.308-5.68-13.308-5.68l-6.93-14.016s1.631-6.613 9.066-6.613z" style="fill:var(--alt2-color);stroke:var(--alt2-color);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"/>
   <circle cx="31.999" cy="30.452" r="15.621" style="fill:var(--alt1-color);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"/>

@@ -3,7 +3,7 @@
     --outline-width: 10px;
 }
 
-/* KEYBOARD */
+/*#region KEYBOARD */
 #keyboard {
     margin: 8px;
     padding: 8px;
@@ -22,12 +22,27 @@
     pointer-events: none;
     text-align: center;
     white-space: nowrap;
-
+    overflow: hidden;
     top: 46%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #d9bd96;
-    font-size: calc(.45*var(--key-size));
+    transition: transform 0.33s ease, font-size 0.2s ease;
+}
+.key_s .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) / max(1, var(--label-length))));}
+.key_m .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) / max(1, (var(--label-length)*.5))));}
+.key_l .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) / max(1, (var(--label-length)*.33))));}
+.key-icon {
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill:#d9bd96;
+    stroke: #d9bd96;
+    transition: transform 0.33s ease;
 }
 .key-row {
     height: calc(1.05 * var(--key-size));
@@ -37,33 +52,42 @@ key-button, .key_s, .key_m, .key_l, .key_blank {
     min-height: calc(var(--key-size));
     width: calc(var(--key-size));
     height: calc(var(--key-size));
+    max-width: calc(var(--key-size));
+    max-height: calc(var(--key-size));
     display: inline-block;
 }
 .key_s {min-width: calc(1* var(--key-size));}
 .key_m {min-width: calc(2* var(--key-size));}
 .key_l {min-width: calc(3* var(--key-size));}
 
-svg .button-top
+key-button .button-top
 {
     transform: translate(0px,0px);
     fill:#ece0d0;
     stroke: #0d944500;
     transition: all 0.33s ease;
 }
-key-button:hover svg .button-top
+key-button:hover .button-top
 {
     fill:#f6e6d1;
     stroke: #08a74a3d;
     transition: fill 0.1s ease;
     transition: stroke 0.1s ease;
+    transition: transform 0.33s ease;
 }
-key-button.pressed svg .button-top
+key-button.pressed .button-top
 {
     fill:#eedbc2;
     transform: translate(0px,4px);
     transition: transform 0.07s ease;
 }
 key-button.pressed .key-label {
-    transform: translate(-50%, -35%);
+    transform: translate(-50%, calc(-50% + 12.5%));
     transition: transform 0.07s ease;
 }
+
+key-button.pressed .key-icon {
+    transform: translate(-50%, calc(-50% + 8%));
+    transition: transform 0.07s ease;
+}
+/*#endregion*/

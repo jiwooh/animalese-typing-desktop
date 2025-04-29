@@ -85,7 +85,7 @@ html, body {
     left: 72%;
     bottom: 92%;
 }
-#master-volume-slider {
+#master_volume {
     width: 180px;
     transform: rotate(-90deg);
     transform-origin: right;

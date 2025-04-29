@@ -12,7 +12,7 @@ ipcRenderer.on('updated-voice_profile', (_, voice_profile) => v = voice_profile)
 
 //TODO: convert file type from .wav to .acc
 const audio_path = path.join(__dirname, './assets/audio/');
-const file_type = ".wav";
+const file_type = ".ogg";
 
 //#region Audio Sprite Maps
 // (60,000/2) / 150bpm = 200ms
@@ -109,6 +109,8 @@ const sfx_sprite = {
 //endregion
 
 function createAudioInstance(fileName, sprite = null) {
+    filePath = path.join(audio_path, fileName + file_type);
+    console.log(`Loading audio file: ${filePath}`);
     return new Howl({
         src: [audio_path + fileName + file_type], sprite,
         onloaderror: (id, err) => console.error('Load error:', err)
@@ -177,7 +179,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
 
         const parts = path.split(".");
         let bank, sprite;
-
+        
         //parse audio identifier
         switch (parts.length) {
             case 1: {

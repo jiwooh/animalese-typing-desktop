@@ -7,6 +7,9 @@ ipcRenderer.on('updated-volume', (_, volume) => {
     Howler.volume(volume);
 });
 
+let v = ipcRenderer.sendSync('get-store-data-sync').voice_profile;
+ipcRenderer.on('updated-voice_profile', (_, voice_profile) => v = voice_profile);
+
 //TODO: convert file type from .wav to .acc
 const audio_path = path.join(__dirname, './assets/audio/');
 const file_type = ".wav";
@@ -105,9 +108,9 @@ const sfx_sprite = {
 }
 //endregion
 
-function createAudioInstance(path, sprite = null) {
+function createAudioInstance(fileName, sprite = null) {
     return new Howl({
-        src: [audio_path + path + file_type], sprite,
+        src: [audio_path + fileName + file_type], sprite,
         onloaderror: (id, err) => console.error('Load error:', err)
     });
 }
@@ -160,6 +163,18 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
 
     // main audio playback function
     function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
+        
+        if (path.startsWith('&.voice')) { // apply animalese voice profile
+            Object.assign(options, {
+                volume: options.volume ?? 0.7,
+                channel: options.channel ?? 1,
+                pitch_shift: options.pitch_shift ?? v.pitch_shift,
+                pitch_variation: options.pitch_variation ?? v.pitch_variation,
+                intonation: options.intonation ?? v.intonation
+            });
+        }
+        path = path.replace('&', v.voice_type);
+
         const parts = path.split(".");
         let bank, sprite;
 

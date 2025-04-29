@@ -13,7 +13,6 @@ contextBridge.exposeInMainWorld('api', {
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
     onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => callback(keycodesMap.win32[e.keycode], e, isCapsLockActive())),
     onSettingUpdate: (key, callback) => {
-        settingsData[key] = value;
         const channel = `updated-${key}`;
         const handler = (_, value) => {
             if (document.readyState === 'loading') {

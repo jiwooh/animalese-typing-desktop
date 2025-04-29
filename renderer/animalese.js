@@ -3,63 +3,57 @@ const preferences = window.settings;
 const voiceProfile = preferences.get('voice_profile')
 
 //#region Initialize controls and listeners
-const masterVolumeSlider = document.getElementById("master-volume-slider");
+const masterVolumeSlider = document.getElementById("master_volume");
 masterVolumeSlider.value = preferences.get('volume');
-masterVolumeSlider.addEventListener('input', (e) => {
-    preferences.set('volume', parseFloat(e.target.value));
-});
+masterVolumeSlider.addEventListener('input', (e) => preferences.set('volume', parseFloat(e.target.value)));
 const controls = [
     'voice_type',
     'pitch_shift',
     'pitch_variation',
     'intonation'
 ];
-for (const control of controls) {
+
+controls.forEach(control => {
     const el = document.getElementById(control);
+    if (!el) return;
 
-    if (!el) continue;
-    // Get saved values and initilize sliders
-    el.value = voiceProfile[control];
-    if (el.type === 'range') { // if slider then set value to slider and output
-        const outputEl = document.getElementById(control + '_out');
-        outputEl.value = String(voiceProfile[control]);
+    const outputEl = document.getElementById(control + '_out');
+    const isSlider = el.type === 'range';
 
-        const updateValue = (value) => {
+    const updateValue = (value) => {
+        if (isSlider) {
+            value = parseFloat(value) || 0.0;
+            value = Math.min(Math.max(value, parseFloat(el.min)), parseFloat(el.max));
             el.value = value;
-            outputEl.value = value;
-            voiceProfile[control] = parseFloat(value);
-            preferences.set('voice_profile', voiceProfile);
-        };
+            if (outputEl) outputEl.value = ((value > 0) ? "+" : "") + value.toFixed(1);
+        } else {
+            el.value = value;
+        }
+        voiceProfile[control] = value;
+        preferences.set('voice_profile', voiceProfile);
+    };
+
+    if (isSlider) {
+        el.value = voiceProfile[control];
+        if (outputEl) outputEl.value = ((voiceProfile[control] > 0) ? "+" : "") + voiceProfile[control].toFixed(1);
 
         el.addEventListener('input', (e) => updateValue(e.target.value));
         el.addEventListener('wheel', (e) => {
             e.preventDefault();
             const step = parseFloat((el.max - el.min) * 0.05);
-            const delta = e.deltaY < 0 ? step : -step;
-            const newValue = Math.min(Math.max(parseFloat(el.value) + delta, parseFloat(el.min)), parseFloat(el.max));
-            updateValue(newValue);
+            updateValue(parseFloat(el.value) + (e.deltaY < 0 ? step : -step));
         });
         el.addEventListener('dblclick', () => updateValue(el.defaultValue));
+        if (outputEl) {
+            outputEl.addEventListener('click', () => outputEl.select());
+            outputEl.addEventListener('focusout', () => updateValue(outputEl.value));
+            outputEl.addEventListener('keydown', (e) => { if (e.key === "Enter") updateValue(outputEl.value); });
+        }
+    } else {
+        el.value = voiceProfile[control];
+        el.addEventListener('input', (e) => updateValue(e.target.value));
     }
-    else {
-        el.addEventListener('input', (e) => {
-            voiceProfile[control] = e.target.value;
-            el.value = e.target.value;
-            preferences.set('voice_profile', voiceProfile);
-        });
-    }
-
-    // Add event listeners or updating values
-    // el.addEventListener('input', (e) => {
-    //     if (el.type === 'range') {
-    //         document.getElementById(control+'_out').value = String(parseFloat(e.target.value));
-    //         voiceProfile[control] = parseFloat(e.target.value);
-    //     }
-    //     else voiceProfile[control] = e.target.value;
-
-    //     preferences.set('voice_profile', voiceProfile);
-    // });
-}
+});
 //#endregion
 
 //#region Key press detect
@@ -67,23 +61,15 @@ window.api.onKeyPress( (key, e, isCapsLockOn) => {
     // where the magic begins :)
     switch(true) {
         case ( isAlpha(key) ):
-            let sound_id = `${voiceProfile.voice_type}.voice.${getAlphaSound(key)}`;
+            let sound_id = `&.voice.${getAlphaSound(key)}`;
             // Uppercase
             if (isCapsLockOn !== e.shiftKey) window.audio.play(sound_id, {
-                channel: 1,
                 volume: .9,
-                pitch_shift: voiceProfile.pitch_shift,
-                pitch_variation: 1.5 + voiceProfile.pitch_variation,
-                intonation: voiceProfile.intonation
+                pitch_shift: 1.5 + voiceProfile.pitch_shift,
+                pitch_variation: 1 + voiceProfile.pitch_variation,
             });
             // Lowercase
-            else window.audio.play(sound_id, {
-                channel: 1,
-                volume: .65,
-                pitch_shift: voiceProfile.pitch_shift,
-                pitch_variation: voiceProfile.pitch_variation,
-                intonation: voiceProfile.intonation
-            });
+            else window.audio.play(sound_id);
         break;
 
         default:

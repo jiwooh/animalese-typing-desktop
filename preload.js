@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const path = require('path');
-const keycodesMap = require('./keycode-map');
+const keycodeToSound = require('./keycodeToSound');
 const { createAudioManager } = require('./audioManager');
 const { initCapsLockState, isCapsLockActive } = require('./capsLockState');
 initCapsLockState();
@@ -11,7 +11,7 @@ const settingsData = ipcRenderer.sendSync('get-store-data-sync');
 contextBridge.exposeInMainWorld('api', {
     closeWindow: () => ipcRenderer.send('close-window'),
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
-    onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => callback(keycodesMap.win32[e.keycode], e, isCapsLockActive())),
+    onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => callback(keycodeToSound.win32[e.keycode], e, isCapsLockActive())),
     onSettingUpdate: (key, callback) => {
         const channel = `updated-${key}`;
         const handler = (_, value) => {

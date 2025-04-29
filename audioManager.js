@@ -110,7 +110,6 @@ const sfx_sprite = {
 
 function createAudioInstance(fileName, sprite = null) {
     filePath = path.join(audio_path, fileName + file_type);
-    console.log(`Loading audio file: ${filePath}`);
     return new Howl({
         src: [audio_path + fileName + file_type], sprite,
         onloaderror: (id, err) => console.error('Load error:', err)
@@ -165,8 +164,8 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
 
     // main audio playback function
     function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
-        
-        if (path.startsWith('&.voice')) { // apply animalese voice profile
+        if (!path || path === '') return;
+        else if (path.startsWith('&.voice')) { // apply animalese voice profile
             Object.assign(options, {
                 volume: options.volume ?? 0.7,
                 channel: options.channel ?? 1,

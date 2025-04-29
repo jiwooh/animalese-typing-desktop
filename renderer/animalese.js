@@ -57,23 +57,22 @@ controls.forEach(control => {
 //#endregion
 
 //#region Key press detect
-window.api.onKeyPress( (key, e, isCapsLockOn) => {
+window.api.onKeyPress( (sound, e, isCapsLockOn) => {
     // where the magic begins :)
     switch(true) {
-        case ( isAlpha(key) ):
-            let sound_id = `&.voice.${getAlphaSound(key)}`;
+        case ( sound.startsWith('&.voice') ):
             // Uppercase
-            if (isCapsLockOn !== e.shiftKey) window.audio.play(sound_id, {
+            if (isCapsLockOn !== e.shiftKey) window.audio.play(sound, {
                 volume: .9,
                 pitch_shift: 1.5 + voiceProfile.pitch_shift,
                 pitch_variation: 1 + voiceProfile.pitch_variation,
             });
             // Lowercase
-            else window.audio.play(sound_id);
+            else window.audio.play(sound);
         break;
 
         default:
-            window.audio.play(key, {volume:0.9});
+            window.audio.play(sound, {volume:0.9});
             //console.log(key, e);
         break;
     }

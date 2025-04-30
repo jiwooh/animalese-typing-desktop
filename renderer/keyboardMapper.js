@@ -60,7 +60,6 @@ function press(btn) {
 //TODO: option to give keys svg image labels
 function keyboardBuilder() {
     const keyboardElement = $('#keyboard');
-    keyboardElement.html('');
     for (let row of keyboardLayout){
         const _row = $( `<div class='key-row'></div>`);
         for (let key of row) {

@@ -13,12 +13,12 @@
     "editor_2": "Intonation",
     "editor_3": "Tonvariation",
 
-    "f_voice_1": "Ausgeglichen",
-    "f_voice_2": "Schwungvoll",
-    "f_voice_3": "Große Schwester",
-    "f_voice_4": "Abgehoben",
-    "m_voice_1": "Sportlich",
-    "m_voice_2": "Schlafmütze",
-    "m_voice_3": "Arrogant",
-    "m_voice_4": "Miesepeter"
+    "f1": "Ausgeglichen",
+    "f2": "Schwungvoll",
+    "f3": "Große Schwester",
+    "f4": "Abgehoben",
+    "m1": "Sportlich",
+    "m2": "Schlafmütze",
+    "m3": "Arrogant",
+    "m4": "Miesepeter"
 }

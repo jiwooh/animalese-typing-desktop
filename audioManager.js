@@ -44,6 +44,7 @@ const voice_sprite = {
     y: [200 * 24,   200],
     z: [200 * 25,   200],
 }
+//TODO: remake the singing audio files. currently the have some artifacts and are too quiet
 // (60,000/2) / 100bpm = 300ms
 const notes_sprite = {
     C4:  [300 * 0, 300],
@@ -165,17 +166,31 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
     // main audio playback function
     function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
         if (!path || path === '') return;
-        else if (path.startsWith('&.voice')) { // apply animalese voice profile
-            Object.assign(options, {
-                volume: options.volume ?? 0.7,
-                channel: options.channel ?? 1,
+        
+        if (path.startsWith('&')) { // apply animalese voice profile
+            const profileOptions = {
                 pitch_shift: options.pitch_shift ?? v.pitch_shift,
                 pitch_variation: options.pitch_variation ?? v.pitch_variation,
-                intonation: options.intonation ?? v.intonation
-            });
+                intonation: options.intonation ?? v.intonation,
+            };
+            if (path.startsWith('&.voice')) {
+                Object.assign(options, profileOptions, {
+                    volume: options.volume ?? 0.65,
+                    channel: options.channel ?? 1,
+                });
+            }
+            else if (path.startsWith('&.special')) {
+                Object.assign(options, profileOptions);
+            } 
+            else {
+                Object.assign(options, {
+                    volume: options.volume ?? 1.0
+                });
+            }
+            path = path.replace('&', v.voice_type);
+            console.log("play", path, options);
         }
-        path = path.replace('&', v.voice_type);
-
+        
         const parts = path.split(".");
         let bank, sprite;
         

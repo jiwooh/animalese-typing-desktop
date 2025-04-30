@@ -13,12 +13,12 @@
     "editor_2":"Entonación",
     "editor_3":"Variación de tono",
 
-    "f_voice_1":"Normal",
-    "f_voice_2":"Animada",
-    "f_voice_3":"Hermana",
-    "f_voice_4":"Estirada",
-    "m_voice_1":"Atlético",
-    "m_voice_2":"Perezoso",
-    "m_voice_3":"Enteradillo",
-    "m_voice_4":"Gruñón"
+    "f1":"Normal",
+    "f2":"Animada",
+    "f3":"Hermana",
+    "f4":"Estirada",
+    "m1":"Atlético",
+    "m2":"Perezoso",
+    "m3":"Enteradillo",
+    "m4":"Gruñón"
 }

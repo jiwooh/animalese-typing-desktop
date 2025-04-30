@@ -1,69 +1,100 @@
 const preferences = window.settings;
 
-const voiceProfile = preferences.get('voice_profile')
+let voiceProfile = preferences.get('voice_profile')
 
 //#region Initialize controls and listeners
-const masterVolumeSlider = document.getElementById("master_volume");
-masterVolumeSlider.value = preferences.get('volume');
-masterVolumeSlider.addEventListener('input', (e) => preferences.set('volume', parseFloat(e.target.value)));
 const controls = [
+    'master_volume',
     'voice_type',
     'pitch_shift',
     'pitch_variation',
     'intonation'
 ];
 
-controls.forEach(control => {
-    const el = document.getElementById(control);
-    if (!el) return;
+function initControls() {
+    controls.forEach(control => {
+        let el = document.getElementById(control);
+        if (!el) return;
 
-    const outputEl = document.getElementById(control + '_out');
-    const isSlider = el.type === 'range';
+        let outputEl = document.getElementById(control + '_out');
+        const isSlider = el.type === 'range';
+        const displayMode = (outputEl)?outputEl.getAttribute('display') || 'float':undefined;
 
-    const updateValue = (value) => {
-        if (isSlider) {
-            value = parseFloat(value) || 0.0;
-            value = Math.min(Math.max(value, parseFloat(el.min)), parseFloat(el.max));
-            el.value = value;
-            if (outputEl) outputEl.value = ((value > 0) ? "+" : "") + value.toFixed(1);
-        } else {
-            el.value = value;
+        const updateValue = (value) => {
+            if (isSlider) {
+                value = parseFloat(value) || 0.0;
+                value = Math.min(Math.max(value, parseFloat(el.min)), parseFloat(el.max));
+                el.value = value;
+                if (outputEl) {
+                    outputEl.value = displayMode === 'percent' 
+                    ? (parseFloat(el.value) * 100).toFixed(0) + "%" 
+                    : ((parseFloat(el.value) > 0) ? "+" : "") + parseFloat(el.value).toFixed(1);
+                }
+            } else {
+                el.value = value;
+            }
+            if (control==='master_volume') {
+                preferences.set('volume', value);
+                
+                if (el.getAttribute('playing')==='false') {
+                    el.setAttribute('playing', 'true');
+                    window.audio.play('sfx.default');
+                    setTimeout(() => el.setAttribute('playing', 'false'), 75);
+                }
+            }
+            else {
+                voiceProfile[control] = value;
+                console.log("update", control, voiceProfile[control]);
+                preferences.set('voice_profile', voiceProfile);
+            }
+        };
+
+        // clear event listeners and reset element
+        el.replaceWith(el.cloneNode(true));
+        el = document.getElementById(control);
+        if (outputEl) {
+            outputEl.replaceWith(outputEl.cloneNode(true));
+            outputEl = document.getElementById(control + '_out');
         }
-        voiceProfile[control] = value;
-        preferences.set('voice_profile', voiceProfile);
-    };
+        if (isSlider) {
+            if (control === 'master_volume') el.value = preferences.get('volume');
+            else el.value = voiceProfile[control];
+            
+            if (outputEl) {
+            outputEl.value = displayMode === 'percent' 
+            ? (parseFloat(el.value) * 100).toFixed(0) + "%" 
+            : ((parseFloat(el.value) > 0) ? "+" : "") + parseFloat(el.value).toFixed(1);
+            }
 
-    if (isSlider) {
-        el.value = voiceProfile[control];
-        if (outputEl) outputEl.value = ((voiceProfile[control] > 0) ? "+" : "") + voiceProfile[control].toFixed(1);
-
-        el.addEventListener('input', (e) => updateValue(e.target.value));
-        el.addEventListener('wheel', (e) => {
+            el.addEventListener('input', (e) => updateValue(e.target.value));
+            el.addEventListener('wheel', (e) => {
             e.preventDefault();
             const step = parseFloat((el.max - el.min) * 0.05);
             updateValue(parseFloat(el.value) + (e.deltaY < 0 ? step : -step));
-        });
-        el.addEventListener('dblclick', () => updateValue(el.defaultValue));
-        if (outputEl) {
+            });
+            el.addEventListener('dblclick', () => updateValue(el.getAttribute('defaultValue')));
+            if (outputEl) {
             outputEl.addEventListener('click', () => outputEl.select());
             outputEl.addEventListener('focusout', () => updateValue(outputEl.value));
             outputEl.addEventListener('keydown', (e) => { if (e.key === "Enter") updateValue(outputEl.value); });
+            outputEl.addEventListener('dblclick', () => updateValue(el.getAttribute('defaultValue')));
+            }
+        } else {
+            el.value = voiceProfile[control];
+            el.addEventListener('input', (e) => updateValue(e.target.value));
         }
-    } else {
-        el.value = voiceProfile[control];
-        el.addEventListener('input', (e) => updateValue(e.target.value));
-    }
-});
+    });
+}
+initControls();
 //#endregion
 
 //#region Key press detect
 window.api.onKeyPress( (sound, e, isCapsLockOn) => {
-    // where the magic begins :)
     switch(true) {
         case ( sound.startsWith('&.voice') ):
             // Uppercase
             if (isCapsLockOn !== e.shiftKey) window.audio.play(sound, {
-                volume: .9,
+                volume: .75,
                 pitch_shift: 1.5 + voiceProfile.pitch_shift,
                 pitch_variation: 1 + voiceProfile.pitch_variation,
             });
@@ -71,36 +102,80 @@ window.api.onKeyPress( (sound, e, isCapsLockOn) => {
             else window.audio.play(sound);
         break;
 
-        default:
-            window.audio.play(sound, {volume:0.9});
-            //console.log(key, e);
+        default: window.audio.play(sound);
         break;
     }
 });
 //#endregion
 
-
-// function from og extension
-function isAlpha(str) {return (str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false;}
-
-function getAlphaSound(key) {
-	key = key.toLowerCase().charAt(0);
-	if ((/[a-z]/).test(key)) return key;
-    for (const { letter, regex } of regexMap) if (regex.test(key)) return letter;// if special letter check regexMap and return basic letter
-    return key;// Default case for unmatched keys
-}
-
 // general setup
 // keep consistant aspect ratio and scales all elements on the window
 function scaleWindow() {
     const wrapper = document.getElementById('main-win');
-    const scaleX = window.innerWidth / 680;
+    const scaleX = window.innerWidth / 720;
     const scaleY = window.innerHeight / 360;
     const scale = Math.min(scaleX, scaleY);
     wrapper.style.transform = `scale(${scale*1})`;
 }
 window.addEventListener('resize', scaleWindow);
 window.addEventListener('load', scaleWindow);
+scaleWindow();
+
+const voiceProfileSlots = preferences.get('saved_voice_profiles');
+for (let i = 0; i < 5; i++) {
+    document.getElementById('voice_profile_slots').options[i].innerHTML = voiceProfileSlots[i+1]?.name || `Slot ${i+1}`;
+}
+
+function deleteVoiceProfile() {
+    const currentVoiceProfile = preferences.get('voice_profile');
+    const selectedSlot = document.getElementById('voice_profile_slots').value;
+
+    let savedVoiceProfiles = preferences.get('saved_voice_profiles');
+
+    savedVoiceProfiles = new Map(Object.entries(savedVoiceProfiles));
+    savedVoiceProfiles.delete(selectedSlot);
+    document.getElementById('voice_profile_slots').options[parseInt(selectedSlot)-1].innerHTML = `Slot ${selectedSlot}`;
+    const savedProfilesObject = Object.fromEntries(savedVoiceProfiles);
+
+    preferences.set('saved_voice_profiles', savedProfilesObject);
+}
+
+function saveVoiceProfile() {
+    // Get the current voice profile
+    const currentVoiceProfile = preferences.get('voice_profile');
+    const selectedSlot = document.getElementById('voice_profile_slots').value;
+    const profileName = document.getElementById('save_profile_name').value.trim();
+
+    if (!profileName) {
+        //alert('Please enter a valid profile name');
+        return;
+    }
+
+    let savedVoiceProfiles = preferences.get('saved_voice_profiles');
+
+    savedVoiceProfiles = new Map(Object.entries(savedVoiceProfiles));
+    savedVoiceProfiles.set(selectedSlot, { name: profileName, profile: currentVoiceProfile });
+    document.getElementById('voice_profile_slots').options[parseInt(selectedSlot)-1].innerHTML = profileName;
+    const savedProfilesObject = Object.fromEntries(savedVoiceProfiles);
+
+    preferences.set('saved_voice_profiles', savedProfilesObject);
+
+    //alert(`Voice profile "${profileName}" saved successfully`);
+}
+
+function loadVoiceProfile() {
+    const selectedSlot = document.getElementById('voice_profile_slots').value;
+    const savedVoiceProfiles = preferences.get('saved_voice_profiles');
+    const selectedProfile = savedVoiceProfiles[selectedSlot];
+
+    if (selectedProfile) {
+        preferences.set('voice_profile', selectedProfile.profile);
+        voiceProfile = preferences.get('voice_profile')
+        initControls()
+    } else {
+        //alert('No saved voice profile found in this slot.');
+    }
+}
 
 // custom svg button element
 customElements.define('svg-button', class extends HTMLElement {
@@ -117,76 +192,9 @@ customElements.define('svg-button', class extends HTMLElement {
             svgEl.classList.add('svg-button');
            
         });
-        this.addEventListener('mousedown', () => {
+        this.addEventListener('click', () => {
             const pressed = this.getAttribute('pressed')==='true';
             this.setAttribute('pressed', pressed?'false':'true');
         });
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// WEB CODE
-// //keypress detect
-// chrome.runtime.sendMessage({type: 'update_values'});
-// constructor()
-
-// function constructor() {
-// 	document.addEventListener('keydown', processKeydown, true);
-// 	var ifs = document.querySelectorAll('iframe')
-// 	for (var i = 0; i < ifs.length; i++) {
-// 		var fc = ifs[i].contentDocument || ifs[i].contentWindow;
-// 		try{fc.addEventListener('keydown', processKeydown, true);}
-// 		catch(e){}
-// 	}
-// }
-// function destructor() {
-// 	document.removeEventListener('keydown', processKeydown, true)
-// 	var ifs = document.querySelectorAll('iframe')
-// 	for (var i = 0; i < ifs.length; i++) {
-// 		var fc = ifs[i].contentDocument || ifs[i].contentWindow;
-// 		try{fc.removeEventListener('keydown', processKeydown, true);}
-// 		catch(e){}
-// 	}
-// }
-
-// function processKeydown(e) {
-// 	//deconstruct when disconnected to bg script.
-// 	if (typeof chrome.runtime === 'undefined' || typeof chrome.runtime.id === 'undefined') {
-// 		destructor();
-// 		return;
-// 	}
-// 	setTimeout(function(){
-// 		if (e.key == "Process" || typeof e.key === 'undefined') processFallback(e);
-// 		else { chrome.runtime.sendMessage({ type: 'type', key: e.key ,  keycode: (e.key.length==1)?e.key.charCodeAt(0):e.keyCode , input_type: e.target.type})};
-// 	},0)
-// }
-// function processFallback(e) {
-// 	let keyFallback = e.code.startsWith("Key")?e.code.charAt(3).toLowerCase():""
-// 	chrome.runtime.sendMessage({ type: 'type', key: keyFallback ,  keycode: (keyFallback.length==1)?keyFallback.charCodeAt(0):keyFallback.keyCode , input_type: e.target.type});
-// }

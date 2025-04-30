@@ -13,12 +13,12 @@
     "editor_2":"语调",
     "editor_3":"音高变化",
 
-    "f_voice_1":"Sweet",
-    "f_voice_2":"Peppy",
-    "f_voice_3":"Big sister",
-    "f_voice_4":"Snooty",
-    "m_voice_1":"Jock",
-    "m_voice_2":"Lazy",
-    "m_voice_3":"Smug",
-    "m_voice_4":"Cranky"
+    "f1":"Sweet",
+    "f2":"Peppy",
+    "f3":"Big sister",
+    "f4":"Snooty",
+    "m1":"Jock",
+    "m2":"Lazy",
+    "m3":"Smug",
+    "m4":"Cranky"
 }

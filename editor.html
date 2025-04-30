@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
-    <title>Animalese Typing Desktop!</title>
+    <title>Animalese Typing - Desktop</title>
     <link rel="stylesheet" href="assets\styles\main.css">
     <link rel="stylesheet" href="assets\styles\keyboard.css">
 </head>
@@ -18,48 +18,77 @@
     </div>
 
     <div id="main-win">
-        <div id="master-volume">
-            <input id="master_volume" min="0" max="1" step=".01" orient="vertical" type="range">
-        </div>
-        <div id="keyboard"></div>
 
-        <svg-button name="male" onclick="window.audio.play('f1.special.OK', {channel: 2})"></svg-button>
-        <svg-button name="female" onclick="window.audio.play('m1.special.OK', {channel: 2})"></svg-button>
+        <div id="main_content">
+            <div id="keyboard"></div>
 
-        <!-- TODO -->
-        <div id="overlay" class="hide">
-            <div id="profile_edit_menu">
-            <label id="label_editor_1" class="editor_label">Pitch Shift</label>
-                <div class="indicator_box"><p class="range_indicator">-</p></div>
-                <input id="pitch_shift" class="editor_slider" type="range" min="-12" max="12" step="0.2" value="0" defaultValue="0"></input>
-                <div class="indicator_box"><p class="range_indicator">+</p></div>
-            <input type="text" id="pitch_shift_out" class="editor_output" />
-        
-            <label id="label_editor_2" class="editor_label">Intonation</label>
-                <div class="indicator_box"><p class="range_indicator">-</p></div>
-                <input id="intonation" class="editor_slider" type="range" min="-1.0" max="2.0" step="0.1" value="0" defaultValue="0"></input>
-                <div class="indicator_box"><p class="range_indicator">+</p></div>
-            <input type="text" id="intonation_out" class="editor_output" />
-        
-            <label id="label_editor_3" class="editor_label">Pitch Variation</label>
-                <div class="indicator_box"><p class="range_indicator">-</p></div>
-                <input id="pitch_variation" class="editor_slider" type="range" min="0" max="12" step="0.1" value="0" defaultValue="0.2"></input>
-                <div class="indicator_box"><p class="range_indicator">+</p></div>
-            <input type="text" id="pitch_variation_out" class="editor_output" />
+            <div class="separator"></div>
+
+            <div id="voice_profile_editor">
+
+                <div id="sliders">
+                    <div class="slider-group">
+                        <label id="label_editor_1" class="editor_label">Pitch Shift</label>
+                        <input id="pitch_shift" class="editor_slider" type="range" min="-12" max="12" step="0.2" value="0" defaultValue="0"></input>
+                        <input type="text" id="pitch_shift_out" class="editor_output" />
+                    </div>
+
+                    <div class="slider-group">
+                        <label id="label_editor_2" class="editor_label">Intonation</label>
+                        <input id="intonation" class="editor_slider" type="range" min="-1.0" max="2.0" step="0.1" value="0" defaultValue="0"></input>
+                        <input type="text" id="intonation_out" class="editor_output" />
+                    </div>
+
+                    <div class="slider-group">
+                        <label id="label_editor_3" class="editor_label">Pitch Variation</label>
+                        <input id="pitch_variation" class="editor_slider" type="range" min="0" max="12" step="0.1" value="0" defaultValue="0.5"></input>
+                        <input type="text" id="pitch_variation_out" class="editor_output" />
+                    </div>
+                </div>
+
+                <div id="voice_type_group">
+                    <div id="voice_type_buttons">
+                        <svg-button name="male" onclick="window.audio.play('&.special.OK', {channel: 2, volume:.65})"></svg-button>
+                        <svg-button name="female" onclick="window.audio.play('&.special.OK', {channel: 2, volume:.65})"></svg-button>
+                    </div>
+
+                    <select id="voice_type">
+                        <option id="label_f1" value="f1" selected>f1</option>
+                        <option id="label_f2" value="f2">f2</p></option>
+                        <option id="label_f3" value="f3">f3</p></option>
+                        <option id="label_f4" value="f4">f4</option>
+                        <option id="label_m1" value="m1">m1</option>
+                        <option id="label_m2" value="m2">m2</p></option>
+                        <option id="label_m3" value="m3">m3</p></option>
+                        <option id="label_m4" value="m4">m4</option>
+                    </select>
+                </div>
+
+                <div id="saved_profiles">
+                    <select id="voice_profile_slots" onchange="loadVoiceProfile()">
+                        <option id="save_1" value="1" selected>Empty</option>
+                        <option id="save_2" value="2">Empty</option>
+                        <option id="save_3" value="3">Empty</option>
+                        <option id="save_4" value="4">Empty</option>
+                        <option id="save_5" value="5">Empty</option>
+                    </select>
+                    <input type="text" id="save_profile_name" placeholder="Profile Name"/>
+                    <div id="save_profile_buttons">
+                        <input type="button" id="save_profile_button" value="S" onclick="saveVoiceProfile()"/>
+                        <input type="button" id="delete_profile_button" value="D" onclick="deleteVoiceProfile()"/>
+                    </div>
+                </div>
+
             </div>
+            
         </div>
-        <!-- TODO -->
 
-        <select id="voice_type">
-            <option id="label_f1" value="f1" selected>f1</option>
-            <option id="label_f2" value="f2">f2</p></option>
-            <option id="label_f3" value="f3">f3</p></option>
-            <option id="label_f4" value="f4">f4</option>
-            <option id="label_m1" value="m1">m1</option>
-            <option id="label_m2" value="m2">m2</p></option>
-            <option id="label_m3" value="m3">m3</p></option>
-            <option id="label_m4" value="m4">m4</option>
-        </select>
+        
+        <div id="master_volume_group">
+            <input id="master_volume" min="0" max="1" step=".01" orient="vertical" type="range" playing="false" defaultValue=".5">
+            <input type="text" id="master_volume_out" class="editor_output" display="percent" />
+        </div>
+
 
     </div>
 

@@ -18,7 +18,8 @@ const store = new Store({
             pitch_shift: 0.0,
             pitch_variation: 0.2,
             intonation: 0.0
-        }
+        },
+        saved_voice_profiles: new Map()
     }
 });
 ipcMain.on('get-store-data-sync', (event) => {
@@ -56,8 +57,8 @@ function createPopup() {
     });
     bgwin.removeMenu();
     bgwin.loadFile('editor.html');
-    bgwin.setAspectRatio(17 / 9);
-    bgwin.setMinimumSize(680, 360);
+    bgwin.setAspectRatio(2);
+    bgwin.setMinimumSize(720, 360);
     
     // bgwin.on('close', function (e) {
     //     if (!app.isQuiting) {

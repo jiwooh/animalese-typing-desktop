@@ -13,12 +13,12 @@
     "editor_2":"Intonation",
     "editor_3":"Variation de ton",
 
-    "f_voice_1":"Normal",
-    "f_voice_2":"Impétueuse",
-    "f_voice_3":"Modèle",
-    "f_voice_4":"Arrogante",
-    "m_voice_1":"Sportif",
-    "m_voice_2":"Paresseux",
-    "m_voice_3":"Star",
-    "m_voice_4":"Versatile"
+    "f1":"Normal",
+    "f2":"Impétueuse",
+    "f3":"Modèle",
+    "f4":"Arrogante",
+    "m1":"Sportif",
+    "m2":"Paresseux",
+    "m3":"Star",
+    "m4":"Versatile"
 }

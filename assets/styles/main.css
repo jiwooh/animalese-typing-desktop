@@ -289,31 +289,37 @@ input[type=text]::placeholder {
 
 #saved_profiles {
     /* background-color: rgb(0, 157, 255); */
+    width: 80%;
     margin-top: 4px;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 #voice_profile_slots {
-    width: 80%;
     min-height: 32px;
     background-color: #ece4c1;
     font-size: 18px;
     border-radius: 6px;
-
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
     text-align: center;
 }
 
 #voice_profile_slots option {
-    background-color: #ece4c1; /* Matches the dropdown background */
-    color: #6e5c44; /* Matches the text color */
+    background-color: #ece4c1;
+    color: #6e5c44; 
     font-family: "Arial Rounded Bold";
     text-align: center;
-    padding: 4px 8px; /* Add padding for better spacing */
+    padding: 4px 8px;
 }
-
+#save_profile_name {
+    min-height: 16px;
+    background-color: #ece4c1;
+    font-size: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
 
 
 #voice_profile_slots option:hover {

@@ -1,6 +1,6 @@
 'use strict';
 
-// [keycode-map.js] This file maps keycodes for different platforms to their respective sounds.
+//TODO: create a keyboard Remapper to remap keys to sounds. the will hole the default mappings
 const standard = {
   1: 'sfx.enter', // 'Esc'
 

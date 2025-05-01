@@ -1,6 +1,6 @@
 const preferences = window.settings;
 
-let voiceProfile = preferences.get('voice_profile')
+let voiceProfile = preferences.get('voice_profile');
 
 //#region Initialize controls and listeners
 const controls = [
@@ -121,6 +121,7 @@ window.addEventListener('resize', scaleWindow);
 window.addEventListener('load', scaleWindow);
 scaleWindow();
 
+//#region Savable voice profiles
 const voiceProfileSlots = preferences.get('saved_voice_profiles');
 for (let i = 0; i < 5; i++) {
     document.getElementById('voice_profile_slots').options[i].innerHTML = voiceProfileSlots[i+1]?.name || `Slot ${i+1}`;
@@ -176,6 +177,8 @@ function loadVoiceProfile() {
         //alert('No saved voice profile found in this slot.');
     }
 }
+//#endregion
+
 
 // custom svg button element
 customElements.define('svg-button', class extends HTMLElement {

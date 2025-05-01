@@ -138,7 +138,7 @@ app.on('activate', function () {
 });
 
 app.on('ready', () => {
-    iohook.start(true);
+    iohook.start();
     iohook.on('keydown', e => {
         bgwin.webContents.send('keydown', e);
     });

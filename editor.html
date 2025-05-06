@@ -10,7 +10,11 @@
 </head>
 <body>
     <div class="title-bar">
-        <div id="title" title="Animalese Typing - Desktop">Animalese Typing - Desktop</div>
+        <div style="display: flex; gap: 10px;">
+            <!-- <img id="icon" src="assets\images\icon.png" alt="Animalese Typing - Desktop" title="Animalese Typing - Desktop" style="height: 20px;"></img> -->
+            <div id="title" title="Animalese Typing - Desktop">Animalese Typing - Desktop</div>
+        </div>
+
         <div style="padding: 0px 10px;">
             <svg-button onclick="window.api.minimizeWindow()" name="minimize" title="Minimize"></svg-button>
             <svg-button onclick="window.api.closeWindow();" name="close" title="Close"></svg-button>

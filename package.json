@@ -1,5 +1,6 @@
 {
   "name": "animalese-typing",
+  "productName": "Animalese Typing",
   "version": "0.0.1",
   "main": "main.js",
   "author": {
@@ -30,6 +31,7 @@
   "description": "\"Animalese Typing Desktop\"",
   "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
+    "active-win": "^8.2.1",
     "electron-fetch": "^1.9.1",
     "electron-log": "^4.4.8",
     "electron-store": "^6.0.1",

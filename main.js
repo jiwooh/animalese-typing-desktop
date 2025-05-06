@@ -22,10 +22,10 @@ const store = new Store({
         saved_voice_profiles: new Map()
     }
 });
+
 ipcMain.on('get-store-data-sync', (event) => {
     event.returnValue = store.store; // Returns entire store as an object
 });
-
 ipcMain.handle('store-set', async (e, key, value) => {
     store.set(key, value);
     bgwin.webContents.send(`updated-${key}`, value);
@@ -97,10 +97,26 @@ function createTrayIcon() {
     const contextMenu = Menu.buildFromTemplate([
         {
             label: 'Settings',
-            click: () => {}
+            click: () => {
+                if (bgwin) {
+                    bgwin.show();
+                    bgwin.focus();
+                }
+            } //TODO
         },
         {
-            label: 'Exit',
+            label: 'Run on startup',
+            type: 'checkbox',
+            checked: app.getLoginItemSettings().openAtLogin,
+            click: (menuItem) => {
+                app.setLoginItemSettings({
+                    openAtLogin: menuItem.checked,
+                    openAsHidden: true
+                });
+            }
+        },
+        {
+            label: 'Quit',
             click: () => {
                 iohook.unload();
                 iohook.stop();
@@ -129,10 +145,6 @@ app.whenReady().then(() => {
     createTrayIcon();
 });
 
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') app.quit();
-});
-
 app.on('activate', function () {
     if (bgwin === null) createPopup();
 });
@@ -144,7 +156,22 @@ app.on('ready', () => {
     });
 });
 
+app.on('window-all-closed', function () {
+    if (process.platform !== 'darwin') app.quit();
+});
+
 app.on('before-quit', () => {
     iohook.unload();
     iohook.stop();
+
+    if (bgwin) {
+        bgwin.removeAllListeners();
+        bgwin.close();
+    }
+
+    if (tray) tray.destroy();
+
+    ipcMain.removeAllListeners();
 });
+
+app.on('quit', () =>  app.exit(0) );

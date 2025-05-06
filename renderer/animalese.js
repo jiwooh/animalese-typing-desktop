@@ -44,7 +44,6 @@ function initControls() {
             }
             else {
                 voiceProfile[control] = value;
-                console.log("update", control, voiceProfile[control]);
                 preferences.set('voice_profile', voiceProfile);
             }
         };
@@ -89,20 +88,22 @@ initControls();
 //#endregion
 
 //#region Key press detect
-window.api.onKeyPress( (sound, e, isCapsLockOn) => {
-    switch(true) {
-        case ( sound.startsWith('&.voice') ):
+window.api.onKeyPress( (map, e, isCapsLockOn) => {
+    switch (true) {
+        case ( map.sound.startsWith('&.voice') ):
             // Uppercase
-            if (isCapsLockOn !== e.shiftKey) window.audio.play(sound, {
+            if (isCapsLockOn !== e.shiftKey) window.audio.play(map.sound, {
                 volume: .75,
                 pitch_shift: 1.5 + voiceProfile.pitch_shift,
                 pitch_variation: 1 + voiceProfile.pitch_variation,
             });
             // Lowercase
-            else window.audio.play(sound);
+            else window.audio.play(map.sound);
         break;
-
-        default: window.audio.play(sound);
+        case (e.shiftKey && (map.shiftSound !== undefined)):
+            window.audio.play(map.shiftSound);
+        break;
+        default: window.audio.play(map.sound);
         break;
     }
 });

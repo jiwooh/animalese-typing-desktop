@@ -5,6 +5,7 @@ const { ipcRenderer } = require('electron');
 // listens for volume changes and update master volume
 ipcRenderer.on('updated-volume', (_, volume) => {
     Howler.volume(volume);
+    Howler.masterGain.gain.value = volume * 2;
 });
 
 let v = ipcRenderer.sendSync('get-store-data-sync').voice_profile;
@@ -84,7 +85,7 @@ const sfx_sprite = {
     enter               : [600 * 1,  600],
     tab                 : [600 * 2,  600],
     question            : [600 * 3,  600],
-    exclamation         : [600 * 5,  600],
+    exclamation         : [600 * 4,  600],
     at                  : [600 * 5,  600],
     pound               : [600 * 6,  600],
     dollar              : [600 * 7,  600],
@@ -96,7 +97,7 @@ const sfx_sprite = {
     bracket_open        : [600 * 13, 600],
     bracket_closed      : [600 * 14, 600],
     brace_open          : [600 * 15, 600],
-    brace_close         : [600 * 16, 600],
+    brace_closed        : [600 * 16, 600],
     tilde               : [600 * 17, 600],
     default             : [600 * 18, 600],
     arrow_left          : [600 * 19, 600],
@@ -159,6 +160,7 @@ function cutOffPrevious(channel) {
 //#region Init Audio Manager
 function createAudioManager(userVolume /* volume settings are passed in from [preload.js] */) {
     Howler.volume(userVolume);
+    Howler.masterGain.gain.value = userVolume * 2;
 
     const audioFileCache = {};
     const soundBanks = buildSoundBanks();
@@ -188,7 +190,6 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
                 });
             }
             path = path.replace('&', v.voice_type);
-            console.log("play", path, options);
         }
         
         const parts = path.split(".");

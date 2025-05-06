@@ -1,24 +1,24 @@
 {
-    "footer": "Animal Crossing-Lebensstil.",
-    "description": "Spielt Animal Crossing-Geräusche, jedes Mal, wenn du tippst!",
+    "footer":"Animal Crossing-Lebensstil.",
+    "description":"Spielt Animal Crossing-Geräusche, jedes Mal, wenn du tippst!",
     
-    "volume": "Lautstärke",
+    "volume":"Lautstärke",
 
-    "config_1": "Beide",
-    "config_2": "Stimme",
-    "config_3": "Soundeffekte",
+    "config_1":"Beide",
+    "config_2":"Stimme",
+    "config_3":"Soundeffekte",
 
-    "editor_title": "Editor",
-    "editor_1": "Tonhöhenverschiebung",
-    "editor_2": "Intonation",
-    "editor_3": "Tonvariation",
+    "editor_title":"Editor",
+    "editor_1":"Tonhöhenverschiebung",
+    "editor_2":"Intonation",
+    "editor_3":"Tonvariation",
 
-    "f1": "Ausgeglichen",
-    "f2": "Schwungvoll",
-    "f3": "Große Schwester",
-    "f4": "Abgehoben",
-    "m1": "Sportlich",
-    "m2": "Schlafmütze",
-    "m3": "Arrogant",
-    "m4": "Miesepeter"
+    "f1":"Ausgeglichen",
+    "f2":"Schwungvoll",
+    "f3":"Große Schwester",
+    "f4":"Abgehoben",
+    "m1":"Sportlich",
+    "m2":"Schlafmütze",
+    "m3":"Arrogant",
+    "m4":"Miesepeter"
 }

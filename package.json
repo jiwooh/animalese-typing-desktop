@@ -25,6 +25,10 @@
     "win": {
       "target": "nsis",
       "icon": "assets/images/icon256.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/images/icon256.png"
     }
   },
   "license": "MIT",

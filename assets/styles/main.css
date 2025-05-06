@@ -336,6 +336,21 @@ input[type=text]::placeholder {
     margin: 0 auto;
 }
 
+#voice_type.female, #voice_type.female option.female {
+    background-color: #fff1ff;
+    color: #4b4b4b;
+}
+#voice_type.male, #voice_type.male option.male {
+    background-color: #d2eeff;
+    color: #4b4b4b;
+}
+#voice_type.female option.male,
+#voice_type.male option.female {
+    display: none;
+}
+
+
+
 .editor_slider {
     display: inline-block;
     width: 170px;

@@ -60,14 +60,14 @@ function createPopup() {
     bgwin.setAspectRatio(2);
     bgwin.setMinimumSize(720, 360);
     
-    // bgwin.on('close', function (e) {
-    //     if (!app.isQuiting) {
-    //         if (process.platform === 'darwin') app.dock.hide();
-    //         e.preventDefault();
-    //         bgwin.hide();
-    //     }
-    //     return false;
-    // });
+    bgwin.on('close', function (e) {
+        if (!app.isQuiting) {
+            if (process.platform === 'darwin') app.dock.hide();
+            e.preventDefault();
+            bgwin.hide();
+        }
+        return false;
+    });
 
     bgwin.on('closed', function () {
         bgwin = null;

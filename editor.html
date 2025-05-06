@@ -52,19 +52,19 @@
 
                 <div id="voice_type_group">
                     <div id="voice_type_buttons">
-                        <svg-button name="male" onclick="window.audio.play('&.special.OK', {channel: 2, volume:.65})"></svg-button>
-                        <svg-button name="female" onclick="window.audio.play('&.special.OK', {channel: 2, volume:.65})"></svg-button>
+                        <svg-button name="male" onclick="selectM()"></svg-button>
+                        <svg-button name="female" onclick="selectF()"></svg-button>
                     </div>
 
-                    <select id="voice_type">
-                        <option id="label_f1" value="f1" selected>f1</option>
-                        <option id="label_f2" value="f2">f2</p></option>
-                        <option id="label_f3" value="f3">f3</p></option>
-                        <option id="label_f4" value="f4">f4</option>
-                        <option id="label_m1" value="m1">m1</option>
-                        <option id="label_m2" value="m2">m2</p></option>
-                        <option id="label_m3" value="m3">m3</p></option>
-                        <option id="label_m4" value="m4">m4</option>
+                    <select id="voice_type" class="female">
+                        <option id="label_f1" class="female" value="f1" selected>f1</option>
+                        <option id="label_f2" class="female" value="f2">f2</option>
+                        <option id="label_f3" class="female" value="f3">f3</option>
+                        <option id="label_f4" class="female" value="f4">f4</option>
+                        <option id="label_m1" class="male" value="m1">m1</option>
+                        <option id="label_m2" class="male" value="m2">m2</option>
+                        <option id="label_m3" class="male" value="m3">m3</option>
+                        <option id="label_m4" class="male" value="m4">m4</option>
                     </select>
                 </div>
 

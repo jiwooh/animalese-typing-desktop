@@ -45,6 +45,7 @@ function initControls() {
             else {
                 voiceProfile[control] = value;
                 preferences.set('voice_profile', voiceProfile);
+                setTimeout(() => {window.audio.play('&.special.OK', {channel: 2, volume:.65});}, 10);
             }
         };
 
@@ -196,9 +197,21 @@ customElements.define('svg-button', class extends HTMLElement {
             svgEl.classList.add('svg-button');
            
         });
-        this.addEventListener('click', () => {
-            const pressed = this.getAttribute('pressed')==='true';
-            this.setAttribute('pressed', pressed?'false':'true');
-        });
     }
 });
+
+function selectM() {
+    window.audio.play('&.special.OK', {channel: 2, volume:.65});
+    if (document.getElementById('male').getAttribute('pressed') === 'true') return;
+    document.getElementById('male').setAttribute('pressed', 'true');
+    document.getElementById('female').setAttribute('pressed', 'false');
+    document.getElementById('voice_type').className = 'male'
+}
+
+function selectF() {
+    window.audio.play('&.special.OK', {channel: 2, volume:.65});
+    if (document.getElementById('female').getAttribute('pressed') === 'true') return;
+    document.getElementById('female').setAttribute('pressed', 'true');
+    document.getElementById('male').setAttribute('pressed', 'false');
+    document.getElementById('voice_type').className = 'female'
+}

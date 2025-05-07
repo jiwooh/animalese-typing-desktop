@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const path = require('path');
 const keycodeToSound = require('./keycodeToSound');
+const translator = require('./translator'); 
 const { createAudioManager } = require('./audioManager');
 const { initCapsLockState, isCapsLockActive } = require('./capsLockState');
 initCapsLockState();
@@ -27,6 +28,12 @@ contextBridge.exposeInMainWorld('api', {
             ipcRenderer.removeListener(channel, handler);
         };
     }
+});
+
+// translation functions
+contextBridge.exposeInMainWorld('translator', {
+    load: (lang) => translator.loadLanguage(lang),
+    t: (key) => translator.translate(key)
 });
 
 // user settings get/set

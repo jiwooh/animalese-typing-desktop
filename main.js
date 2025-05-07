@@ -12,6 +12,7 @@ var tray = null;
 
 const store = new Store({
     defaults: {
+        lang: 'en',
         volume: 0.5,
         voice_profile: {
             voice_type: 'f2',

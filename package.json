@@ -10,7 +10,6 @@
   "keywords": [],
   "scripts": {
     "start": "electron .",
-    "clean": "rimraf exports",
     "build": "electron-builder"
   },
   "build": {
@@ -44,8 +43,7 @@
   },
   "devDependencies": {
     "electron": "^12.2.3",
-    "electron-builder": "~24.13.3",
-    "rimraf": "^6.0.1"
+    "electron-builder": "~24.13.3"
   },
   "iohook": {
     "targets": [

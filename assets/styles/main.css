@@ -214,7 +214,7 @@ input[type=range]::-webkit-slider-thumb:hover {
 select {
     height: 18px;
     width: 100px;
-    opacity: 30%;
+    opacity: 40%;
     font-size: 14px;
     font-family: "Arial Rounded Bold";
     appearance: none;
@@ -335,14 +335,16 @@ input[type=text]::placeholder {
 #voice_type {
     margin: 0 auto;
 }
-
+#voice_type:hover{
+    opacity: 100%;
+}
 #voice_type.female, #voice_type.female option.female {
-    background-color: #fff1ff;
-    color: #4b4b4b;
+    background-color: #ffe9ff;
+    color: #ff8bcb;
 }
 #voice_type.male, #voice_type.male option.male {
     background-color: #d2eeff;
-    color: #4b4b4b;
+    color: #00aaff;
 }
 #voice_type.female option.male,
 #voice_type.male option.female {

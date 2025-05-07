@@ -38,8 +38,8 @@ function initControls() {
                 
                 if (el.getAttribute('playing')==='false') {
                     el.setAttribute('playing', 'true');
-                    window.audio.play('sfx.default');
-                    setTimeout(() => el.setAttribute('playing', 'false'), 75);
+                    window.audio.play('sfx.default', {channel: 3});
+                    setTimeout(() => el.setAttribute('playing', 'false'), 50);
                 }
             }
             else {
@@ -82,6 +82,7 @@ function initControls() {
         } else {
             el.value = voiceProfile[control];
             el.addEventListener('input', (e) => updateValue(e.target.value));
+            //el.addEventListener('change', (e) => updateValue(e.target.value));
         }
     });
 }
@@ -182,6 +183,19 @@ function loadVoiceProfile() {
 //#endregion
 
 
+function updateTranslation() {
+    const lang = preferences.get('lang');
+    window.translator.load(lang);
+    document.querySelectorAll('[translation]').forEach(el => {
+        const key = el.getAttribute('translation');
+        if (key) {
+            el.innerHTML = window.translator.t(key);
+        }
+    });
+}
+updateTranslation()
+
+
 // custom svg button element
 customElements.define('svg-button', class extends HTMLElement {
     connectedCallback() {
@@ -200,18 +214,35 @@ customElements.define('svg-button', class extends HTMLElement {
     }
 });
 
+const voiceTypeElement = document.getElementById('voice_type');
+if (voiceProfile.voice_type) {
+    if(voiceProfile.voice_type.startsWith('m')) voiceTypeElement.className = 'male'
+    else if(voiceProfile.voice_type.startsWith('f')) voiceTypeElement.className = 'female'
+}
 function selectM() {
-    window.audio.play('&.special.OK', {channel: 2, volume:.65});
-    if (document.getElementById('male').getAttribute('pressed') === 'true') return;
+    if (document.getElementById('male').getAttribute('pressed') === 'true') {
+        window.audio.play('&.special.OK', {channel: 2, volume:.65});
+        return;
+    }
+
+    voiceTypeElement.value = "m1";
+    voiceTypeElement.dispatchEvent(new Event('input', { bubbles: true }));
+
     document.getElementById('male').setAttribute('pressed', 'true');
     document.getElementById('female').setAttribute('pressed', 'false');
-    document.getElementById('voice_type').className = 'male'
+    voiceTypeElement.className = 'male'
 }
 
 function selectF() {
-    window.audio.play('&.special.OK', {channel: 2, volume:.65});
-    if (document.getElementById('female').getAttribute('pressed') === 'true') return;
+    if (document.getElementById('female').getAttribute('pressed') === 'true') {
+        window.audio.play('&.special.OK', {channel: 2, volume:.65});
+        return;
+    }
+
+    voiceTypeElement.value = "f1";
+    voiceTypeElement.dispatchEvent(new Event('input', { bubbles: true }));
+
     document.getElementById('female').setAttribute('pressed', 'true');
     document.getElementById('male').setAttribute('pressed', 'false');
-    document.getElementById('voice_type').className = 'female'
+    voiceTypeElement.className = 'female'
 }

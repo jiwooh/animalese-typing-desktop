@@ -24,7 +24,15 @@
     <div id="main-win">
 
         <div id="main_content">
-            <div id="keyboard"></div>
+            
+            <div id="top_row">
+                <div id="keyboard"></div>
+
+                <div id="key_remapper">
+                    Key Remapper </br>
+                    (W.I.P)
+                </div>
+            </div>
 
             <div class="separator"></div>
 
@@ -52,8 +60,8 @@
 
                 <div id="voice_type_group">
                     <div id="voice_type_buttons">
-                        <svg-button name="male" onclick="selectM()"></svg-button>
-                        <svg-button name="female" onclick="selectF()"></svg-button>
+                        <svg-button id="male" name="male" onclick="selectVoiceType('male')"></svg-button>
+                        <svg-button id="female" name="female" onclick="selectVoiceType('female')"></svg-button>
                     </div>
 
                     <select id="voice_type" class="female">

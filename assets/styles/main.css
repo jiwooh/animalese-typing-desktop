@@ -25,6 +25,12 @@ html, body {
 #main_content{
     flex: 1;
 }
+#top_row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    box-sizing: border-box;
+}
 .title-bar {
     width: 100%;
     height: 30px;
@@ -351,8 +357,6 @@ input[type=text]::placeholder {
     display: none;
 }
 
-
-
 .editor_slider {
     display: inline-block;
     width: 170px;
@@ -367,4 +371,20 @@ input[type=text]::placeholder {
 }
 .editor_output {
     max-width: 48px;
+}
+
+#key_remapper {
+    margin: 8px;
+    margin-left: 0px;
+    padding: 8px;
+    flex: 1;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f2d7;
+    border-radius: 16px;
+    box-sizing: border-box;
+    color: #877358;
+    font-size: 14px;
+    text-align: center;
 }

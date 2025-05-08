@@ -17,7 +17,6 @@ function loadLanguage(lang = 'en') {
         translations = {};
     }
 }
-// default language set to english
 loadLanguage('en');
 
 function translate(key) {

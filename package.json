@@ -23,11 +23,11 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "assets/images/icon256.png"
+      "icon": "assets/images/icon.png"
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/images/icon256.png"
+      "icon": "assets/images/icon.png"
     }
   },
   "license": "MIT",

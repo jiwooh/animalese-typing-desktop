@@ -13,6 +13,7 @@
     "build": "electron-builder"
   },
   "build": {
+    "asar": true,
     "appId": "com.joshxviii.animalese-typing",
     "productName": "Animalese Typing",
     "files": [
@@ -35,8 +36,6 @@
   "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
     "active-win": "^8.2.1",
-    "electron-fetch": "^1.9.1",
-    "electron-log": "^4.4.8",
     "electron-store": "^6.0.1",
     "howler": "^2.2.4",
     "iohook": "^0.9.3"

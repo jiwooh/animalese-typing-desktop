@@ -6,6 +6,21 @@ const Store = require('electron-store');
 
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+    // if another instance is already running then quit
+    app.quit();
+} else {
+    app.on('second-instance', () => {
+        // focus the existing window if it exists
+        if (bgwin) {
+            bgwin.show();
+            bgwin.focus();
+        }
+    });
+}
+app.setAppUserModelId('com.joshxviii.animalese-typing');
 
 var bgwin = null;
 var tray = null;
@@ -103,7 +118,7 @@ function createTrayIcon() {
                     bgwin.show();
                     bgwin.focus();
                 }
-            } //TODO
+            } //TODO: make a settings window
         },
         {
             label: 'Run on startup',

@@ -5,30 +5,37 @@ const os = require("os");
 const Store = require('electron-store');
 
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
+const SYSTRAY_ICON_OFF = path.join(__dirname, '/assets/images/icon_off.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
 const gotTheLock = app.requestSingleInstanceLock();
 
-if (!gotTheLock) {
-    // if another instance is already running then quit
-    app.quit();
-} else {
-    app.on('second-instance', () => {
-        // focus the existing window if it exists
-        if (bgwin) {
-            bgwin.show();
-            bgwin.focus();
-        }
-    });
+function showIfAble() { // focus the existing window if it exists
+    if (bgwin) {
+        bgwin.show();
+        bgwin.focus();
+    }
 }
-app.setAppUserModelId('com.joshxviii.animalese-typing');
 
-var bgwin = null;
-var tray = null;
+function setDisable(value) {
+    disabled = value;
+    store.set('disabled', disabled);
+    if (tray) {
+        tray.setImage(disabled?SYSTRAY_ICON_OFF:SYSTRAY_ICON);
+        tray.setToolTip(disabled?'Animalese Typing: Disabled':'Animalese Typing');
+    }
+    if (disabled) iohook.stop(); else iohook.start();
+}
+
+if (!gotTheLock) app.quit(); // if another instance is already running then quit
+else app.on('second-instance', () => showIfAble()); // show instance that is running
+
+app.setAppUserModelId('com.joshxviii.animalese-typing');
 
 const store = new Store({
     defaults: {
         lang: 'en',
         volume: 0.5,
+        disabled: false,
         voice_profile: {
             voice_type: 'f2',
             pitch_shift: 0.0,
@@ -40,7 +47,7 @@ const store = new Store({
 });
 
 ipcMain.on('get-store-data-sync', (event) => {
-    event.returnValue = store.store; // Returns entire store as an object
+    event.returnValue = store.store;
 });
 ipcMain.handle('store-set', async (e, key, value) => {
     store.set(key, value);
@@ -54,6 +61,10 @@ ipcMain.on('minimize-window', (e) => {
     if (bgwin) bgwin.minimize();
 });
 
+var bgwin = null;
+var tray = null;
+var disabled = store.get('disabled', false);//TODO: this should be set to true when the the selected window is out of focus.
+
 function createPopup() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({
@@ -62,7 +73,6 @@ function createPopup() {
         icon: ICON,
         resizable: true,
         frame: false,
-        alwaysOnTop: true,
         skipTaskbar: false,
         show: false,
         webPreferences: {
@@ -105,20 +115,15 @@ function createPopup() {
 
 
 function createTrayIcon() {
-    // prevent dupe tray icons
-    if(tray !== null) return;
+    if(tray !== null) return; // prevent dupe tray icons
 
-    tray = new Tray(SYSTRAY_ICON);
+    tray = new Tray(disabled?SYSTRAY_ICON_OFF:SYSTRAY_ICON);
+    tray.setToolTip(disabled?'Animalese Typing: Disabled':'Animalese Typing');
 
     const contextMenu = Menu.buildFromTemplate([
         {
             label: 'Settings',
-            click: () => {
-                if (bgwin) {
-                    bgwin.show();
-                    bgwin.focus();
-                }
-            } //TODO: make a settings window
+            click: () => { showIfAble(); } //TODO: make a settings window
         },
         {
             label: 'Run on startup',
@@ -132,6 +137,14 @@ function createTrayIcon() {
             }
         },
         {
+            label: 'Disable',
+            type: 'checkbox',
+            checked: disabled,
+            click: (menuItem) => {
+                setDisable(menuItem.checked);
+            }
+        },
+        {
             label: 'Quit',
             click: () => {
                 iohook.unload();
@@ -140,16 +153,8 @@ function createTrayIcon() {
             }
         }
     ]);
-    tray.on('click', () => {
-        if (bgwin) {
-            bgwin.show();
-            bgwin.focus();
-        }
-    });
-
-    tray.setToolTip('Animalese Typing');
     tray.setContextMenu(contextMenu);
-
+    tray.on('click', () => { showIfAble(); });
     tray.displayBalloon({
         title: "Animalese Typing",
         content: "Animalese Typing is Running!"
@@ -159,6 +164,8 @@ function createTrayIcon() {
 app.whenReady().then(() => {
     createPopup();
     createTrayIcon();
+    if (process.platform === 'darwin') app.dock.hide();
+    bgwin.hide();
 });
 
 app.on('activate', function () {
@@ -166,7 +173,7 @@ app.on('activate', function () {
 });
 
 app.on('ready', () => {
-    iohook.start();
+    if (!disabled) iohook.start();
     iohook.on('keydown', e => {
         bgwin.webContents.send('keydown', e);
     });
@@ -184,7 +191,6 @@ app.on('before-quit', () => {
         bgwin.removeAllListeners();
         bgwin.close();
     }
-
     if (tray) tray.destroy();
 
     ipcMain.removeAllListeners();

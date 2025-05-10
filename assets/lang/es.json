@@ -13,6 +13,7 @@
     "editor_1":"Cambio de tono",
     "editor_2":"Entonación",
     "editor_3":"Variación de tono",
+    "key-remapper":"Reasignador de teclas",
 
     "f1":"Normal",
     "f2":"Animada",
@@ -26,7 +27,9 @@
     "settings":"Configuración",
     "settings.startup":"Ejecutar al inicio",
     "settings.disable":"Desactivar",
-    "settings.app":"Seleccionar App",
+    "settings.apps":"Apps con Animalese",
+    "settings.apps.description":"FX solo si estas apps están activas.",
+    "settings.always_enabled":"Siempre activo",
     "settings.lang":"Idioma",
     "settings.none":"Ninguna",
 

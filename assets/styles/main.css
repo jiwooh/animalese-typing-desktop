@@ -133,8 +133,7 @@ input[type=checkbox] {
 }
 
 input[type=checkbox]:checked {
-    background-color: #d1b48b;
-    border-color: #b89c7a;
+    border-color: #d1b48b;
 }
 
 input[type=checkbox]:checked::after {
@@ -144,8 +143,8 @@ input[type=checkbox]:checked::after {
     left: 15%;
     width: 4px;
     height: 8px;
-    border: solid #ffffff;
-    border-width: 0 2px 2px 0;
+    border: solid #6cd576;
+    border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
 
@@ -536,4 +535,9 @@ table {
     display: flex;
     flex-direction: column;
     font-size: 11px;
+}
+
+table thead {
+    color: #6e5c44;
+    align-self: center;
 }

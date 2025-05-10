@@ -13,6 +13,7 @@
     "editor_1":"ピッチシフト",
     "editor_2":"抑揚",
     "editor_3":"音程変化",
+    "key-remapper":"キーリマッパー",
 
     "f1":"ふつう",
     "f2":"元気",
@@ -26,7 +27,9 @@
     "settings":"設定",
     "settings.startup":"起動時に実行",
     "settings.disable":"無効",
-    "settings.app":"アプリ選択",
+    "settings.apps":"アニマリーズ対応アプリ",
+    "settings.apps.description":"フォーカス中のみ効果音再生。",
+    "settings.always_enabled":"常に有効",
     "settings.lang":"言語選択",
     "settings.none":"なし",
 

@@ -46,26 +46,27 @@
                 
                 <div id="checkbox_list">
                     <div>
-                        <input type="checkbox" id="option1" />
-                        <label for="option1">hehe</label>
+                        <input type="checkbox" id="option1" disabled/>
+                        <label for="option1">Test</label>
                     </div>
                     <div>
                         <input type="checkbox" id="check_always_enabled" onchange="window.settings.set('always_enabled', this.checked)"/>
-                        <label for="check_always_enabled">Always Enabled</label>
+                        <label for="check_always_enabled" translation="settings.always_enabled">Always Enabled</label>
                     </div>
                 </div>
             
                 <div class="dropdown">
-                    <p translation="settings.app.description"></p>
+                    <p translation="settings.apps.description"></p>
                     <table>
                         <thead>
                             <tr>
-                                <th translation="settings.app"></th>
+                                <th translation="settings.apps"></th>
                             </tr>
                         </thead>
                         <tbody id="apps_table"></tbody>
                     </table>
                 </div>
+                <div class="separator"></div>
             </div>
 
 

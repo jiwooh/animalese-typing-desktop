@@ -13,6 +13,7 @@
     "editor_1":"Pitch Shift",
     "editor_2":"Intonation",
     "editor_3":"Pitch Variation",
+    "key-remapper":"Key-Remapper",
 
     "f1":"Sweet",
     "f2":"Peppy",
@@ -26,7 +27,9 @@
     "settings":"Settings",
     "settings.startup":"Run on startup",
     "settings.disable":"Disable",
-    "settings.app":"App Select",
+    "settings.apps":"Animalese-Enabled Apps",
+    "settings.apps.description":"SFX play only when these apps are focused.",
+    "settings.always_enabled":"Always Enabled",
     "settings.lang":"Language",
     "settings.none":"None",
 

@@ -13,6 +13,7 @@
     "editor_1":"Tonhöhenversch.",
     "editor_2":"Intonation",
     "editor_3":"Tonvariation",
+    "key-remapper":"Tastenbelegung ändern",
 
     "f1":"Ausgeglichen",
     "f2":"Schwungvoll",
@@ -26,7 +27,9 @@
     "settings":"Einstellungen",
     "settings.startup":"Beim Start",
     "settings.disable":"Deaktivieren",
-    "settings.app":"App auswählen",
+    "settings.apps":"Animalese-fähige Apps",
+    "settings.apps.description":"SFX nur bei aktivem App-Fokus.",
+    "settings.always_enabled":"Immer aktiviert",
     "settings.lang":"Sprache",
     "settings.none":"Keine",
 

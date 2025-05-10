@@ -13,6 +13,7 @@
     "editor_1":"Déplacement de hauteur",
     "editor_2":"Intonation",
     "editor_3":"Variation de ton",
+    "key-remapper":"Reconfiguration des touches",
 
     "f1":"Normal",
     "f2":"Impétueuse",
@@ -26,7 +27,9 @@
     "settings":"Paramètres",
     "settings.startup":"Lancer au démarrage",
     "settings.disable":"Désactiver",
-    "settings.app":"Sélection App",
+    "settings.apps":"Apps avec Animalese",
+    "settings.apps.description":"Effets actifs si app au premier plan.",
+    "settings.always_enabled":"Toujours activé",
     "settings.lang":"Langue",
     "settings.none":"Aucune",
 

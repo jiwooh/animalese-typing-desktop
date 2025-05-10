@@ -13,6 +13,7 @@
     "editor_1":"음정 변경",
     "editor_2":"억양",
     "editor_3":"음높이 변화",
+    "key-remapper":"키 리매퍼",
 
     "f1":"친절함",
     "f2":"건강한",
@@ -26,7 +27,9 @@
     "settings":"설정",
     "settings.startup":"시작 시 실행",
     "settings.disable":"비활성화",
-    "settings.app":"앱 선택",
+    "settings.apps":"아니말리즈 활성화 앱",
+    "settings.apps.description":"포커스된 앱에서만 효과음 재생.",
+    "settings.always_enabled":"항상 활성화",
     "settings.lang":"언어 선택",
     "settings.none":"없음",
 

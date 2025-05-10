@@ -13,6 +13,7 @@
     "editor_1":"音调变化",
     "editor_2":"语调",
     "editor_3":"音高变化",
+    "key-remapper":"按键重映射",
 
     "f1":"Sweet",
     "f2":"Peppy",
@@ -26,7 +27,9 @@
     "settings":"设置",
     "settings.startup":"启动时运行",
     "settings.disable":"禁用",
-    "settings.app":"选择应用",
+    "settings.apps":"支持动物语的应用",
+    "settings.apps.description":"仅当前台应用播放音效。",
+    "settings.always_enabled":"始终启用",
     "settings.lang":"选择语言",
     "settings.none":"无",
 

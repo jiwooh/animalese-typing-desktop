@@ -4,9 +4,10 @@
 
     "volume":"Volume",
 
-    "config_1":"Les deux",
+    "config_1":"Défaut",
     "config_2":"Voix",
     "config_3":"Effets sonores",
+    "config_4":"Aléatoire",
 
     "editor_title":"Éditeur",
     "editor_1":"Déplacement de hauteur",
@@ -20,5 +21,20 @@
     "m1":"Sportif",
     "m2":"Paresseux",
     "m3":"Star",
-    "m4":"Versatile"
+    "m4":"Versatile",
+
+    "settings":"Paramètres",
+    "settings.startup":"Lancer au démarrage",
+    "settings.disable":"Désactiver",
+    "settings.app":"Sélection App",
+    "settings.lang":"Langue",
+    "settings.none":"Aucune",
+
+    "en": "Anglais/English",
+    "es": "Espagnol/Español",
+    "de": "Allemand/Deutsch",
+    "fr": "Français",
+    "ko": "Coréen/한국어",
+    "ja": "Japonais/日本語",
+    "zh_CN": "Chinois/中文"
 }

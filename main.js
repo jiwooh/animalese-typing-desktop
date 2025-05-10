@@ -3,6 +3,7 @@ const path = require('path');
 const iohook = require('iohook');
 const os = require("os");
 const Store = require('electron-store');
+const activeWin = require('active-win');
 
 const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
 const SYSTRAY_ICON_OFF = path.join(__dirname, '/assets/images/icon_off.png');
@@ -17,6 +18,7 @@ function showIfAble() { // focus the existing window if it exists
 }
 
 function setDisable(value) {
+    if (disabled === value) return;
     disabled = value;
     store.set('disabled', disabled);
     if (tray) {
@@ -36,6 +38,7 @@ const store = new Store({
         lang: 'en',
         volume: 0.5,
         disabled: false,
+        enabled_app: false,
         voice_profile: {
             voice_type: 'f2',
             pitch_shift: 0.0,
@@ -52,8 +55,8 @@ ipcMain.on('get-store-data-sync', (event) => {
 ipcMain.handle('store-set', async (e, key, value) => {
     store.set(key, value);
     bgwin.webContents.send(`updated-${key}`, value);
+    if (key==='enabled_app') setDisable(value !== false);
 });
-
 ipcMain.on('close-window', (e) => {
     if (bgwin) bgwin.close();
 });
@@ -63,9 +66,41 @@ ipcMain.on('minimize-window', (e) => {
 
 var bgwin = null;
 var tray = null;
-var disabled = store.get('disabled', false);//TODO: this should be set to true when the the selected window is out of focus.
+var disabled = store.get('disabled', false);
+let lastActiveWindow = null;
+let activeWindows = store.get('enabled_app', false)?[store.get('enabled_app', false)]:[];
 
-function createPopup() {
+// check for active window changes and update `lastActiveWindow` when the window changes
+async function monitorActiveWindow() {
+    const activeWindow = await activeWin();
+    if (activeWindow?.owner?.name === lastActiveWindow?.owner?.name) return;// return early if the active window hasn't changed.
+    const enabledApp = store.get('enabled_app', false);
+    if (
+        (!lastActiveWindow ||
+        activeWindow?.owner?.name !== lastActiveWindow?.owner?.name) &&
+        activeWindow?.owner?.processId !== process.pid ||
+        activeWindow?.owner?.name !== enabledApp
+    ) {
+        const winName = activeWindow.owner.name
+
+        // change disable value when focusing in or out of the animalese-enabled app.
+        // this also allows you to enable animalese without being focused on the enabled app and without the monitor forcing animalese to be didabled
+        if (enabledApp === winName || enabledApp === lastActiveWindow?.owner?.name) setDisable(enabledApp !== winName);
+
+        lastActiveWindow = activeWindow;
+        if (!activeWindows.includes(winName)) {
+            activeWindows.push(winName);
+            if (activeWindows.length > 5) activeWindows.shift();
+            bgwin.webContents.send(`active-windows-updated`, activeWindows);
+        }
+    }
+}
+
+function startActiveWindowMonitoring() {
+    setInterval(monitorActiveWindow, 500); // check every .5 seconds
+}
+
+function createMainWin() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({
         width: 0,
@@ -99,10 +134,6 @@ function createPopup() {
         bgwin = null;
     });
 
-    // bgwin.on('blur', () => {
-    //     bgwin.close();
-    // });
-
     bgwin.webContents.on('before-input-event', (e, input) => {
         if (input.control && input.shift && input.key.toLowerCase() === 'i') {
             const wc = bgwin.webContents;
@@ -112,6 +143,7 @@ function createPopup() {
         }
     });
 }
+
 
 
 function createTrayIcon() {
@@ -137,14 +169,6 @@ function createTrayIcon() {
             }
         },
         {
-            label: 'Disable',
-            type: 'checkbox',
-            checked: disabled,
-            click: (menuItem) => {
-                setDisable(menuItem.checked);
-            }
-        },
-        {
             label: 'Quit',
             click: () => {
                 iohook.unload();
@@ -162,14 +186,15 @@ function createTrayIcon() {
 }
 
 app.whenReady().then(() => {
-    createPopup();
+    startActiveWindowMonitoring();
+    createMainWin();
     createTrayIcon();
     if (process.platform === 'darwin') app.dock.hide();
     bgwin.hide();
 });
 
 app.on('activate', function () {
-    if (bgwin === null) createPopup();
+    if (bgwin === null) createMainWin();
 });
 
 app.on('ready', () => {

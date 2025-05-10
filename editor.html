@@ -25,6 +25,48 @@
 
         <div id="main_content">
             
+
+            <div id="settings_overlay" show="true">
+                <h2 id="settings_title" translation="settings">Settings</h2>
+            
+                <div id="checkbox_list">
+                    <div>
+                        <input type="checkbox" id="option1" />
+                        <label for="option1">hehe</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="option2" />
+                        <label for="option2">haha</label>
+                    </div>
+                </div>
+            
+                <div id="dropdowns">
+                    <label for="app_select" translation="settings.app">App Select</label>
+                    <select id="app_select" onchange="updateEnabledApp()">
+                        <option value="undefined" translation="settings.none" style="color:black" selected>None</option>
+                        <option value="undefined" >---</option>
+                        <option value="undefined" >---</option>
+                        <option value="undefined" >---</option>
+                        <option value="undefined" >---</option>
+                        <option value="undefined" >---</option>
+                        <option id="enabled_app" value="undefined" style="visibility: hidden; font-size: 0px;"></option>
+                    </select>
+            
+                    <label for="lang_select" translation="settings.lang">Language</label>
+                    <select id="lang_select" onchange="updateLang()">
+                        <option value="en"      translation="en"></option>
+                        <option value="es"      translation="es"></option>
+                        <option value="de"      translation="de"></option>
+                        <option value="fr"      translation="fr"></option>
+                        <option value="ko"      translation="ko"></option>
+                        <option value="ja"      translation="ja"></option>
+                        <option value="zh_CN"   translation="zh_CN"></option>
+                    </select>
+                </div>
+            </div>
+
+
+
             <div id="top_row">
                 <div id="keyboard"></div>
 

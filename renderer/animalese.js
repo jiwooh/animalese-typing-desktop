@@ -29,6 +29,10 @@ const controls = [
     'intonation'
 ];
 function initControls() {
+    document.getElementById('lang_select').value = preferences.get('lang');
+    document.getElementById('enabled_app').value = preferences.get('enabled_app');
+    document.getElementById('enabled_app').innerHTML = preferences.get('enabled_app');
+
     controls.forEach(control => {
         let el = document.getElementById(control);
         if (!el) return;
@@ -162,6 +166,26 @@ function updateTranslation() {
 }
 updateTranslation();
 //#endregion
+
+function updateLang() {// language selection update
+    preferences.set('lang', document.getElementById('lang_select').value);
+    updateTranslation();
+}
+
+window.api.onActiveWindowChanged((apps) => {
+    for (let i = 0; i < apps.length; i++) {
+        document.getElementById('app_select').options[i+1].innerHTML = apps[i];
+        document.getElementById('app_select').options[i+1].value = apps[i];
+    }
+    if (preferences.get('enabled_app')) document.getElementById('app_select').value = preferences.get('enabled_app');
+});
+
+function updateEnabledApp() {
+    const value = document.getElementById('app_select').value
+    document.getElementById('enabled_app').value = value
+    document.getElementById('enabled_app').innerHTML = value
+    preferences.set('enabled_app', value === 'undefined' ? false : value);
+}
 
 //#region Key press detect
 window.api.onKeyPress( (map, e, isCapsLockOn) => {

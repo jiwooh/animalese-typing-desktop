@@ -56,6 +56,25 @@ html, body {
     opacity: 0.15; /* Slight transparency */
     border-radius: 16px; /* Add rounded edges */
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f2d7;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d1b48b;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b89c7a;
+}
+
 /*#endregion GENERAL */
 
 /*#region BUTTONS */
@@ -93,6 +112,49 @@ input[type=button]:disabled {
     box-shadow: none; 
     outline: none;
 }
+
+input[type=checkbox] {
+    outline: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #d1b48b;
+    border-radius: 4px;
+    background-color: #ece4c1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+input[type=checkbox]:checked {
+    background-color: #d1b48b;
+    border-color: #b89c7a;
+}
+
+input[type=checkbox]:checked::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    left: 15%;
+    width: 4px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+input[type=checkbox]:hover {
+    background-color: #e0c49e;
+    border-color: #b89c7a;
+}
+
+#checkbox_list label {
+    font-size: 14px;
+    color: #6e5c44;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
 
 .svg-button {
     display: inline-block;
@@ -387,4 +449,74 @@ input[type=text]::placeholder {
     color: #95846d7d;
     font-size: 14px;
     text-align: center;
+}
+
+
+
+
+#settings_overlay {
+    width: 320px;
+    height: 300px;
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    background-color: #fffae4;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    padding: 16px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+#settings_overlay[show=true] {
+    visibility: visible;
+    z-index: 2;
+}
+
+#settings_title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6e5c44;
+    text-align: center;
+    margin: 0;
+}
+
+#checkbox_list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Add spacing between checkboxes */
+    width: 100%;
+}
+
+#checkbox_list div {
+    display: flex;
+    gap: 8px; /* Add spacing between checkbox and label */
+}
+
+#dropdowns {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center dropdowns horizontally */
+    gap: 8px; /* Add spacing between dropdowns */
+    width: 100%;
+}
+
+#dropdowns label {
+    font-size: 14px;
+    color: #6e5c44;
+}
+
+#dropdowns select {
+    width: 150px;
+    height: 25px;
+}
+
+#dropdowns option {
+    color: #534635;
 }

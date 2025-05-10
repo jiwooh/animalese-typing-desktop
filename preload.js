@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld('api', {
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
     onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => callback(keycodeToSound.win32[e.keycode], e, isCapsLockActive())),
     onSettingUpdate: (key, callback) => {
-        const channel = `updated-${key}`;
+        const channel = `${key}`;
         const handler = (_, value) => {
             if (document.readyState === 'loading') {
                 window.addEventListener('load', () => callback(value));
@@ -27,7 +27,8 @@ contextBridge.exposeInMainWorld('api', {
         return () => {
             ipcRenderer.removeListener(channel, handler);
         };
-    }
+    },
+    onActiveWindowChanged: (callback) => ipcRenderer.on('active-windows-updated', (_event, e) => callback(e)),
 });
 
 // translation functions

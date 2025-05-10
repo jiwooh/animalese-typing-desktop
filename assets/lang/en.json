@@ -4,9 +4,9 @@
     
     "volume":"Volume",
 
-    "config_1":"All",
-    "config_2":"Animalese",
-    "config_3":"Soundfx",
+    "config_1":"Default",
+    "config_2":"Animalese Only",
+    "config_3":"SFX Only",
     "config_4":"Randomized",
 
     "editor_title":"Editor",
@@ -21,5 +21,20 @@
     "m1":"Jock",
     "m2":"Lazy",
     "m3":"Smug",
-    "m4":"Cranky"
+    "m4":"Cranky",
+
+    "settings":"Settings",
+    "settings.startup":"Run on startup",
+    "settings.disable":"Disable",
+    "settings.app":"App Select",
+    "settings.lang":"Language",
+    "settings.none":"None",
+
+    "en": "English",
+    "es": "Spanish/Español",
+    "de": "German/Deutsch",
+    "fr": "French/Français",
+    "ko": "Korean/한국어",
+    "ja": "Japanese/日本語",
+    "zh_CN": "Chinese/中文"
 }

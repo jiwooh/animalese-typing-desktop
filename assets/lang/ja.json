@@ -4,9 +4,10 @@
 
     "volume":"音量",
 
-    "config_1":"両方",
+    "config_1":"デフォルト",
     "config_2":"声",
-    "config_3":"効果音",
+    "config_3":"効果音のみ",
+    "config_4":"ランダム",
      
     "editor_title":"編集ソフト",
     "editor_1":"ピッチシフト",
@@ -20,5 +21,20 @@
     "m1":"はきはき",
     "m2":"ぼんやり",
     "m3":"キザ",
-    "m4":"コワイ"
+    "m4":"コワイ",
+
+    "settings":"設定",
+    "settings.startup":"起動時に実行",
+    "settings.disable":"無効",
+    "settings.app":"アプリ選択",
+    "settings.lang":"言語選択",
+    "settings.none":"なし",
+
+    "en": "英語/English",
+    "es": "スペイン語/Español",
+    "de": "ドイツ語/Deutsch",
+    "fr": "フランス語/French",
+    "ko": "韓国語/한국어",
+    "ja": "日本語",
+    "zh_CN": "中国語/中文"
 }

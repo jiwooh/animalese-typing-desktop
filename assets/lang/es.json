@@ -4,9 +4,10 @@
 
     "volume":"Volumen",
 
-    "config_1":"Ambos",
-    "config_2":"Voz",
-    "config_3":"Efectos de sonido",
+    "config_1":"Predet.",
+    "config_2":"Solo Animalese",
+    "config_3":"Solo FX",
+    "config_4":"Aleatorio",
 
     "editor_title":"Editor",
     "editor_1":"Cambio de tono",
@@ -20,5 +21,20 @@
     "m1":"Atlético",
     "m2":"Perezoso",
     "m3":"Enteradillo",
-    "m4":"Gruñón"
+    "m4":"Gruñón",
+
+    "settings":"Configuración",
+    "settings.startup":"Ejecutar al inicio",
+    "settings.disable":"Desactivar",
+    "settings.app":"Seleccionar App",
+    "settings.lang":"Idioma",
+    "settings.none":"Ninguna",
+
+    "en": "Inglés/English",
+    "es": "Español",
+    "de": "Alemán/Deutsch",
+    "fr": "Francés/French",
+    "ko": "Coreano/Korean",
+    "ja": "Japonés/Japanese",
+    "zh_CN": "Chino/Chinese"
 }

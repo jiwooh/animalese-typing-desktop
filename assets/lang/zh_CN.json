@@ -4,9 +4,10 @@
     
     "volume":"音量",
 
-    "config_1":"两者",
-    "config_2":"声音",
-    "config_3":"音效",
+    "config_1":"默认",
+    "config_2":"仅动物语",
+    "config_3":"仅音效",
+    "config_4":"随机",
 
     "editor_title":"编辑器",
     "editor_1":"音调变化",
@@ -20,5 +21,20 @@
     "m1":"Jock",
     "m2":"Lazy",
     "m3":"Smug",
-    "m4":"Cranky"
+    "m4":"Cranky",
+
+    "settings":"设置",
+    "settings.startup":"启动时运行",
+    "settings.disable":"禁用",
+    "settings.app":"选择应用",
+    "settings.lang":"选择语言",
+    "settings.none":"无",
+
+    "en": "英语/English",
+    "es": "西班牙语/Español",
+    "de": "德语/Deutsch",
+    "fr": "法语/French",
+    "ko": "韩语/한국어",
+    "ja": "日语/日本語",
+    "zh_CN": "中文"
 }

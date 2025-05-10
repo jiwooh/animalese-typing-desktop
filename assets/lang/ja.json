@@ -27,6 +27,7 @@
     "settings":"設定",
     "settings.startup":"起動時に実行",
     "settings.disable":"無効",
+    "settings.audio_mode":"オーディオモード",
     "settings.apps":"アニマリーズ対応アプリ",
     "settings.apps.description":"フォーカス中に有効化",
     "settings.always_enabled":"常に有効",

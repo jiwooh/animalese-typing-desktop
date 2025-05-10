@@ -27,6 +27,7 @@
     "settings":"设置",
     "settings.startup":"启动时运行",
     "settings.disable":"禁用",
+    "settings.audio_mode":"音频模式",
     "settings.apps":"支持动物语的应用",
     "settings.apps.description":"应用在前台时启用",
     "settings.always_enabled":"始终启用",

@@ -27,6 +27,7 @@
     "settings":"configuración",
     "settings.startup":"Ejecutar al inicio",
     "settings.disable":"Desactivar",
+    "settings.audio_mode":"modo de audio",
     "settings.apps":"apps con animalese",
     "settings.apps.description":"activar con apps en primer plano",
     "settings.always_enabled":"siempre activo",

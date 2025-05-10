@@ -32,8 +32,8 @@
 
                 <div class="separator"></div>
                 
-                <div class="dropdown">
-                    <label for="lang_select" translation="settings.lang">Language</label>
+                <div class="catagory">
+                    <h3 for="lang_select" translation="settings.lang">Language</h3>
                     <select id="lang_select" onchange="updateLang()">
                         <option value="en"      translation="en"></option>
                         <option value="es"      translation="es"></option>
@@ -45,34 +45,34 @@
                     </select>
                 </div>
                 
-                <div class="rad_button_list">
-                    <div>
-                        <input type="radio" id="config_1" name="audio_mode" value="default" checked>
-                        <label for="config_1" translation="config_1">Default</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="config_2" name="audio_mode" value="animalese">
-                        <label for="config_2" translation="config_2">Animalese Only</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="config_3" name="audio_mode" value="sound_effects">
-                        <label for="config_3" translation="config_3">Sound Effects Only</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="config_4" name="audio_mode" value="randomized">
-                        <label for="config_4" translation="config_4">Randomized</label>
-                    </div>
-                </div>
-
-                <div class="checkbox_list">
-                    <div>
-                        <input type="checkbox" id="check_always_enabled" onchange="updateAlwaysEnabled(this.checked)"/>
-                        <label for="check_always_enabled" translation="settings.always_enabled">Always Enabled</label>
+                <div class="catagory">
+                    <h3 translation="settings.audio_mode"></h3>
+                    <div class="rad_button_list">
+                        <div class="labeled_con">
+                            <input type="radio" id="config_1" name="audio_mode" value="default" checked>
+                            <label for="config_1" translation="config_1">Default</label>
+                        </div>
+                        <div class="labeled_con">
+                            <input type="radio" id="config_2" name="audio_mode" value="animalese">
+                            <label for="config_2" translation="config_2">Animalese Only</label>
+                        </div>
+                        <div class="labeled_con">
+                            <input type="radio" id="config_3" name="audio_mode" value="sound_effects">
+                            <label for="config_3" translation="config_3">Sound Effects Only</label>
+                        </div>
+                        <div class="labeled_con">
+                            <input type="radio" id="config_4" name="audio_mode" value="randomized">
+                            <label for="config_4" translation="config_4">Randomized</label>
+                        </div>
                     </div>
                 </div>
             
-                <div class="dropdown">
-                    <label translation="settings.apps"></label>
+                <div class="catagory">
+                    <h3 translation="settings.apps"></h3>
+                    <div class="labeled_con">
+                        <input type="checkbox" id="check_always_enabled" onchange="updateAlwaysEnabled(this.checked)"/>
+                        <label for="check_always_enabled" translation="settings.always_enabled">Always Enabled</label>
+                    </div>
                     <table id="apps_table" disabled="false">
                         <thead>
                             <tr>

@@ -1,3 +1,7 @@
+/* TODO: this file is getting kinda huge... */
+/* consolidate some stlyes that are redundent and */
+/* make some css variables so changing themes is easier */
+
 /*#region GENERAL */
 @font-face {
     font-family: "Arial Rounded Bold";
@@ -160,8 +164,8 @@ input[type=checkbox]:hover,input[type=radio]:hover {
 input[type=radio] {
     outline: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     background-color: #ece4c1;
     border: 2px solid #d1b48b;
     border-radius: 50%;
@@ -172,8 +176,8 @@ input[type=radio] {
 
 input[type=radio]:checked::before {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background-color: #6cd576;
     border-radius: 50%;
     position: absolute;
@@ -495,6 +499,46 @@ input[type=text]::placeholder {
     align-items: center;
     gap: 12px;
 }
+#settings_overlay h3 {
+    font-size: 15px;
+    color: #6e5c44;
+    margin-block-start: 10px;
+    margin-block-end: 4px;
+}
+#settings_overlay label {
+    font-size: 14px;
+    color: #6e5c44;
+    
+}
+
+#settings_overlay .catagory {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.catagory div, .catagory table {
+    width: 100%;
+}
+
+#settings_overlay select {
+    width: 150px;
+    height: 25px;
+}
+
+#settings_overlay option {
+    color: #534635;
+}
+
+.labeled_con {
+    display: inline-flex;
+    padding: 0px 6px;
+}
+.labeled_con input {
+    margin: 2px 7px 2px 7px;
+}
 
 #focus_out {
     z-index: 2;
@@ -534,54 +578,12 @@ input[type=text]::placeholder {
 .rad_button_list {
     background-color: #f8f2d7;
     border-radius: 8px;
-    padding: 6px;
-    color: #6e5c44;
-    font-size: 12px;
-}
-.rad_button_list input[type=radio] {
-    margin: 0px;
-}
-
-.checkbox_list, .rad_button_list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    width: 80%;
+    gap: 3px;
+    padding-block: 7px;
 }
 
-.checkbox_list div, .rad_button_list div {
-    display: flex;
-    gap: 4px;
-}
-
-.checkbox_list label {
-    font-size: 14px;
-    color: #6e5c44;
-    cursor: pointer;
-    margin-left: 8px;
-}
-
-.dropdown {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-}
-
-.dropdown label {
-    font-size: 14px;
-    color: #6e5c44;
-}
-
-.dropdown select {
-    width: 150px;
-    height: 25px;
-}
-
-.dropdown option {
-    color: #534635;
-}
 
 table {
     width: 84%;

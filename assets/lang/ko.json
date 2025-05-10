@@ -27,6 +27,7 @@
     "settings":"설정",
     "settings.startup":"시작 시 실행",
     "settings.disable":"비활성화",
+    "settings.audio_mode":"오디오 모드",
     "settings.apps":"아니말리즈 활성화 앱",
     "settings.apps.description":"포커스된 앱에서만 활성화",
     "settings.always_enabled":"항상 활성화",

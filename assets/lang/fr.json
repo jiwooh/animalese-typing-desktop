@@ -27,6 +27,7 @@
     "settings":"paramètres",
     "settings.startup":"Lancer au démarrage",
     "settings.disable":"Désactiver",
+    "settings.audio_mode":"mode audio",
     "settings.apps":"apps avec animalese",
     "settings.apps.description":"activer quand l’appli est active",
     "settings.always_enabled":"toujours activé",

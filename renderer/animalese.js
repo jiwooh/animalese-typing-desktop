@@ -31,6 +31,7 @@ const controls = [
 function initControls() {
     document.getElementById('lang_select').value = preferences.get('lang');
     document.getElementById('check_always_enabled').checked = preferences.get('always_enabled');
+    document.getElementById('apps_table').setAttribute('disabled', preferences.get('always_enabled'));
 
 
     controls.forEach(control => {
@@ -174,7 +175,7 @@ function updateLang() {// language selection update
 
 function updatedActiveWindows(activeWindows = []) {
     const enabledApps = preferences.get('enabled_apps');
-    const tableBody = document.getElementById('apps_table');
+    const tableBody = document.getElementById('apps_tbody');
     tableBody.innerHTML = '';
     [...new Set([...enabledApps, ...activeWindows])].forEach(appName => {
         if (appName !== undefined) {
@@ -210,6 +211,11 @@ function updateEnabledApps(appName, isChecked) {
 window.api.onActiveWindowChanged((activeWindows) => {
     updatedActiveWindows(activeWindows);
 });
+
+function updateAlwaysEnabled(value) {
+    window.settings.set('always_enabled', value)
+    document.getElementById('apps_table').setAttribute('disabled', value)
+}
 
 //#region Key press detect
 window.api.onKeyPress( (map, e, isCapsLockOn) => {
@@ -290,3 +296,10 @@ function loadVoiceProfile() {
     }
 }
 //#endregion
+
+
+function openSettings() {
+    const show = document.getElementById('focus_out').getAttribute('show')==="true"?false:true;
+    document.getElementById('focus_out').setAttribute('show', show);
+    console.log(show);
+}

@@ -155,10 +155,6 @@ function createTrayIcon() {
 
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: 'Settings',
-            click: () => { showIfAble(); } //TODO: make a settings window
-        },
-        {
             label: 'Run on startup',
             type: 'checkbox',
             checked: app.getLoginItemSettings().openAtLogin,

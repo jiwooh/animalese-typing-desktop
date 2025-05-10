@@ -15,7 +15,8 @@
             <div id="title" title="Animalese Typing - Desktop">Animalese Typing - Desktop</div>
         </div>
 
-        <div style="padding: 0px 10px;">
+        <div style="margin-top:3px; display: flex; padding: 0px 16px; gap: 16px;">
+            <svg-button onclick="openSettings()" name="config" title="Settings"></svg-button>
             <svg-button onclick="window.api.minimizeWindow()" name="minimize" title="Minimize"></svg-button>
             <svg-button onclick="window.api.closeWindow();" name="close" title="Close"></svg-button>
         </div>
@@ -25,8 +26,8 @@
 
         <div id="main_content">
             
-
-            <div id="settings_overlay" show="true">
+            <div id="focus_out" show="false">
+            <div id="settings_overlay">
                 <h2 id="settings_title" translation="settings">Settings</h2>
 
                 <div class="separator"></div>
@@ -50,23 +51,24 @@
                         <label for="option1">Test</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="check_always_enabled" onchange="window.settings.set('always_enabled', this.checked)"/>
+                        <input type="checkbox" id="check_always_enabled" onchange="updateAlwaysEnabled(this.checked)"/>
                         <label for="check_always_enabled" translation="settings.always_enabled">Always Enabled</label>
                     </div>
                 </div>
             
                 <div class="dropdown">
                     <p translation="settings.apps.description"></p>
-                    <table>
+                    <table id="apps_table" disabled="false">
                         <thead>
                             <tr>
                                 <th translation="settings.apps"></th>
                             </tr>
                         </thead>
-                        <tbody id="apps_table"></tbody>
+                        <tbody id="apps_tbody"></tbody>
                     </table>
                 </div>
                 <div class="separator"></div>
+            </div>
             </div>
 
 

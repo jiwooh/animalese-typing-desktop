@@ -13,6 +13,7 @@ html, body {
     height: 100%;
     user-select: none;
     font-size: 16px;
+    scroll-behavior: smooth;
 }
 p {
     font-size: 12px;
@@ -20,13 +21,16 @@ p {
     margin: 0px;
     text-align: center;
 }
+div[show=false] {
+    visibility: hidden;
+}
 #main-win {
     margin-top: 30px;
     transform-origin: top left;
     width: 720px;
     height: 360px;
-    display: flex; /* Use flexbox for layout */
-    flex-direction: row; /* Arrange children in a horizontal row */
+    display: flex;
+    flex-direction: row;
 }
 #main_content{
     flex: 1;
@@ -166,14 +170,12 @@ input[type=checkbox]:hover {
 .svg-button:active {
     transform: scale(.9);
 }
-#close, #minimize {
-    line-height: 0%;
-    z-index: 9999;
-}
-#close .svg-button, #minimize .svg-button {
+
+.title-bar .svg-button {
     filter: drop-shadow(0 0 0px #ffffff00);
     transform-origin: center;
-    transform: scale(.65);
+    width: 24px;
+    height: 24px;
 }
 #male {
     --alt1-color: #f3f3f3;
@@ -212,11 +214,11 @@ input[type=checkbox]:hover {
     flex: 0 0 1%; /* Fixed 20% width */
     background-color: #f8f2d7;
     border-radius: 6px;
-    z-index: 9999;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center children vertically */
+    justify-content: center;
     width: 56px;
     transform: translate(0, -26px);
     height: 100%;
@@ -388,13 +390,13 @@ input[type=text]::placeholder {
 
 
 #voice_profile_slots option:hover {
-    background-color: #d1b48b; /* Highlighted background for options */
-    color: #ffffff; /* Change text color for better contrast */
+    background-color: #d1b48b;
+    color: #ffffff;
 }
 
 #voice_profile_slots option:checked {
-    background-color: #d1b48b; /* Match the hover background */
-    color: #ffffff; /* Match the hover text color */
+    background-color: #d1b48b;
+    color: #ffffff;
 }
 
 #voice_type {
@@ -449,12 +451,9 @@ input[type=text]::placeholder {
 }
 
 
-
-
 #settings_overlay {
     width: 320px;
     height: 300px;
-    visibility: hidden;
     position: absolute;
     left: 50%;
     top: 45%;
@@ -471,9 +470,25 @@ input[type=text]::placeholder {
     gap: 10px;
 }
 
-#settings_overlay[show=true] {
-    visibility: visible;
+#focus_out {
     z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0000002f;
+}
+#focus_out[show=false], #focus_out[show=false] #settings_overlay {
+    z-index: -1;
+    opacity: 0;
+}
+
+#apps_table tbody {
+    transition: all 0.3s ease;
+}
+
+#apps_table[disabled=true] tbody {
+    pointer-events: none;
+    opacity: 40%;
 }
 
 #settings_title {
@@ -487,13 +502,13 @@ input[type=text]::placeholder {
 #checkbox_list {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Add spacing between checkboxes */
+    gap: 4px;
     width: 100%;
 }
 
 #checkbox_list div {
     display: flex;
-    gap: 8px; /* Add spacing between checkbox and label */
+    gap: 4px;
 }
 
 #checkbox_list label {
@@ -506,8 +521,8 @@ input[type=text]::placeholder {
 .dropdown {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center dropdowns horizontally */
-    gap: 8px; /* Add spacing between dropdowns */
+    align-items: center;
+    gap: 8px;
     width: 100%;
 }
 

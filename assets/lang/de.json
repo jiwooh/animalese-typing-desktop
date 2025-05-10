@@ -4,16 +4,16 @@
     
     "volume":"Lautstärke",
 
-    "config_1":"Standard",
-    "config_2":"Nur Animalese",
-    "config_3":"Nur SFX",
-    "config_4":"Zufällig",
+    "config_1":"standard",
+    "config_2":"nur animalese",
+    "config_3":"nur sfx",
+    "config_4":"zufällig",
 
     "editor_title":"Editor",
-    "editor_1":"Tonhöhenversch.",
-    "editor_2":"Intonation",
-    "editor_3":"Tonvariation",
-    "key-remapper":"Tastenbelegung ändern",
+    "editor_1":"tonhöhenversch.",
+    "editor_2":"intonation",
+    "editor_3":"tonvariation",
+    "key-remapper":"tastenbelegung ändern",
 
     "f1":"Ausgeglichen",
     "f2":"Schwungvoll",
@@ -24,12 +24,12 @@
     "m3":"Arrogant",
     "m4":"Miesepeter",
 
-    "settings":"Einstellungen",
+    "settings":"einstellungen",
     "settings.startup":"Beim Start",
     "settings.disable":"Deaktivieren",
-    "settings.apps":"Animalese-fähige Apps",
-    "settings.apps.description":"Aktivieren bei Fokus dieser Apps",
-    "settings.always_enabled":"Immer aktiviert",
+    "settings.apps":"animalese-fähige apps",
+    "settings.apps.description":"aktivieren bei Fokus dieser apps",
+    "settings.always_enabled":"immer aktiviert",
     "settings.lang":"Sprache",
     "settings.none":"Keine",
 

@@ -141,8 +141,8 @@ function createMainWin() {
 function createTrayIcon() {
     if(tray !== null) return; // prevent dupe tray icons
 
-    tray = new Tray(disabled?SYSTRAY_ICON_OFF:SYSTRAY_ICON);
-    tray.setToolTip(disabled?'Animalese Typing: Disabled':'Animalese Typing');
+    tray = new Tray(SYSTRAY_ICON);
+    tray.setToolTip('Animalese Typing');
 
     const contextMenu = Menu.buildFromTemplate([
         {

@@ -186,13 +186,17 @@ function updatedActiveWindows(activeWindows = []) {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.checked = enabledApps.includes(appName);
+            checkbox.id = `app_${appName}`;
             checkbox.addEventListener('change', () => updateEnabledApps(appName, checkbox.checked));
             checkboxCell.appendChild(checkbox);
             row.appendChild(checkboxCell);
 
             // app name cell
             const nameCell = document.createElement('td');
-            nameCell.textContent = appName;
+            const label = document.createElement('label');
+            label.setAttribute('for', `app_${appName}`);
+            label.textContent = appName;
+            nameCell.appendChild(label);
             row.appendChild(nameCell);
 
             tableBody.appendChild(row);
@@ -246,7 +250,6 @@ for (let i = 0; i < 5; i++) {
 }
 
 function deleteVoiceProfile() {
-    const currentVoiceProfile = preferences.get('voice_profile');
     const selectedSlot = document.getElementById('voice_profile_slots').value;
 
     let savedVoiceProfiles = preferences.get('saved_voice_profiles');

@@ -45,11 +45,26 @@
                     </select>
                 </div>
                 
-                <div id="checkbox_list">
+                <div class="rad_button_list">
                     <div>
-                        <input type="checkbox" id="option1" disabled/>
-                        <label for="option1">Test</label>
+                        <input type="radio" id="config_1" name="audio_mode" value="default" checked>
+                        <label for="config_1" translation="config_1">Default</label>
                     </div>
+                    <div>
+                        <input type="radio" id="config_2" name="audio_mode" value="animalese">
+                        <label for="config_2" translation="config_2">Animalese Only</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="config_3" name="audio_mode" value="sound_effects">
+                        <label for="config_3" translation="config_3">Sound Effects Only</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="config_4" name="audio_mode" value="randomized">
+                        <label for="config_4" translation="config_4">Randomized</label>
+                    </div>
+                </div>
+
+                <div class="checkbox_list">
                     <div>
                         <input type="checkbox" id="check_always_enabled" onchange="updateAlwaysEnabled(this.checked)"/>
                         <label for="check_always_enabled" translation="settings.always_enabled">Always Enabled</label>
@@ -57,11 +72,11 @@
                 </div>
             
                 <div class="dropdown">
-                    <p translation="settings.apps.description"></p>
+                    <label translation="settings.apps"></label>
                     <table id="apps_table" disabled="false">
                         <thead>
                             <tr>
-                                <th translation="settings.apps"></th>
+                                <th translation="settings.apps.description" style="font-size: 10px; opacity: .5;"></th>
                             </tr>
                         </thead>
                         <tbody id="apps_tbody"></tbody>
@@ -77,8 +92,7 @@
                 <div id="keyboard"></div>
 
                 <div id="key_remapper">
-                    Key Remapper </br>
-                    (W.I.P)
+                    <h3 translation="key-remapper">Key Remapper</h3>
                 </div>
             </div>
 

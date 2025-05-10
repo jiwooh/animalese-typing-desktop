@@ -4,16 +4,16 @@
     
     "volume":"Volume",
 
-    "config_1":"Default",
-    "config_2":"Animalese Only",
-    "config_3":"SFX Only",
-    "config_4":"Randomized",
+    "config_1":"default",
+    "config_2":"animalese only",
+    "config_3":"sfx only",
+    "config_4":"randomized",
 
     "editor_title":"Editor",
-    "editor_1":"Pitch Shift",
-    "editor_2":"Intonation",
-    "editor_3":"Pitch Variation",
-    "key-remapper":"Key-Remapper",
+    "editor_1":"pitch shift",
+    "editor_2":"intonation",
+    "editor_3":"pitch variation",
+    "key-remapper":"key-remapper",
 
     "f1":"Sweet",
     "f2":"Peppy",
@@ -24,13 +24,13 @@
     "m3":"Smug",
     "m4":"Cranky",
 
-    "settings":"Settings",
+    "settings":"settings",
     "settings.startup":"Run on startup",
     "settings.disable":"Disable",
-    "settings.apps":"Animalese-Enabled Apps",
-    "settings.apps.description":"Enabled when these apps are in focus",
-    "settings.always_enabled":"Always Enabled",
-    "settings.lang":"Language",
+    "settings.apps":"animalese-enabled apps",
+    "settings.apps.description":"enabled when these apps are in focus",
+    "settings.always_enabled":"always enabled",
+    "settings.lang":"language",
     "settings.none":"None",
 
     "en": "English",

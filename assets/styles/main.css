@@ -152,9 +152,34 @@ input[type=checkbox]:checked::after {
     transform: rotate(45deg);
 }
 
-input[type=checkbox]:hover {
+input[type=checkbox]:hover,input[type=radio]:hover {
     background-color: #e0c49e;
     border-color: #b89c7a;
+}
+
+input[type=radio] {
+    outline: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background-color: #ece4c1;
+    border: 2px solid #d1b48b;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+input[type=radio]:checked::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #6cd576;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .svg-button {
@@ -425,6 +450,7 @@ input[type=text]::placeholder {
     transform: translate(0, 3px);
 }
 .editor_label {
+    font-weight: 200;
     color: #877358;
     font-size: 14px;
     width: 116px;
@@ -467,7 +493,7 @@ input[type=text]::placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 #focus_out {
@@ -482,11 +508,17 @@ input[type=text]::placeholder {
     opacity: 0;
 }
 
-#apps_table tbody {
+#apps_table {
     transition: all 0.3s ease;
 }
+#apps_table label {
+    font-size: 11px;
+}
+#apps_table td {
+    display: inline-flex;
+}
 
-#apps_table[disabled=true] tbody {
+#apps_table[disabled=true] {
     pointer-events: none;
     opacity: 40%;
 }
@@ -499,19 +531,30 @@ input[type=text]::placeholder {
     margin: 0;
 }
 
-#checkbox_list {
+.rad_button_list {
+    background-color: #f8f2d7;
+    border-radius: 8px;
+    padding: 6px;
+    color: #6e5c44;
+    font-size: 12px;
+}
+.rad_button_list input[type=radio] {
+    margin: 0px;
+}
+
+.checkbox_list, .rad_button_list {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 100%;
+    width: 80%;
 }
 
-#checkbox_list div {
+.checkbox_list div, .rad_button_list div {
     display: flex;
     gap: 4px;
 }
 
-#checkbox_list label {
+.checkbox_list label {
     font-size: 14px;
     color: #6e5c44;
     cursor: pointer;
@@ -541,7 +584,7 @@ input[type=text]::placeholder {
 }
 
 table {
-    width: 80%;
+    width: 84%;
     height: 100px;
     background-color: #f8f2d7;
     border-radius: 8px;
@@ -549,7 +592,6 @@ table {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    font-size: 11px;
 }
 
 table thead {

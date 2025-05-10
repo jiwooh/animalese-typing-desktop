@@ -4,16 +4,16 @@
 
     "volume":"Volume",
 
-    "config_1":"Défaut",
-    "config_2":"Voix",
-    "config_3":"Effets sonores",
-    "config_4":"Aléatoire",
+    "config_1":"défaut",
+    "config_2":"voix",
+    "config_3":"effets sonores",
+    "config_4":"aléatoire",
 
     "editor_title":"Éditeur",
-    "editor_1":"Déplacement de hauteur",
-    "editor_2":"Intonation",
-    "editor_3":"Variation de ton",
-    "key-remapper":"Reconfiguration des touches",
+    "editor_1":"déplacement de hauteur",
+    "editor_2":"intonation",
+    "editor_3":"variation de ton",
+    "key-remapper":"reconfiguration des touches",
 
     "f1":"Normal",
     "f2":"Impétueuse",
@@ -24,13 +24,13 @@
     "m3":"Star",
     "m4":"Versatile",
 
-    "settings":"Paramètres",
+    "settings":"paramètres",
     "settings.startup":"Lancer au démarrage",
     "settings.disable":"Désactiver",
-    "settings.apps":"Apps avec Animalese",
-    "settings.apps.description":"Activer quand l’appli est active",
-    "settings.always_enabled":"Toujours activé",
-    "settings.lang":"Langue",
+    "settings.apps":"apps avec animalese",
+    "settings.apps.description":"activer quand l’appli est active",
+    "settings.always_enabled":"toujours activé",
+    "settings.lang":"langue",
     "settings.none":"Aucune",
 
     "en": "Anglais/English",

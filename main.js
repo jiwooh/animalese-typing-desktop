@@ -37,6 +37,7 @@ const preferences = new Store({
     defaults: {
         lang: 'en',
         volume: 0.5,
+        audio_mode: 0,
         always_enabled: true,
         enabled_apps: [],
         voice_profile: {

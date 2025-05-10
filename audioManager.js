@@ -10,6 +10,9 @@ ipcRenderer.on('updated-volume', (_, volume) => {
 
 let v = ipcRenderer.sendSync('get-store-data-sync').voice_profile;
 ipcRenderer.on('updated-voice_profile', (_, voice_profile) => v = voice_profile);
+let mode = ipcRenderer.sendSync('get-store-data-sync').audio_mode;
+ipcRenderer.on('updated-audio_mode', (_, audio_mode) => mode = audio_mode);
+
 
 //TODO: convert file type from .wav to .acc
 const audio_path = path.join(__dirname, './assets/audio/');
@@ -169,6 +172,17 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
     function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
         if (!path || path === '') return;
         
+        if (mode===1 && path.startsWith('sfx')) path = 'sfx.default';
+        if (mode===2 && path.startsWith('&')) path = 'sfx.default';
+        if (mode===3) {
+            if (path.startsWith('&')) {
+                // play a random animalese sfx
+            }
+            else if (path.startsWith('sfx')) {
+                // play a random sfx
+            }
+        }
+
         if (path.startsWith('&')) { // apply animalese voice profile
             const profileOptions = {
                 pitch_shift: options.pitch_shift ?? v.pitch_shift,
@@ -191,7 +205,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
             }
             path = path.replace('&', v.voice_type);
         }
-        
+
         const parts = path.split(".");
         let bank, sprite;
         

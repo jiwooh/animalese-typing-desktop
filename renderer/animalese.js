@@ -32,6 +32,12 @@ const controls = [
     'pitch_variation',
     'intonation'
 ];
+document.querySelectorAll('input[name="audio_mode"]').forEach(radio => {// audio mode initilize 
+    radio.checked = parseInt(radio.value) === preferences.get('audio_mode');
+    radio.addEventListener('change', () => {
+        if (radio.checked) preferences.set('audio_mode', parseInt(radio.value));
+    });
+});
 function initControls() {
     document.getElementById('lang_select').value = preferences.get('lang');
     document.getElementById('check_always_enabled').checked = preferences.get('always_enabled');

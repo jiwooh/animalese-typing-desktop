@@ -28,30 +28,10 @@
 
             <div id="settings_overlay" show="true">
                 <h2 id="settings_title" translation="settings">Settings</h2>
-            
-                <div id="checkbox_list">
-                    <div>
-                        <input type="checkbox" id="option1" />
-                        <label for="option1">hehe</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="option2" />
-                        <label for="option2">haha</label>
-                    </div>
-                </div>
-            
-                <div id="dropdowns">
-                    <label for="app_select" translation="settings.app">App Select</label>
-                    <select id="app_select" onchange="updateEnabledApp()">
-                        <option value="undefined" translation="settings.none" style="color:black" selected>None</option>
-                        <option value="undefined" >---</option>
-                        <option value="undefined" >---</option>
-                        <option value="undefined" >---</option>
-                        <option value="undefined" >---</option>
-                        <option value="undefined" >---</option>
-                        <option id="enabled_app" value="undefined" style="visibility: hidden; font-size: 0px;"></option>
-                    </select>
-            
+
+                <div class="separator"></div>
+                
+                <div class="dropdown">
                     <label for="lang_select" translation="settings.lang">Language</label>
                     <select id="lang_select" onchange="updateLang()">
                         <option value="en"      translation="en"></option>
@@ -62,6 +42,29 @@
                         <option value="ja"      translation="ja"></option>
                         <option value="zh_CN"   translation="zh_CN"></option>
                     </select>
+                </div>
+                
+                <div id="checkbox_list">
+                    <div>
+                        <input type="checkbox" id="option1" />
+                        <label for="option1">hehe</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="check_always_enabled" onchange="window.settings.set('always_enabled', this.checked)"/>
+                        <label for="check_always_enabled">Always Enabled</label>
+                    </div>
+                </div>
+            
+                <div class="dropdown">
+                    <p translation="settings.app.description"></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th translation="settings.app"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="apps_table"></tbody>
+                    </table>
                 </div>
             </div>
 

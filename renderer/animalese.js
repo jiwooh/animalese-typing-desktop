@@ -30,8 +30,8 @@ const controls = [
 ];
 function initControls() {
     document.getElementById('lang_select').value = preferences.get('lang');
-    document.getElementById('enabled_app').value = preferences.get('enabled_app');
-    document.getElementById('enabled_app').innerHTML = preferences.get('enabled_app');
+    document.getElementById('check_always_enabled').checked = preferences.get('always_enabled');
+
 
     controls.forEach(control => {
         let el = document.getElementById(control);
@@ -172,20 +172,44 @@ function updateLang() {// language selection update
     updateTranslation();
 }
 
-window.api.onActiveWindowChanged((apps) => {
-    for (let i = 0; i < apps.length; i++) {
-        document.getElementById('app_select').options[i+1].innerHTML = apps[i];
-        document.getElementById('app_select').options[i+1].value = apps[i];
-    }
-    if (preferences.get('enabled_app')) document.getElementById('app_select').value = preferences.get('enabled_app');
-});
+function updatedActiveWindows(activeWindows = []) {
+    const enabledApps = preferences.get('enabled_apps');
+    const tableBody = document.getElementById('apps_table');
+    tableBody.innerHTML = '';
+    [...new Set([...enabledApps, ...activeWindows])].forEach(appName => {
+        if (appName !== undefined) {
+            const row = document.createElement('tr');
 
-function updateEnabledApp() {
-    const value = document.getElementById('app_select').value
-    document.getElementById('enabled_app').value = value
-    document.getElementById('enabled_app').innerHTML = value
-    preferences.set('enabled_app', value === 'undefined' ? false : value);
+            // checkbox cell
+            const checkboxCell = document.createElement('td');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = enabledApps.includes(appName);
+            checkbox.addEventListener('change', () => updateEnabledApps(appName, checkbox.checked));
+            checkboxCell.appendChild(checkbox);
+            row.appendChild(checkboxCell);
+
+            // app name cell
+            const nameCell = document.createElement('td');
+            nameCell.textContent = appName;
+            row.appendChild(nameCell);
+
+            tableBody.appendChild(row);
+        }
+    });
 }
+updatedActiveWindows();
+function updateEnabledApps(appName, isChecked) {
+    let enabledApps = preferences.get('enabled_apps')
+
+    if (isChecked && !enabledApps.includes(appName)) enabledApps.push(appName);
+    else enabledApps = enabledApps.filter(name => name !== appName);
+
+    preferences.set('enabled_apps', enabledApps)
+}
+window.api.onActiveWindowChanged((activeWindows) => {
+    updatedActiveWindows(activeWindows);
+});
 
 //#region Key press detect
 window.api.onKeyPress( (map, e, isCapsLockOn) => {

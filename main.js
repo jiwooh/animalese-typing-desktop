@@ -18,9 +18,9 @@ function showIfAble() { // focus the existing window if it exists
 }
 
 function setDisable(value) {
+    value = preferences.get('always_enabled') ? false : value;
     if (disabled === value) return;
     disabled = value;
-    store.set('disabled', disabled);
     if (tray) {
         tray.setImage(disabled?SYSTRAY_ICON_OFF:SYSTRAY_ICON);
         tray.setToolTip(disabled?'Animalese Typing: Disabled':'Animalese Typing');
@@ -33,12 +33,12 @@ else app.on('second-instance', () => showIfAble()); // show instance that is run
 
 app.setAppUserModelId('com.joshxviii.animalese-typing');
 
-const store = new Store({
+const preferences = new Store({
     defaults: {
         lang: 'en',
         volume: 0.5,
-        disabled: false,
-        enabled_app: false,
+        always_enabled: true,
+        enabled_apps: [],
         voice_profile: {
             voice_type: 'f2',
             pitch_shift: 0.0,
@@ -50,12 +50,12 @@ const store = new Store({
 });
 
 ipcMain.on('get-store-data-sync', (event) => {
-    event.returnValue = store.store;
+    event.returnValue = preferences.store;
 });
 ipcMain.handle('store-set', async (e, key, value) => {
-    store.set(key, value);
+    preferences.set(key, value);
     bgwin.webContents.send(`updated-${key}`, value);
-    if (key==='enabled_app') setDisable(value !== false);
+    if (key==='always_enabled') setDisable(!value);
 });
 ipcMain.on('close-window', (e) => {
     if (bgwin) bgwin.close();
@@ -66,31 +66,32 @@ ipcMain.on('minimize-window', (e) => {
 
 var bgwin = null;
 var tray = null;
-var disabled = store.get('disabled', false);
+var disabled = !preferences.get('always_enabled');
 let lastActiveWindow = null;
-let activeWindows = store.get('enabled_app', false)?[store.get('enabled_app', false)]:[];
+let activeWindows = [];
 
 // check for active window changes and update `lastActiveWindow` when the window changes
 async function monitorActiveWindow() {
     const activeWindow = await activeWin();
     if (activeWindow?.owner?.name === lastActiveWindow?.owner?.name) return;// return early if the active window hasn't changed.
-    const enabledApp = store.get('enabled_app', false);
+    
+    const enabledApps = preferences.get('enabled_apps');
     if (
         (!lastActiveWindow ||
         activeWindow?.owner?.name !== lastActiveWindow?.owner?.name) &&
         activeWindow?.owner?.processId !== process.pid ||
-        activeWindow?.owner?.name !== enabledApp
+        !enabledApps.includes(activeWindow?.owner?.name)
     ) {
         const winName = activeWindow.owner.name
 
         // change disable value when focusing in or out of the animalese-enabled app.
         // this also allows you to enable animalese without being focused on the enabled app and without the monitor forcing animalese to be didabled
-        if (enabledApp === winName || enabledApp === lastActiveWindow?.owner?.name) setDisable(enabledApp !== winName);
+        if (enabledApps.includes(winName) || enabledApps.includes(lastActiveWindow?.owner?.name)) setDisable(!enabledApps.includes(winName));
 
         lastActiveWindow = activeWindow;
         if (!activeWindows.includes(winName)) {
             activeWindows.push(winName);
-            if (activeWindows.length > 5) activeWindows.shift();
+            if (activeWindows.length > 8) activeWindows.shift();
             bgwin.webContents.send(`active-windows-updated`, activeWindows);
         }
     }

@@ -542,7 +542,7 @@ input[type=text]::placeholder {
 
 table {
     width: 80%;
-    height: 90px;
+    height: 100px;
     background-color: #f8f2d7;
     border-radius: 8px;
     overflow-y: auto;

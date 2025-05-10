@@ -28,7 +28,7 @@
     "settings.startup":"Run on startup",
     "settings.disable":"Disable",
     "settings.apps":"Animalese-Enabled Apps",
-    "settings.apps.description":"Enable when these apps are in focus",
+    "settings.apps.description":"Enabled when these apps are in focus",
     "settings.always_enabled":"Always Enabled",
     "settings.lang":"Language",
     "settings.none":"None",

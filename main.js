@@ -55,7 +55,6 @@ ipcMain.on('get-store-data-sync', (event) => {
 ipcMain.handle('store-set', async (e, key, value) => {
     preferences.set(key, value);
     bgwin.webContents.send(`updated-${key}`, value);
-    if (key==='always_enabled') setDisable(!value);
 });
 ipcMain.on('close-window', (e) => {
     if (bgwin) bgwin.close();
@@ -73,32 +72,26 @@ let activeWindows = [];
 // check for active window changes and update `lastActiveWindow` when the window changes
 async function monitorActiveWindow() {
     const activeWindow = await activeWin();
-    if (activeWindow?.owner?.name === lastActiveWindow?.owner?.name) return;// return early if the active window hasn't changed.
+    if (!activeWindow?.owner?.name) return;// return early if invlaid window
+
+    const winName = activeWindow.owner.name
+    if (winName === lastActiveWindow?.owner?.name) return;// return early if the active window hasn't changed.
     
     const enabledApps = preferences.get('enabled_apps');
-    if (
-        (!lastActiveWindow ||
-        activeWindow?.owner?.name !== lastActiveWindow?.owner?.name) &&
-        activeWindow?.owner?.processId !== process.pid ||
-        !enabledApps.includes(activeWindow?.owner?.name)
-    ) {
-        const winName = activeWindow.owner.name
 
-        // change disable value when focusing in or out of the animalese-enabled app.
-        // this also allows you to enable animalese without being focused on the enabled app and without the monitor forcing animalese to be didabled
-        if (enabledApps.includes(winName) || enabledApps.includes(lastActiveWindow?.owner?.name)) setDisable(!enabledApps.includes(winName));
+    // change disable value when focusing in or out of an animalese-enabled app.
+    setDisable( !(enabledApps.includes(winName) || activeWindow?.owner?.processId === process.pid) )
 
-        lastActiveWindow = activeWindow;
-        if (!activeWindows.includes(winName)) {
-            activeWindows.push(winName);
-            if (activeWindows.length > 8) activeWindows.shift();
-            bgwin.webContents.send(`active-windows-updated`, activeWindows);
-        }
+    lastActiveWindow = activeWindow;
+    if (!activeWindows.includes(winName)) {
+        activeWindows.push(winName);
+        if (activeWindows.length > 8) activeWindows.shift();
+        bgwin.webContents.send(`active-windows-updated`, activeWindows);
     }
 }
 
 function startActiveWindowMonitoring() {
-    setInterval(monitorActiveWindow, 500); // check every .5 seconds
+    setInterval(monitorActiveWindow, 500); // check window every .5 seconds
 }
 
 function createMainWin() {
@@ -144,8 +137,6 @@ function createMainWin() {
         }
     });
 }
-
-
 
 function createTrayIcon() {
     if(tray !== null) return; // prevent dupe tray icons

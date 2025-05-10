@@ -300,5 +300,4 @@ function loadVoiceProfile() {
 function openSettings() {
     const show = document.getElementById('focus_out').getAttribute('show')==="true"?false:true;
     document.getElementById('focus_out').setAttribute('show', show);
-    console.log(show);
 }

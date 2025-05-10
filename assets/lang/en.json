@@ -32,7 +32,7 @@
     "settings.apps.description":"enabled when these apps are in focus",
     "settings.always_enabled":"always enabled",
     "settings.lang":"language",
-    "settings.none":"None",
+    "settings.none":"none",
 
     "en": "English",
     "es": "Spanish/Español",

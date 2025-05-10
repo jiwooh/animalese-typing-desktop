@@ -1,3 +1,7 @@
+/*
+author: joshxviii 
+*/
+
 /* TODO: this file is getting kinda huge... */
 /* consolidate some stlyes that are redundent and */
 /* make some css variables so changing themes is easier */
@@ -47,16 +51,23 @@ div[show=false] {
 }
 .title-bar {
     width: 100%;
-    height: 30px;
+    height: 22px;
     max-width: 100%;
     -webkit-app-region: drag;
-    z-index: 999;
+    z-index: 5;
     background-color: #e0c49e;
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0px 10px;
+    padding-block-end: 4px;
+}
+#resize-border {
+    height: 4px;
+    background: transparent;
+    -webkit-app-region: no-drag;
+    background-color: #e0c49e;
 }
 #title {
     color: #f0feff;
@@ -89,6 +100,20 @@ div[show=false] {
     background: #b89c7a;
 }
 
+.footer {
+    padding-top:0px;
+    padding-bottom:0px;
+
+    bottom:0;
+    width:100%;
+    height:20px;
+   
+    display: inline-block;
+}
+.footer a, .footer p {
+    font-size: 12px;
+    color: #b89c7a9f;
+}
 /*#endregion GENERAL */
 
 /*#region BUTTONS */
@@ -507,7 +532,7 @@ input[type=text]::placeholder {
 }
 #settings_overlay label {
     font-size: 14px;
-    color: #6e5c44;
+    color: #6e5c44a5;
     
 }
 
@@ -541,9 +566,10 @@ input[type=text]::placeholder {
 }
 
 #focus_out {
+    margin: -4px;
     z-index: 2;
     position: absolute;
-    width: 100%;
+    width: 101%;
     height: 100%;
     background-color: #0000002f;
 }
@@ -553,7 +579,7 @@ input[type=text]::placeholder {
 }
 
 #apps_table {
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 #apps_table label {
     font-size: 11px;

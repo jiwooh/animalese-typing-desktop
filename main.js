@@ -49,8 +49,8 @@ const preferences = new Store({
     }
 });
 
-ipcMain.on('get-store-data-sync', (event) => {
-    event.returnValue = preferences.store;
+ipcMain.on('get-store-data-sync', (e) => {
+    e.returnValue = preferences.store;
 });
 ipcMain.handle('store-set', async (e, key, value) => {
     preferences.set(key, value);
@@ -61,6 +61,12 @@ ipcMain.on('close-window', (e) => {
 });
 ipcMain.on('minimize-window', (e) => {
     if (bgwin) bgwin.minimize();
+});
+ipcMain.on('get-app-info', (e) => {
+    e.returnValue = {
+        version: app.getVersion(),
+        name: app.getName()
+    }
 });
 
 var bgwin = null;
@@ -93,7 +99,7 @@ async function monitorActiveWindow() {
 function startActiveWindowMonitoring() {
     setInterval(monitorActiveWindow, 500); // check window every .5 seconds
 }
-
+app.disableHardwareAcceleration();
 function createMainWin() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({

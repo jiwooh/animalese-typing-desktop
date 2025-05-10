@@ -1,4 +1,6 @@
-<!-- editor.html -->
+ <!--
+author: joshxviii 
+ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +11,11 @@
     <link rel="stylesheet" href="assets\styles\keyboard.css">
 </head>
 <body>
+    <div id="resize-border"></div>
     <div class="title-bar">
         <div style="display: flex; gap: 10px;">
             <!-- <img id="icon" src="assets\images\icon.png" alt="Animalese Typing - Desktop" title="Animalese Typing - Desktop" style="height: 20px;"></img> -->
-            <div id="title" title="Animalese Typing - Desktop">Animalese Typing - Desktop</div>
+            <div id="title" title="Animalese Typing - Desktop">Animalese Typing</div>
         </div>
 
         <div style="margin-top:3px; display: flex; padding: 0px 16px; gap: 16px;">
@@ -83,6 +86,11 @@
                     </table>
                 </div>
                 <div class="separator"></div>
+                <div class="footer" title="GitHub" style="cursor: pointer;">
+                    <p onclick='window.api.goToUrl("https:\/\/github.com/joshxviii/animalese-typing-desktop")'>
+                        Animalese Typing <text id="version"></text>
+                    </p>
+                </div>
             </div>
             </div>
 
@@ -146,7 +154,7 @@
                         <option id="save_4" value="4">Empty</option>
                         <option id="save_5" value="5">Empty</option>
                     </select>
-                    <input type="text" id="save_profile_name" placeholder="name"/>
+                    <input type="text" id="save_profile_name" translation="settings.none"/>
                     <div id="save_profile_buttons">
                         <input type="button" id="save_profile_button" value="S" onclick="saveVoiceProfile()"/>
                         <input type="button" id="delete_profile_button" value="D" onclick="deleteVoiceProfile()"/>

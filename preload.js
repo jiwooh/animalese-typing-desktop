@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { app, shell, contextBridge, ipcRenderer } = require('electron');
 const path = require('path');
 const keycodeToSound = require('./keycodeToSound');
 const translator = require('./translator'); 
@@ -7,6 +7,7 @@ const { initCapsLockState, isCapsLockActive } = require('./capsLockState');
 initCapsLockState();
 
 const settingsData = ipcRenderer.sendSync('get-store-data-sync');
+const appInfo = ipcRenderer.sendSync('get-app-info')
 
 // general app messages 
 contextBridge.exposeInMainWorld('api', {
@@ -29,6 +30,8 @@ contextBridge.exposeInMainWorld('api', {
         };
     },
     onActiveWindowChanged: (callback) => ipcRenderer.on('active-windows-updated', (_event, e) => callback(e)),
+    getAppInfo: () => appInfo,
+    goToUrl: (url) => shell.openExternal(url)
 });
 
 // translation functions

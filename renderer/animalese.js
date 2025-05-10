@@ -1,3 +1,7 @@
+/**
+ * author: joshxviii 
+ */
+
 const preferences = window.settings;
 
 // custom svg button element
@@ -32,6 +36,7 @@ function initControls() {
     document.getElementById('lang_select').value = preferences.get('lang');
     document.getElementById('check_always_enabled').checked = preferences.get('always_enabled');
     document.getElementById('apps_table').setAttribute('disabled', preferences.get('always_enabled'));
+    document.getElementById('version').innerHTML = `v${window.api.getAppInfo().version}`;
 
 
     controls.forEach(control => {
@@ -161,7 +166,8 @@ function updateTranslation() {
     document.querySelectorAll('[translation]').forEach(el => {
         const key = el.getAttribute('translation');
         if (key) {
-            el.innerHTML = window.translator.t(key);
+            if (el.type === 'text') el.setAttribute('placeholder', window.translator.t(key))
+            else el.innerHTML = window.translator.t(key);
         }
     });
 }

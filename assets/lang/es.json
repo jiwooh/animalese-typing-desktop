@@ -28,7 +28,7 @@
     "settings.startup":"Ejecutar al inicio",
     "settings.disable":"Desactivar",
     "settings.apps":"Apps con Animalese",
-    "settings.apps.description":"FX solo si estas apps están activas.",
+    "settings.apps.description":"Activar con apps en primer plano",
     "settings.always_enabled":"Siempre activo",
     "settings.lang":"Idioma",
     "settings.none":"Ninguna",

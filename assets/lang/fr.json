@@ -28,7 +28,7 @@
     "settings.startup":"Lancer au démarrage",
     "settings.disable":"Désactiver",
     "settings.apps":"Apps avec Animalese",
-    "settings.apps.description":"Effets actifs si app au premier plan.",
+    "settings.apps.description":"Activer quand l’appli est active",
     "settings.always_enabled":"Toujours activé",
     "settings.lang":"Langue",
     "settings.none":"Aucune",

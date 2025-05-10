@@ -28,7 +28,7 @@
     "settings.startup":"起動時に実行",
     "settings.disable":"無効",
     "settings.apps":"アニマリーズ対応アプリ",
-    "settings.apps.description":"フォーカス中のみ効果音再生。",
+    "settings.apps.description":"フォーカス中に有効化",
     "settings.always_enabled":"常に有効",
     "settings.lang":"言語選択",
     "settings.none":"なし",

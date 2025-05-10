@@ -28,7 +28,7 @@
     "settings.startup":"시작 시 실행",
     "settings.disable":"비활성화",
     "settings.apps":"아니말리즈 활성화 앱",
-    "settings.apps.description":"포커스된 앱에서만 효과음 재생.",
+    "settings.apps.description":"포커스된 앱에서만 활성화",
     "settings.always_enabled":"항상 활성화",
     "settings.lang":"언어 선택",
     "settings.none":"없음",

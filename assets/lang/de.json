@@ -28,7 +28,7 @@
     "settings.startup":"Beim Start",
     "settings.disable":"Deaktivieren",
     "settings.apps":"Animalese-fähige Apps",
-    "settings.apps.description":"SFX nur bei aktivem App-Fokus.",
+    "settings.apps.description":"Aktivieren bei Fokus dieser Apps",
     "settings.always_enabled":"Immer aktiviert",
     "settings.lang":"Sprache",
     "settings.none":"Keine",

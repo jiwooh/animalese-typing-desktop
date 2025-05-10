@@ -10,6 +10,6 @@ This app is currently being developed, please be patient :)
 - **macOS Support**
 - **Key Re-mapper** - *This will allow you to map any key or key combination to whatever sound you like.*
 - **GUI Improvements** - *I'm not a fan of having all the settings on one window, so I plan to rework the whole GUI.*
-- **Activation on Specified Windows** - *This will be a setting that will allow the app to run only when a specified window/program is in focus.*
+- ~**Activation on Specified Windows** - *This will be a setting that will allow the app to run only when a specified window/program is in focus.*~
 - **Randomized Sound Option** - *This will "censor" what you type by playing random sounds while typing.*
 - **More Special Character Sounds**

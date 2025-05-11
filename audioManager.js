@@ -171,19 +171,23 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
     // main audio playback function
     function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
         if (!path || path === '') return;
+        const isAnimalese = path.startsWith('&');
+        const isSfx = path.startsWith('sfx')
         
-        if (mode===1 && path.startsWith('sfx')) path = 'sfx.default';
-        if (mode===2 && path.startsWith('&')) path = 'sfx.default';
+        if (mode===1 && isSfx) path = 'sfx.default';
+        if (mode===2 && isAnimalese) path = 'sfx.default';
         if (mode===3) {
-            if (path.startsWith('&')) {
-                // play a random animalese sfx
+            if (isAnimalese) {// play random animalese sound
+                const sounds = Object.keys(voice_sprite)
+                path = `&.voice.${ sounds[Math.floor(Math.random() * sounds.length)] }`;
             }
-            else if (path.startsWith('sfx')) {
-                // play a random sfx
+            else if (isSfx) {// play random sound effect
+                const sounds = Object.keys(sfx_sprite)
+                path = `sfx.${ sounds[Math.floor(Math.random() * sounds.length)] }`;
             }
         }
 
-        if (path.startsWith('&')) { // apply animalese voice profile
+        if (isAnimalese) { // apply animalese voice profile
             const profileOptions = {
                 pitch_shift: options.pitch_shift ?? v.pitch_shift,
                 pitch_variation: options.pitch_variation ?? v.pitch_variation,

@@ -8,6 +8,7 @@
     "config_2":"아니말리즈만",
     "config_3":"효과음만",
     "config_4":"무작위",
+    "config_4.description":"(입력 숨기기)",
 
     "editor_title":"편집기",
     "editor_1":"음정 변경",

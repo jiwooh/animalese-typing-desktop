@@ -32,7 +32,7 @@
     }
   },
   "license": "MIT",
-  "description": "\"Animalese Typing Desktop\"",
+  "description": "Animalese Typing",
   "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
     "active-win": "^8.2.1",

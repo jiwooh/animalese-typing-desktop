@@ -8,6 +8,7 @@
     "config_2":"仅动物语",
     "config_3":"仅音效",
     "config_4":"随机",
+    "config_4.description":"(隐藏输入)",
 
     "editor_title":"编辑器",
     "editor_1":"音调变化",

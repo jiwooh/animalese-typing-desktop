@@ -8,6 +8,7 @@
     "config_2":"voix",
     "config_3":"effets sonores",
     "config_4":"aléatoire",
+    "config_4.description":"(masquer la saisie)",
 
     "editor_title":"Éditeur",
     "editor_1":"déplacement de hauteur",

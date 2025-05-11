@@ -8,6 +8,7 @@
     "config_2":"animalese only",
     "config_3":"sfx only",
     "config_4":"randomized",
+    "config_4.description":"(disguise typing)",
 
     "editor_title":"Editor",
     "editor_1":"pitch shift",

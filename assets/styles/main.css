@@ -65,6 +65,7 @@ div[show=false] {
 }
 #resize-border {
     height: 4px;
+    z-index: 5;
     background: transparent;
     -webkit-app-region: no-drag;
     background-color: #e0c49e;
@@ -92,12 +93,8 @@ div[show=false] {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #d1b48b;
+    background: #e0c49ead;
     border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #b89c7a;
 }
 
 .footer {
@@ -267,15 +264,15 @@ input[type=radio]:checked::before {
 #master_volume_group {
     flex: 0 0 1%; /* Fixed 20% width */
     background-color: #f8f2d7;
-    border-radius: 6px;
+    border-radius: 8px;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 56px;
-    transform: translate(0, -26px);
-    height: 100%;
+    transform: translate(0, -4px);
+    height: 91%;
 }
 
 #master_volume {
@@ -337,6 +334,7 @@ select {
     width: 100px;
     opacity: 40%;
     font-size: 14px;
+    color: #6e5c44;
     font-family: "Arial Rounded Bold";
     appearance: none;
     border-style: none;
@@ -345,15 +343,15 @@ select {
     content: "1";
     position: relative;
     display: inline-table;
-    transition: all 0.5s ease;
+    transition: all 0.33s ease;
     background-color: #ECE4C1;
     text-align: center;
     text-align-last: center;
     outline-style: none;
 }
-/* select:hover {
-    background-color: #e0c49e; Slightly darker background on hover
-} */
+select:hover{
+    opacity: 100%;
+}
 
 input[type=text] {
     width: 100px;
@@ -456,9 +454,6 @@ input[type=text]::placeholder {
 #voice_type {
     margin: 0 auto;
 }
-#voice_type:hover{
-    opacity: 100%;
-}
 #voice_type.female, #voice_type.female option.female {
     background-color: #ffe9ff;
     color: #ff8bcb;
@@ -533,7 +528,6 @@ input[type=text]::placeholder {
 #settings_overlay label {
     font-size: 14px;
     color: #6e5c44a5;
-    
 }
 
 #settings_overlay .catagory {

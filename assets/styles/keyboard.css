@@ -3,19 +3,24 @@
     --outline-width: 10px;
 }
 
-/*#region KEYBOARD */
-key-board {
+.remap_controller[show=false] {
     display: none;
+}
+.remap_controller {
+    height: 163px;
+    width: 416px;
     margin: 8px;
     padding: 8px;
-    flex: 0 0 auto;
     background-color: bisque;
     user-select: none;
     border-radius: 6px;
     filter: drop-shadow(0 6px 0px #d1b48b);
 }
-key-board[show=true] {
+
+/*#region KEYBOARD */
+key-board {
     display: inline-block;
+    flex: 0 0 auto;
 }
 .key-label-wrapper {
     position: relative;
@@ -95,26 +100,17 @@ key-button.pressed .key-icon {
 
 /*#region PIANO*/
 piano-board {
-    display: none;
-    margin: 8px;
-    padding: 8px;
-    background-color: bisque;
-    user-select: none;
-    border-radius: 6px;
-    filter: drop-shadow(0 6px 0px #d1b48b);
-}
-piano-board[show=true] {
-    display:inherit;
+    display: inherit;
 }
 #paino_back {
     background-color: bisque;
     border-radius: 8px;
-    filter: drop-shadow(0 26px 0px #d1b48b);
+    filter: drop-shadow(0 16px 0px #d1b48b);
     width: 100%;
     padding: 8px;
     margin: 0px -8px;
-    height: calc(var(--key-size)*2);
-    transform: translateY(-16px);
+    height: calc(var(--key-size)*3);
+    transform: translateY(-8px);
 }
 #paino_keys {
     flex: 0 0 auto;

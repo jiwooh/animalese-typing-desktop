@@ -9,9 +9,13 @@ ipcRenderer.on('updated-volume', (_, volume) => {
 });
 
 ipcRenderer.on('keyup', (_, e) => {
-    cutOffAudio(waitingForRelease[e.keycode], 0.075);
-    delete waitingForRelease[e.keycode];
+    releaseSound(e.keycode);
 });
+
+function releaseSound(release_id) {
+    cutOffAudio(waitingForRelease[release_id], 0.075);
+    delete waitingForRelease[release_id];
+}
 
 let v = ipcRenderer.sendSync('get-store-data-sync').voice_profile;
 ipcRenderer.on('updated-voice_profile', (_, voice_profile) => v = voice_profile);
@@ -279,7 +283,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
         if (options.channel !== undefined) activeChannels[options.channel] = { bank, id };
         if (options.hold !== undefined) waitingForRelease[options.hold] = { bank, id };
     }
-    return { play: playSound };
+    return { play: playSound, release: releaseSound };
 }
 
 module.exports = { createAudioManager };

@@ -236,7 +236,7 @@ function updateAlwaysEnabled(value) {
 
 //#region Key press detect
 window.api.onKeyPress( (keyInfo) => {
-    if (remap_alpha_in === document.activeElement) return;
+    // if (remap_alpha_in === document.activeElement) return;
     lastKey = keyInfo;
     const path = (keyInfo.isShiftDown && keyInfo.data.shiftSound) || keyInfo.data.sound;
     switch (true) {
@@ -338,46 +338,55 @@ function openSettings() {
 
 function isAlpha(str) {return str?(str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false:false;}
 
-const remap_alpha_in = document.getElementById('remap_alpha_in');
-const remap_alpha_out = document.getElementById('remap_alpha_out');
+// const remap_alpha_in = document.getElementById('remap_alpha_in');
+// const remap_alpha_out = document.getElementById('remap_alpha_out');
 
 document.addEventListener('keydown', e => {
-    if (remap_alpha_in === document.activeElement) return;
-    //document.getElementById('keycode_label').innerHTML = lastKey.keycode;
-    //(lastKey.isShiftDown && lastKey.data.shiftSound) || lastKey.data.sound;
+    // if (remap_alpha_in === document.activeElement) return;
     document.getElementById('keycode_label').innerHTML = ((lastKey.isShiftDown && lastKey.data.key !== "Shift"?"Shift + ":"") + lastKey.data.key).toUpperCase();
+
+    const sound = (lastKey.isShiftDown && lastKey.data.shiftSound) || lastKey.data.sound
+    const tabIndex = !sound||sound===''?0:sound.startsWith('&.voice')?1:sound.startsWith('&.sing')?2:sound.startsWith('sfx')?3:0
+
+    document.querySelectorAll('input[name="remap_type"]').forEach( (radio, index) => {
+        if (index === tabIndex) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change'));
+        }
+    });
 })
 
-remap_alpha_in.addEventListener('selectstart', e => e.preventDefault());
-remap_alpha_in.addEventListener('mousedown', e => e.preventDefault());
-remap_alpha_in.addEventListener('beforeinput', (e) => {
-    if (isAlpha(e.data)) {
-        setTimeout(() => {
-            remap_alpha_in.blur();
-            remap_alpha_in.value = ''
-        }, 1);
-        e.preventDefault();
+// remap_alpha_in.addEventListener('selectstart', e => e.preventDefault());
+// remap_alpha_in.addEventListener('mousedown', e => e.preventDefault());
+// remap_alpha_in.addEventListener('beforeinput', (e) => {
+//     if (isAlpha(e.data)) {
+//         setTimeout(() => {
+//             remap_alpha_in.blur();
+//             remap_alpha_in.value = ''
+//         }, 1);
+//         e.preventDefault();
 
-        remap_alpha_out.innerHTML = e.data.charAt(0).toUpperCase();       
-    } else e.preventDefault();
-});
+//         remap_alpha_out.innerHTML = e.data.charAt(0).toUpperCase();       
+//     } else e.preventDefault();
+// });
 
-document.querySelectorAll('input[name="remap_type"]').forEach((radio, index) => {
+document.querySelectorAll('input[name="remap_type"]').forEach( (radio, index) => {
     radio.addEventListener('change', () => {
         const allTypes = document.querySelectorAll('#remap_types .remap_type');
+        const allControllers = document.querySelectorAll('#remap_controllers .remap_controller');
         allTypes.forEach(el => el.setAttribute('show',false));
+        allControllers.forEach(el => el.setAttribute('show',false));
 
         // Show the selected one (index is 0-based)
         const selectedIndex = parseInt(radio.value) - 1;
         if (allTypes[selectedIndex]) {
-        allTypes[selectedIndex].setAttribute('show',true);
+            allTypes[selectedIndex].setAttribute('show',true);
+            allControllers[selectedIndex].setAttribute('show',true);
         }
     });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     const checked = document.querySelector('input[name="remap_type"]:checked');
-    if (checked) {
-        checked.dispatchEvent(new Event('change'));
-    }
+    if (checked) checked.dispatchEvent(new Event('change'));
 });

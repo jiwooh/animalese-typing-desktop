@@ -97,25 +97,30 @@ author: joshxviii
 
 
             <div id="top_row">
-                <key-board show="true"></key-board>
-                <piano-board show="false"></piano-board>
+                <div id="remap_controllers">
+                    <div class="remap_controller" show="true" ><h3 style="color: #95846d7d;text-align: center;margin-block: 70px;">No Sound</h3></div>
+                    <key-board type="voice" class="remap_controller" show="false"></key-board>
+                    <piano-board class="remap_controller" show="false"></piano-board>
+                    <key-board type="sfx" class="remap_controller" show="false"></key-board>
+                </div>
 
                 <div id="key_remapper">
                     <div style="width: 100%;">
                         <h3 translation="key-remapper" style="margin-block: 0px 4px;">Key Remapper</h3>
-                        <label id="keycode_label">None</label>
+                        <label id="keycode_label"></label>
                     </div>
 
 
                     <div id="remap_types">
-                        <div class="remap_type">None</div>
-                        <div class="remap_type">
+                        <div class="remap_type"></div>
+                        <div class="remap_type">Speech</div>
+                        <!-- <div class="remap_type">
                             <div class="wrapper">
                                 <input id="remap_alpha_in" type="text" maxlength="1" onclick="this.focus()"/>
                             </div>
                             <label id="remap_alpha_out" for="remap_alpha_in">A</label>
-                        </div>
-                        <div class="remap_type">Singing</div>
+                        </div> -->
+                        <div class="remap_type">Notes</div>
                         <div class="remap_type">Sound Effects</div>
                     </div>
                     <div>

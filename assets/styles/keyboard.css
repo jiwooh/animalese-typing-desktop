@@ -1,18 +1,21 @@
 :root {
-    --key-size: 32px;
+    --key-size: 16px;
     --outline-width: 10px;
 }
 
 /*#region KEYBOARD */
-#keyboard {
+key-board {
+    display: none;
     margin: 8px;
     padding: 8px;
     flex: 0 0 auto;
     background-color: bisque;
-    display: inline-block;
     user-select: none;
     border-radius: 6px;
     filter: drop-shadow(0 6px 0px #d1b48b);
+}
+key-board[show=true] {
+    display: inline-block;
 }
 .key-label-wrapper {
     position: relative;
@@ -30,9 +33,9 @@
     color: #d9bd96;
     transition: transform 0.33s ease, font-size 0.2s ease;
 }
-.key_s .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) / max(1, var(--label-length))));}
-.key_m .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) / max(1, (var(--label-length)*.5))));}
-.key_l .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) / max(1, (var(--label-length)*.33))));}
+.key_s .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) * 2 / max(1, var(--label-length))));}
+.key_m .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) * 2 / max(1, (var(--label-length)*.5))));}
+.key_l .key-label {font-size: clamp(1px, 100%, calc(var(--key-size) * 2 / max(1, (var(--label-length)*.33))));}
 .key-icon {
     position: absolute;
     pointer-events: none;
@@ -46,20 +49,20 @@
     transition: transform 0.33s ease;
 }
 .key-row {
-    height: calc(1.05 * var(--key-size));
+    height: calc(1.05 * var(--key-size * 2));
 }
 key-button, .key_s, .key_m, .key_l, .key_blank {
-    min-width: calc(var(--key-size));
-    min-height: calc(var(--key-size));
-    width: calc(var(--key-size));
-    height: calc(var(--key-size));
-    max-width: calc(var(--key-size));
-    max-height: calc(var(--key-size));
+    min-width: calc(var(--key-size) * 2);
+    min-height: calc(var(--key-size) * 2);
+    width: calc(var(--key-size) * 2);
+    height: calc(var(--key-size) * 2);
+    max-width: calc(var(--key-size) * 2);
+    max-height: calc(var(--key-size) * 2);
     display: inline-block;
 }
-.key_s {min-width: calc(1* var(--key-size));}
-.key_m {min-width: calc(2* var(--key-size));}
-.key_l {min-width: calc(3* var(--key-size));}
+.key_s {min-width: calc(1* var(--key-size) * 2);}
+.key_m {min-width: calc(2* var(--key-size) * 2);}
+.key_l {min-width: calc(3* var(--key-size) * 2);}
 
 key-button .button-top
 {
@@ -68,17 +71,11 @@ key-button .button-top
     stroke: #0d944500;
     transition: all 0.33s ease;
 }
-key-button:hover .button-top
-{
-    fill:#f6e6d1;
-    stroke: #08a74a3d;
-    transition: fill 0.1s ease;
-    transition: stroke 0.1s ease;
-    transition: transform 0.33s ease;
-}
+
 key-button.pressed .button-top
 {
     fill:#eedbc2;
+    stroke: #08a74a3d;
     transform: translate(0px,4px);
     transition: transform 0.07s ease;
 }
@@ -89,6 +86,89 @@ key-button.pressed .key-label {
 
 key-button.pressed .key-icon {
     transform: translate(-50%, calc(-50% + 8%));
+    transition: transform 0.07s ease;
+}
+/*#endregion*/
+
+
+
+
+/*#region PIANO*/
+piano-board {
+    display: none;
+    margin: 8px;
+    padding: 8px;
+    background-color: bisque;
+    user-select: none;
+    border-radius: 6px;
+    filter: drop-shadow(0 6px 0px #d1b48b);
+}
+piano-board[show=true] {
+    display:inherit;
+}
+#paino_back {
+    background-color: bisque;
+    border-radius: 8px;
+    filter: drop-shadow(0 26px 0px #d1b48b);
+    width: 100%;
+    padding: 8px;
+    margin: 0px -8px;
+    height: calc(var(--key-size)*2);
+    transform: translateY(-16px);
+}
+#paino_keys {
+    flex: 0 0 auto;
+    display: inline-flex;
+    justify-content:flex-start;
+}
+piano-key, .piano_l, .piano_m, .piano_r, .piano_b {
+    transform: translateX(calc(var(--key-size) / 3));
+    margin: 0px calc(var(--key-size) * -0.5);
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
+    min-width: calc(var(--key-size) * 3);
+    min-height: calc(var(--key-size) * 6);
+    width: calc(var(--key-size) * 3);
+    height: calc(var(--key-size) * 6);
+    max-width: calc(var(--key-size) * 3);
+    max-height: calc(var(--key-size) * 6);
+    display: inline-block;
+}
+
+piano-key[type=b], .piano_b {
+    z-index: 0;
+    min-width: calc(var(--key-size) * 2);
+    min-height: calc(var(--key-size) * 4.5);
+    width: calc(var(--key-size) * 2);
+    height: calc(var(--key-size) * 4.5);
+    max-width: calc(var(--key-size) * 2);
+    max-height: calc(var(--key-size) * 4.5);
+}
+piano-key[type=b] {
+    margin: 0px calc(var(--key-size) * -1);
+}
+
+piano-key .button-top
+{
+    pointer-events:all;
+    transform: translate(0px,0px);
+    fill:#ffffff;
+    transition: all 0.33s ease;
+}
+piano-key[type=b] .button-top {
+    fill:#444444;
+}
+piano-key .button-top:hover
+{
+    transition: fill 0.1s ease;
+    transition: stroke 0.1s ease;
+    transition: transform 0.33s ease;
+}
+piano-key.pressed .button-top
+{
+    fill:#a1e19a;
+    transform: translate(0px,4px);
     transition: transform 0.07s ease;
 }
 /*#endregion*/

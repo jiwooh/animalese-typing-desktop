@@ -97,14 +97,45 @@ author: joshxviii
 
 
             <div id="top_row">
-                <div id="keyboard"></div>
+                <key-board show="true"></key-board>
+                <piano-board show="false"></piano-board>
 
                 <div id="key_remapper">
-                    <h3 translation="key-remapper">Key Remapper</h3>
+                    <div style="width: 100%;">
+                        <h3 translation="key-remapper" style="margin-block: 0px 4px;">Key Remapper</h3>
+                        <label id="keycode_label">None</label>
+                    </div>
 
-                    
-                    <input id="remap_alpha" type="text" onclick="this.focus()"/>
-                    <label id="keycode_label" style="min-height: 16px;">0</label>
+
+                    <div id="remap_types">
+                        <div class="remap_type">None</div>
+                        <div class="remap_type">
+                            <div class="wrapper">
+                                <input id="remap_alpha_in" type="text" maxlength="1" onclick="this.focus()"/>
+                            </div>
+                            <label id="remap_alpha_out" for="remap_alpha_in">A</label>
+                        </div>
+                        <div class="remap_type">Singing</div>
+                        <div class="remap_type">Sound Effects</div>
+                    </div>
+                    <div>
+                        <div class="labeled_con" style="flex-direction: column;">
+                            <input type="radio" name="remap_type" id="remap_type_1" value="1" checked>
+                            <label for="remap_type_1" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">❌</label>
+                        </div>
+                        <div class="labeled_con" style="flex-direction: column;">
+                            <input type="radio" name="remap_type" id="remap_type_2" value="2">
+                            <label for="remap_type_2" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">💬</label>
+                        </div>
+                        <div class="labeled_con" style="flex-direction: column;">
+                            <input type="radio" name="remap_type" id="remap_type_3" value="3">
+                            <label for="remap_type_3" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">🎵</label>
+                        </div>
+                        <div class="labeled_con" style="flex-direction: column;">
+                            <input type="radio" name="remap_type" id="remap_type_4" value="4">
+                            <label for="remap_type_4" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">🔊</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 

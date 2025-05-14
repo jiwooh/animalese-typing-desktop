@@ -236,12 +236,13 @@ function updateAlwaysEnabled(value) {
 
 //#region Key press detect
 window.api.onKeyPress( (keyInfo) => {
+    if (remap_alpha_in === document.activeElement) return;
     lastKey = keyInfo;
-    const path = (keyInfo.isShiftKey && keyInfo.data.shiftSound) || keyInfo.data.sound;
+    const path = (keyInfo.isShiftDown && keyInfo.data.shiftSound) || keyInfo.data.sound;
     switch (true) {
         case ( path.startsWith('&.voice') ):
             // Uppercase
-            if (keyInfo.isCapsLock !== keyInfo.isShiftKey) window.audio.play(path, {
+            if (keyInfo.isCapsLock !== keyInfo.isShiftDown) window.audio.play(path, {
                 volume: .75,
                 pitch_shift: 1.5 + voiceProfile.pitch_shift,
                 pitch_variation: 1 + voiceProfile.pitch_variation,
@@ -251,7 +252,7 @@ window.api.onKeyPress( (keyInfo) => {
         break;
         case ( path.startsWith('&.sing') ):
             window.audio.play(path, {
-                hold: keyInfo.keycode
+                hold: keyInfo.keycode// lock keycode until it is released with keyup 
             });
         break;
         default: window.audio.play(path);
@@ -335,20 +336,48 @@ function openSettings() {
 
 
 
+function isAlpha(str) {return str?(str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false:false;}
 
+const remap_alpha_in = document.getElementById('remap_alpha_in');
+const remap_alpha_out = document.getElementById('remap_alpha_out');
 
 document.addEventListener('keydown', e => {
+    if (remap_alpha_in === document.activeElement) return;
     //document.getElementById('keycode_label').innerHTML = lastKey.keycode;
-    document.getElementById('keycode_label').innerHTML = (lastKey.isShiftKey && lastKey.data.shiftSound) || lastKey.data.sound;
-   
+    //(lastKey.isShiftDown && lastKey.data.shiftSound) || lastKey.data.sound;
+    document.getElementById('keycode_label').innerHTML = ((lastKey.isShiftDown && lastKey.data.key !== "Shift"?"Shift + ":"") + lastKey.data.key).toUpperCase();
 })
 
-const remap_alpha = document.getElementById('remap_alpha');
-remap_alpha.addEventListener('selectstart', e => e.preventDefault());
-remap_alpha.addEventListener('mousedown', e => e.preventDefault());
-remap_alpha.addEventListener('input', e => {
-    remap_alpha.blur();
-    remap_alpha.value = '';
-    if(e.data) remap_alpha.value =  e.data.toUpperCase();
-    setTimeout(() => {remap_alpha.focus();}, 1);
-})
+remap_alpha_in.addEventListener('selectstart', e => e.preventDefault());
+remap_alpha_in.addEventListener('mousedown', e => e.preventDefault());
+remap_alpha_in.addEventListener('beforeinput', (e) => {
+    if (isAlpha(e.data)) {
+        setTimeout(() => {
+            remap_alpha_in.blur();
+            remap_alpha_in.value = ''
+        }, 1);
+        e.preventDefault();
+
+        remap_alpha_out.innerHTML = e.data.charAt(0).toUpperCase();       
+    } else e.preventDefault();
+});
+
+document.querySelectorAll('input[name="remap_type"]').forEach((radio, index) => {
+    radio.addEventListener('change', () => {
+        const allTypes = document.querySelectorAll('#remap_types .remap_type');
+        allTypes.forEach(el => el.setAttribute('show',false));
+
+        // Show the selected one (index is 0-based)
+        const selectedIndex = parseInt(radio.value) - 1;
+        if (allTypes[selectedIndex]) {
+        allTypes[selectedIndex].setAttribute('show',true);
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const checked = document.querySelector('input[name="remap_type"]:checked');
+    if (checked) {
+        checked.dispatchEvent(new Event('change'));
+    }
+});

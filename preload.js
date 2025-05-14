@@ -19,7 +19,7 @@ contextBridge.exposeInMainWorld('api', {
         const keyInfo = {
             data: keycodeToSound[platform][e.keycode],
             keycode: e.keycode,
-            isShiftKey: e.shiftKey,
+            isShiftDown: e.shiftKey,
             isCapsLock: isCapsLockActive()
         }
         callback(keyInfo);

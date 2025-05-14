@@ -29,6 +29,11 @@
     "mac": {
       "target": "dmg",
       "icon": "assets/images/icon.png"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Utility",
+      "icon": "assets/images/icon.png"
     }
   },
   "license": "MIT",

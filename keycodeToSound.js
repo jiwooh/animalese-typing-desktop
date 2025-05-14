@@ -93,10 +93,10 @@ const standard = {
 /* PageUp */        3657: { key: 'PageUp', sound: '' },
 /* PageDown */      3665: { key: 'PageDown', sound: '' },
 
-/* ↑ */             57416: { key: '↑', sound: 'sfx.arrow_up' },
-/* ← */             57419: { key: '←', sound: 'sfx.arrow_left' },
-/* → */             57421: { key: '→', sound: 'sfx.arrow_right' },
-/* ↓ */             57424: { key: '↓', sound: 'sfx.arrow_down' },
+/* ↑ */             57416: { key: 'Up', sound: 'sfx.arrow_up' },
+/* ← */             57419: { key: 'Left', sound: 'sfx.arrow_left' },
+/* → */             57421: { key: 'Right', sound: 'sfx.arrow_right' },
+/* ↓ */             57424: { key: 'Down', sound: 'sfx.arrow_down' },
 
 /* Shift */         42: { key: 'Shift', sound: '' },
 /* Shift */         54: { key: 'Shift', sound: '' },
@@ -108,26 +108,26 @@ const standard = {
 /* Meta */          3676: { key: 'Meta', sound: '' },
 /* Menu */          3677: { key: 'Menu', sound: '' },
 
-// Numpad
+// Num
 /* Num Lock */      69: { key: 'Num Lock', sound: '' },
-/* Numpad / */      3637: { key: 'Numpad /', sound: '' },
-/* Numpad * */      55: { key: 'Numpad *', sound: '' },
-/* Numpad - */      74: { key: 'Numpad -', sound: '' },
-/* Numpad - */      3597: { key: 'Numpad -', sound: '' },
-/* Numpad + */      78: { key: 'Numpad +', sound: '' },
-/* Numpad Enter */  3612: { key: 'Numpad Enter', sound: 'sfx.enter' },
-/* Numpad . */      83: { key: 'Numpad .', sound: '' },
-
-/* Numpad 1 */      79: { key: 'Numpad 1', sound: '&.sing.C4' },
-/* Numpad 2 */      80: { key: 'Numpad 2', sound: '&.sing.D4' },
-/* Numpad 3 */      81: { key: 'Numpad 3', sound: '&.sing.Eb4' },
-/* Numpad 4 */      75: { key: 'Numpad 4', sound: '&.sing.F4' },
-/* Numpad 5 */      76: { key: 'Numpad 5', sound: '&.sing.G4' },
-/* Numpad 6 */      77: { key: 'Numpad 6', sound: '&.sing.Ab4' },
-/* Numpad 7 */      71: { key: 'Numpad 7', sound: '&.sing.Bb4' },
-/* Numpad 8 */      72: { key: 'Numpad 8', sound: '&.sing.C5' },
-/* Numpad 9 */      73: { key: 'Numpad 9', sound: '&.sing.D5' },
-/* Numpad 0 */      82: { key: 'Numpad 0', sound: '&.sing.Eb5' },
+/* Num / */         3637: { key: 'Num /', sound: '' },
+/* Num * */         55: { key: 'Num *', sound: '' },
+/* Num - */         74: { key: 'Num -', sound: '' },
+/* Num - */         3597: { key: 'Num -', sound: '' },
+/* Num + */         78: { key: 'Num +', sound: '' },
+/* Num Enter */     3612: { key: 'Num Enter', sound: 'sfx.enter' },
+/* Num . */         83: { key: 'Num .', sound: '' },
+    
+/* Num 1 */         79: { key: 'Num 1', sound: '&.sing.C4' },
+/* Num 2 */         80: { key: 'Num 2', sound: '&.sing.D4' },
+/* Num 3 */         81: { key: 'Num 3', sound: '&.sing.Eb4' },
+/* Num 4 */         75: { key: 'Num 4', sound: '&.sing.F4' },
+/* Num 5 */         76: { key: 'Num 5', sound: '&.sing.G4' },
+/* Num 6 */         77: { key: 'Num 6', sound: '&.sing.Ab4' },
+/* Num 7 */         71: { key: 'Num 7', sound: '&.sing.Bb4' },
+/* Num 8 */         72: { key: 'Num 8', sound: '&.sing.C5' },
+/* Num 9 */         73: { key: 'Num 9', sound: '&.sing.D5' },
+/* Num 0 */         82: { key: 'Num 0', sound: '&.sing.Eb5' },
 };
 
 const darwin = JSON.parse(JSON.stringify(standard));
@@ -151,10 +151,10 @@ Object.assign(win32, {
   /* End */         61007: { key: 'End', sound: '' },
   /* PageUp */      61001: { key: 'PageUp', sound: '' },
   /* PageDown */    61009: { key: 'PageDown', sound: '' },
-  /* ↑ */           61000: { key: '↑', sound: 'sfx.arrow_up' },
-  /* ← */           61003: { key: '←', sound: 'sfx.arrow_left' },
-  /* → */           61005: { key: '→', sound: 'sfx.arrow_right' },
-  /* ↓ */           61008: { key: '↓', sound: 'sfx.arrow_down' },
+  /* ↑ */           61000: { key: 'Up', sound: 'sfx.arrow_up' },
+  /* ← */           61003: { key: 'Left', sound: 'sfx.arrow_left' },
+  /* → */           61005: { key: 'Right', sound: 'sfx.arrow_right' },
+  /* ↓ */           61008: { key: 'Down', sound: 'sfx.arrow_down' },
 });
 
 const linux = JSON.parse(JSON.stringify(standard));

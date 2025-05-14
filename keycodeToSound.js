@@ -1,6 +1,6 @@
 'use strict';
 
-//TODO: create a keyboard Remapper to remap keys to sounds. the will hole the default mappings
+//TODO: create a keyboard Remapper to remap keys to sounds.
 const standard = {
 /* Esc */           1: { key: 'Esc', sound: 'sfx.enter' },
 

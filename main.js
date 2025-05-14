@@ -1,7 +1,6 @@
 const { app, Tray, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const iohook = require('iohook');
-const os = require("os");
 const Store = require('electron-store');
 const activeWin = require('active-win');
 
@@ -196,6 +195,9 @@ app.on('ready', () => {
     if (!disabled) iohook.start();
     iohook.on('keydown', e => {
         bgwin.webContents.send('keydown', e);
+    });
+    iohook.on('keyup', e => {
+        bgwin.webContents.send('keyup', e);
     });
 });
 

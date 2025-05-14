@@ -498,8 +498,28 @@ input[type=text]::placeholder {
     color: #95846d7d;
     font-size: 14px;
     text-align: center;
+    flex-direction: column;
 }
 
+#remap_alpha {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 8px dashed transparent;
+    min-height: 60px;
+    max-height: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    font-size: 32px;
+    font-weight: 900;
+    caret-color: transparent;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+#remap_alpha:focus {
+    border: 8px dashed #6cd576ab;
+}
 
 #settings_overlay {
     width: 320px;

@@ -8,6 +8,11 @@ ipcRenderer.on('updated-volume', (_, volume) => {
     Howler.masterGain.gain.value = volume * 2;
 });
 
+ipcRenderer.on('keyup', (_, e) => {
+    cutOffAudio(waitingForRelease[e.keycode], 0.075);
+    delete waitingForRelease[e.keycode];
+});
+
 let v = ipcRenderer.sendSync('get-store-data-sync').voice_profile;
 ipcRenderer.on('updated-voice_profile', (_, voice_profile) => v = voice_profile);
 let mode = ipcRenderer.sendSync('get-store-data-sync').audio_mode;
@@ -17,6 +22,9 @@ ipcRenderer.on('updated-audio_mode', (_, audio_mode) => mode = audio_mode);
 //TODO: convert file type from .wav to .acc
 const audio_path = path.join(__dirname, './assets/audio/');
 const file_type = ".ogg";
+
+const waitingForRelease = {};// a list of audio paths waiting for key up event to be released
+const activeChannels = {};// map of currently playing sounds on a given channel (only one sound per channel)
 
 //#region Audio Sprite Maps
 // (60,000/2) / 150bpm = 200ms
@@ -48,33 +56,32 @@ const voice_sprite = {
     y: [200 * 24,   200],
     z: [200 * 25,   200],
 }
-//TODO: remake the singing audio files. currently the have some artifacts and are too quiet
-// (60,000/2) / 100bpm = 300ms
+// (60,000) / 60bpm = 1000ms
 const notes_sprite = {
-    C4:  [300 * 0, 300],
-    Db4: [300 * 1, 300],
-    D4:  [300 * 2, 300],
-    Eb4: [300 * 3, 300],
-    E4:  [300 * 4, 300],
-    F4:  [300 * 5, 300],
-    Gb4: [300 * 6, 300],
-    G4:  [300 * 7, 300],
-    Ab4: [300 * 8, 300],
-    A4:  [300 * 9, 300],
-    Bb4: [300 * 10, 300],
-    B4:  [300 * 11, 300],
-    C5:  [300 * 12, 300],
-    Db5: [300 * 13, 300],
-    D5:  [300 * 14, 300],
-    Eb5: [300 * 15, 300],
-    E5:  [300 * 16, 300],
-    F5:  [300 * 17, 300],
-    Gb5: [300 * 18, 300],
-    G5:  [300 * 19, 300],
-    Ab5: [300 * 20, 300],
-    A5:  [300 * 21, 300],
-    Bb5: [300 * 22, 300],
-    B5:  [300 * 23, 300],
+    C4:  [1000 * 0,  1000],
+    Db4: [1000 * 1,  1000],
+    D4:  [1000 * 2,  1000],
+    Eb4: [1000 * 3,  1000],
+    E4:  [1000 * 4,  1000],
+    F4:  [1000 * 5,  1000],
+    Gb4: [1000 * 6,  1000],
+    G4:  [1000 * 7,  1000],
+    Ab4: [1000 * 8,  1000],
+    A4:  [1000 * 9,  1000],
+    Bb4: [1000 * 10, 1000],
+    B4:  [1000 * 11, 1000],
+    C5:  [1000 * 12, 1000],
+    Db5: [1000 * 13, 1000],
+    D5:  [1000 * 14, 1000],
+    Eb5: [1000 * 15, 1000],
+    E5:  [1000 * 16, 1000],
+    F5:  [1000 * 17, 1000],
+    Gb5: [1000 * 18, 1000],
+    G5:  [1000 * 19, 1000],
+    Ab5: [1000 * 20, 1000],
+    A5:  [1000 * 21, 1000],
+    Bb5: [1000 * 22, 1000],
+    B5:  [1000 * 23, 1000],
 }
 // (60,000) / 100bpm = 600ms
 const special_sprite = {
@@ -149,11 +156,11 @@ function applyIntonation(bank, id, intonation, currentRate) {
         }, i * interval);
     }
 }
+
 // audio channel cutoff logic
-const activeChannels = {};// map of currently playing sounds on a given channel (only one sound per channel)
-function cutOffPrevious(channel) {
-    CUTOFF_DURATION=0.025;
-    const prev = activeChannels[channel];
+function cutOffAudio(audio, release=0.025) {
+    CUTOFF_DURATION=release;
+    const prev = audio;
     if (!prev || !prev.bank.playing(prev.id)) return;
 
     prev.bank.fade(prev.bank.volume(prev.id), 0, CUTOFF_DURATION * 1000, prev.id);
@@ -171,6 +178,8 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
     // main audio playback function
     function playSound(path, options = {/*volume, pitch_shift, pitch_variation, intonation, channel*/}) {
         if (!path || path === '') return;
+        if (waitingForRelease[options.hold]) return;
+
         const isAnimalese = path.startsWith('&');
         const isSfx = path.startsWith('sfx')
         
@@ -204,7 +213,8 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
             } 
             else {
                 Object.assign(options, {
-                    volume: options.volume ?? 1.0
+                    volume: options.volume ?? 1.0,
+                    channel: options.channel ?? path
                 });
             }
             path = path.replace('&', v.voice_type);
@@ -249,7 +259,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
         }
 
         // AUDIO OPTIONS
-        if (options.channel !== undefined) cutOffPrevious(options.channel);
+        if (options.channel !== undefined) cutOffAudio(activeChannels[options.channel]);
 
         const id = (bank._sprite) ? bank.play(sprite) : bank.play();
 
@@ -267,6 +277,7 @@ function createAudioManager(userVolume /* volume settings are passed in from [pr
         if (options.intonation !== undefined) applyIntonation(bank, id, options.intonation, bank.rate(id));
         // add this sound to a cutoff channel
         if (options.channel !== undefined) activeChannels[options.channel] = { bank, id };
+        if (options.hold !== undefined) waitingForRelease[options.hold] = { bank, id };
     }
     return { play: playSound };
 }

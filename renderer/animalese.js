@@ -3,6 +3,7 @@
  */
 
 const preferences = window.settings;
+let lastKey = {};
 
 // custom svg button element
 customElements.define('svg-button', class extends HTMLElement {
@@ -234,22 +235,26 @@ function updateAlwaysEnabled(value) {
 }
 
 //#region Key press detect
-window.api.onKeyPress( (map, e, isCapsLockOn) => {
+window.api.onKeyPress( (keyInfo) => {
+    lastKey = keyInfo;
+    const path = (keyInfo.isShiftKey && keyInfo.data.shiftSound) || keyInfo.data.sound;
     switch (true) {
-        case ( map.sound.startsWith('&.voice') ):
+        case ( path.startsWith('&.voice') ):
             // Uppercase
-            if (isCapsLockOn !== e.shiftKey) window.audio.play(map.sound, {
+            if (keyInfo.isCapsLock !== keyInfo.isShiftKey) window.audio.play(path, {
                 volume: .75,
                 pitch_shift: 1.5 + voiceProfile.pitch_shift,
                 pitch_variation: 1 + voiceProfile.pitch_variation,
             });
             // Lowercase
-            else window.audio.play(map.sound);
+            else window.audio.play(path);
         break;
-        case (e.shiftKey && (map.shiftSound !== undefined)):
-            window.audio.play(map.shiftSound);
+        case ( path.startsWith('&.sing') ):
+            window.audio.play(path, {
+                hold: keyInfo.keycode
+            });
         break;
-        default: window.audio.play(map.sound);
+        default: window.audio.play(path);
         break;
     }
 });
@@ -316,3 +321,34 @@ function openSettings() {
     const show = document.getElementById('focus_out').getAttribute('show')==="true"?false:true;
     document.getElementById('focus_out').setAttribute('show', show);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('keydown', e => {
+    //document.getElementById('keycode_label').innerHTML = lastKey.keycode;
+    document.getElementById('keycode_label').innerHTML = (lastKey.isShiftKey && lastKey.data.shiftSound) || lastKey.data.sound;
+   
+})
+
+const remap_alpha = document.getElementById('remap_alpha');
+remap_alpha.addEventListener('selectstart', e => e.preventDefault());
+remap_alpha.addEventListener('mousedown', e => e.preventDefault());
+remap_alpha.addEventListener('input', e => {
+    remap_alpha.blur();
+    remap_alpha.value = '';
+    if(e.data) remap_alpha.value =  e.data.toUpperCase();
+    setTimeout(() => {remap_alpha.focus();}, 1);
+})

@@ -16,8 +16,10 @@ contextBridge.exposeInMainWorld('api', {
     closeWindow: () => ipcRenderer.send('close-window'),
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
     onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => {
+        const data = keycodeToSound[platform][e.keycode];
+        if (data === undefined) return;
         const keyInfo = {
-            data: keycodeToSound[platform][e.keycode],
+            data: data,
             keycode: e.keycode,
             isShiftDown: e.shiftKey,
             isCapsLock: isCapsLockActive()

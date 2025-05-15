@@ -129,7 +129,7 @@ input[type=button] {
     outline: none;
 }
 
-input[type=button]:hover {
+input[type=button]:not(:disabled):hover {
     background-color: #e0c49e;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
     transform: scale(1.05);
@@ -209,6 +209,7 @@ input[type=radio]:checked::before {
 }
 
 .svg-button {
+    cursor: pointer;
     display: inline-block;
     position: relative;
     filter: drop-shadow(0 0 2px #0000005d);
@@ -501,8 +502,13 @@ input[type=text]::placeholder {
     flex-direction: column;
 }
 
-#keycode_label {
+#remap_monitor {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     color: #95846da9;
+    min-width: 16px;
     min-height: 16px;
     background-color: #ece1c167;
     border-radius: 8px;
@@ -510,6 +516,25 @@ input[type=text]::placeholder {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    text-align: center;
+    line-height: 16px;
+    transition: all 0.2s ease;
+    border: 4px dashed transparent;
+}
+#remap_monitor[monitoring=true] {
+    border: 4px dashed #6cd576ab;
+}
+#remap_in {
+    width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    /* font-size: 0; */
+    position: absolute;
+    background-color: #00aaff;
+    caret-color: transparent;
+    color: transparent;
 }
 
 #remap_types {
@@ -524,42 +549,6 @@ input[type=text]::placeholder {
 
 .remap_type[show=true] {
   display: block;
-}
-
-#remap_alpha_in,
-#remap_alpha_out {
-    padding: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    min-height: 40px;
-    max-height: 40px;
-    min-width: 40px;
-    max-width: 40px;
-    font-size: 28px;
-    font-weight: 900;
-    cursor: pointer;
-    display: inline-block;
-    text-align: center;
-    line-height: 40px;
-    border: 8px dashed transparent;
-}
-#remap_alpha_in {
-    background-color: transparent;
-    caret-color: transparent;
-    transition: all 0.1s ease;
-    color: transparent;
-}
-#remap_alpha_in:focus {
-    border: 8px dashed #6cd576ab;
-}
-.wrapper {
-    position: absolute;
-}
-#remap_alpha_out {
-    background-color: #ECE4C1;
-    border-radius: 8px;
 }
 
 #settings_overlay {

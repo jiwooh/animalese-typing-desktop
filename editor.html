@@ -36,8 +36,8 @@ author: joshxviii
                 <div class="separator"></div>
                 
                 <div class="catagory">
-                    <h3 for="lang_select" translation="settings.lang">Language</h3>
-                    <select id="lang_select" onchange="updateLang()">
+                    <h3 translation="settings.lang">Language</h3>
+                    <select id="lang_select" onchange="updateLanguage(`${this.value}`)">
                         <option value="en"      translation="en"></option>
                         <option value="es"      translation="es"></option>
                         <option value="de"      translation="de"></option>
@@ -85,9 +85,15 @@ author: joshxviii
                         <tbody id="apps_tbody"></tbody>
                     </table>
                 </div>
+
+                <div class="catagory">
+                    <!-- <h3 translation="settings.reset">Reset Settings</h3> -->
+                    <input type="button" onclick="resetSettings()" translation="settings.reset"/>
+                </div>
+
                 <div class="separator"></div>
                 <div class="footer" title="GitHub" style="cursor: pointer;">
-                    <p onclick='window.api.goToUrl("https:\/\/github.com/joshxviii/animalese-typing-desktop")'>
+                    <p onclick="window.api.goToUrl('https:\/\/github.com/joshxviii/animalese-typing-desktop')">
                         Animalese Typing <text id="version"></text>
                     </p>
                 </div>
@@ -107,21 +113,23 @@ author: joshxviii
                 <div id="key_remapper">
                     <div style="width: 100%;">
                         <h3 translation="key-remapper" style="margin-block: 0px 4px;">Key Remapper</h3>
-                        <label id="keycode_label"></label>
+                        <input id="remap_in" type="text" maxlength="1" onclick="this.focus()" translation="click.to.remap"/>
+                        <label id="remap_monitor" for="remap_in" translation="click.to.remap"></label>
+                        <input id="remap_cancel" type="button" onclick="remapStop()" disabled translation="cancel.rebind"/>
                     </div>
 
 
                     <div id="remap_types">
                         <div class="remap_type"></div>
-                        <div class="remap_type">Speech</div>
+                        <div class="remap_type"></div>
                         <!-- <div class="remap_type">
                             <div class="wrapper">
                                 <input id="remap_alpha_in" type="text" maxlength="1" onclick="this.focus()"/>
                             </div>
                             <label id="remap_alpha_out" for="remap_alpha_in">A</label>
                         </div> -->
-                        <div class="remap_type">Notes</div>
-                        <div class="remap_type">Sound Effects</div>
+                        <div class="remap_type"></div>
+                        <div class="remap_type"></div>
                     </div>
                     <div>
                         <div class="labeled_con" style="flex-direction: column;">

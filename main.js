@@ -99,7 +99,6 @@ async function monitorActiveWindow() {
 function startActiveWindowMonitoring() {
     setInterval(monitorActiveWindow, 500); // check window every .5 seconds
 }
-app.disableHardwareAcceleration();
 function createMainWin() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({
@@ -156,10 +155,13 @@ function createTrayIcon() {
             type: 'checkbox',
             checked: app.getLoginItemSettings().openAtLogin,
             click: (menuItem) => {
-                app.setLoginItemSettings({
+                const settings = {
                     openAtLogin: menuItem.checked,
-                    openAsHidden: true
-                });
+                    openAsHidden: true,
+                };
+                if (process.platform === 'win32') settings.path = app.isPackaged ? app.getPath('exe') : process.execPath;
+
+                app.setLoginItemSettings(settings);
             }
         },
         {

@@ -60,6 +60,9 @@ const voice_sprite = {
     y: [200 * 24,   200],
     z: [200 * 25,   200],
 }
+
+// TODO: change the note's pitch with js rather than having a different hard-coded sound per note.
+// This will make adding custom sounds much easier later.
 // (60,000) / 60bpm = 1000ms
 const notes_sprite = {
     C4:  [1000 * 0,  1000],

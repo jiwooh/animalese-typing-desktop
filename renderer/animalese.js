@@ -226,9 +226,10 @@ function updateAlwaysEnabled(value) {
 
 //#region Key press detect
 window.api.onKeyPress( (keyInfo) => {
-    // if (remap_alpha_in === document.activeElement) return;
     lastKey = keyInfo;
+    if (isRemapping || remapIn === document.activeElement) return;
     const path = (keyInfo.isShiftDown && keyInfo.data.shiftSound) || keyInfo.data.sound;
+    if (path === undefined) return;
     switch (true) {
         case ( path.startsWith('&.voice') ):
             // Uppercase
@@ -328,12 +329,36 @@ function openSettings() {
 
 function isAlpha(str) {return str?(str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false:false;}
 
-// const remap_alpha_in = document.getElementById('remap_alpha_in');
-// const remap_alpha_out = document.getElementById('remap_alpha_out');
+//#region Key Remapper
+let isRemapping = false;
 
+const remapMonitor = document.getElementById('remap_monitor');
+const remapIn = document.getElementById('remap_in');
+const remapCancel = document.getElementById('remap_cancel');
+
+function remapStart() {
+    if (isRemapping == true) return;
+    isRemapping = true;
+    remapCancel.disabled = false;
+}
+
+function remapStop() {
+    isRemapping = false;
+    remapMonitor.setAttribute('monitoring', false)
+    remapMonitor.innerHTML = remapIn.getAttribute('placeholder');
+    remapCancel.disabled = true;
+}
+
+remapIn.addEventListener('focusin', e => remapMonitor.setAttribute('monitoring', true));
+remapIn.addEventListener('focusout', e => isRemapping?undefined:remapMonitor.setAttribute('monitoring', false));
+remapIn.addEventListener('selectstart', e => e.preventDefault());
+remapIn.addEventListener('mousedown', e => e.preventDefault());
 document.addEventListener('keydown', e => {
-    // if (remap_alpha_in === document.activeElement) return;
-    document.getElementById('keycode_label').innerHTML = ((lastKey.isShiftDown && lastKey.data.key !== "Shift"?"Shift + ":"") + lastKey.data.key).toUpperCase();
+    console.log('a');
+    if ( !(remapIn === document.activeElement || isRemapping) ) return;
+    remapStart();
+    
+    remapMonitor.innerHTML = ((lastKey.isShiftDown && lastKey.data.key !== "Shift"?"Shift + ":"") + lastKey.data.key).toUpperCase();
 
     const sound = (lastKey.isShiftDown && lastKey.data.shiftSound) || lastKey.data.sound
     const tabIndex = !sound||sound===''?0:sound.startsWith('&.voice')?1:sound.startsWith('&.sing')?2:sound.startsWith('sfx')?3:0
@@ -345,20 +370,6 @@ document.addEventListener('keydown', e => {
         }
     });
 })
-
-// remap_alpha_in.addEventListener('selectstart', e => e.preventDefault());
-// remap_alpha_in.addEventListener('mousedown', e => e.preventDefault());
-// remap_alpha_in.addEventListener('beforeinput', (e) => {
-//     if (isAlpha(e.data)) {
-//         setTimeout(() => {
-//             remap_alpha_in.blur();
-//             remap_alpha_in.value = ''
-//         }, 1);
-//         e.preventDefault();
-
-//         remap_alpha_out.innerHTML = e.data.charAt(0).toUpperCase();       
-//     } else e.preventDefault();
-// });
 
 document.querySelectorAll('input[name="remap_type"]').forEach( (radio, index) => {
     radio.addEventListener('change', () => {
@@ -380,3 +391,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const checked = document.querySelector('input[name="remap_type"]:checked');
     if (checked) checked.dispatchEvent(new Event('change'));
 });
+//#endregion

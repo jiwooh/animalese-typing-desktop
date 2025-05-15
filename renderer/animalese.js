@@ -167,24 +167,14 @@ window.addEventListener('load', scaleWindow);
 scaleWindow();
 
 //#region Translation stuff
-function updateTranslation() {
-    const lang = preferences.get('lang');
-    window.translator.load(lang);
-    document.querySelectorAll('[translation]').forEach(el => {
-        const key = el.getAttribute('translation');
-        if (key) {
-            if (el.type === 'text') el.setAttribute('placeholder', window.translator.t(key))
-            else el.innerHTML = window.translator.t(key);
-        }
-    });
-}
-updateTranslation();
-//#endregion
+updateLanguage(preferences.get('lang'));
 
-function updateLang() {// language selection update
-    preferences.set('lang', document.getElementById('lang_select').value);
-    updateTranslation();
+function updateLanguage(lang) {// language selection update
+    preferences.set('lang', lang);
+    window.translator.load(lang);
+    window.translator.update();
 }
+//#endregion
 
 function updatedActiveWindows(activeWindows = []) {
     const enabledApps = preferences.get('enabled_apps');

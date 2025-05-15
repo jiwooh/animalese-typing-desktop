@@ -47,7 +47,7 @@ contextBridge.exposeInMainWorld('api', {
 // translation functions
 contextBridge.exposeInMainWorld('translator', {
     load: (lang) => translator.loadLanguage(lang),
-    t: (key) => translator.translate(key)
+    update: () => translator.updateHtmlDocumentTranslations()
 });
 
 // user settings get/set

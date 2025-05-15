@@ -17,13 +17,24 @@ function loadLanguage(lang = 'en') {
         translations = {};
     }
 }
-loadLanguage('en');
+loadLanguage();
 
-function translate(key) {
-    return translations[key] || (defaultTranslations[key] || `Missing: ${key}`);
+// get translation
+function translate(key) { return translations[key] || (defaultTranslations[key] || `${key}`); }
+
+// update translations for all elements on the document
+function updateHtmlDocumentTranslations() {
+    document.querySelectorAll('[translation]').forEach(el => {
+        const key = el.getAttribute('translation');
+        if (key) {
+            if (el.type === 'text') el.setAttribute('placeholder', translate(key))
+            else if (el.type === 'button') el.setAttribute('value', translate(key))
+            else el.innerHTML = translate(key);
+        }
+    });
 }
 
 module.exports = {
     loadLanguage,
-    translate
+    updateHtmlDocumentTranslations
 };

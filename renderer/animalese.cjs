@@ -354,7 +354,6 @@ remapIn.addEventListener('focusout', e => isRemapping?undefined:remapMonitor.set
 remapIn.addEventListener('selectstart', e => e.preventDefault());
 remapIn.addEventListener('mousedown', e => e.preventDefault());
 document.addEventListener('keydown', e => {
-    console.log('a');
     if ( !(remapIn === document.activeElement || isRemapping) ) return;
     remapStart();
     
@@ -391,4 +390,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const checked = document.querySelector('input[name="remap_type"]:checked');
     if (checked) checked.dispatchEvent(new Event('change'));
 });
+//#endregion
+
+//#region request Permission
+window.api.onPermissionError((msg) => {
+    alert(`⚠️ Animalese Typing requires Accessibility permission to detect key presses.\n\nPlease allow access in System Settings > Privacy & Security > Accessibility.`);
+  
+    window.open("x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility");
+  });
 //#endregion

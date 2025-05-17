@@ -1,11 +1,16 @@
-const { app, Tray, BrowserWindow, Menu, ipcMain } = require('electron');
-const path = require('path');
-const iohook = require('iohook');
-const Store = require('electron-store');
-const activeWin = require('active-win');
+import { app, Tray, BrowserWindow, Menu, ipcMain } from 'electron';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import Store from 'electron-store';
+import isDev from 'electron-is-dev';
+import { spawn } from 'child_process';
+import { activeWindow as getActiveWindow } from '@deepfocus/get-windows';
 
-const SYSTRAY_ICON = path.join(__dirname, '/assets/images/icon.png');
-const SYSTRAY_ICON_OFF = path.join(__dirname, '/assets/images/icon_off.png');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const SYSTRAY_ICON = (process.platform === 'darwin') ? path.join(__dirname, '/assets/images/icon_18x18.png') : path.join(__dirname, '/assets/images/icon.png');
+const SYSTRAY_ICON_OFF = (process.platform === 'darwin') ? path.join(__dirname, '/assets/images/icon_off_18x18.png') : path.join(__dirname, '/assets/images/icon_off.png');
 const ICON = path.join(__dirname, '/assets/images/icon.png');
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -24,7 +29,7 @@ function setDisable(value) {
         tray.setImage(disabled?SYSTRAY_ICON_OFF:SYSTRAY_ICON);
         tray.setToolTip(disabled?'Animalese Typing: Disabled':'Animalese Typing');
     }
-    if (disabled) iohook.stop(); else iohook.start();
+    if (disabled) stopKeyListener(); else startKeyListener();
 }
 
 if (!gotTheLock) app.quit(); // if another instance is already running then quit
@@ -65,7 +70,8 @@ ipcMain.on('minimize-window', (e) => {
 ipcMain.on('get-app-info', (e) => {
     e.returnValue = {
         version: app.getVersion(),
-        name: app.getName()
+        name: app.getName(),
+        platform: process.platform
     }
 });
 
@@ -77,7 +83,8 @@ let activeWindows = [];
 
 // check for active window changes and update `lastActiveWindow` when the window changes
 async function monitorActiveWindow() {
-    const activeWindow = await activeWin();
+    const activeWindow = await getActiveWindow();
+
     if (!activeWindow?.owner?.name) return;// return early if invlaid window
 
     const winName = activeWindow.owner.name
@@ -102,17 +109,18 @@ function startActiveWindowMonitoring() {
 function createMainWin() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({
-        width: 0,
-        height: 0,
+        width: 720,
+        height: 360,
         icon: ICON,
         resizable: true,
         frame: false,
         skipTaskbar: false,
         show: false,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload.cjs'),
             contextIsolation: true,
-            nodeIntegration: false
+            nodeIntegration: false,
+            sandbox: false
         }
     });
     bgwin.removeMenu();
@@ -151,6 +159,10 @@ function createTrayIcon() {
 
     const contextMenu = Menu.buildFromTemplate([
         {
+            label: 'Show Settings',
+            click: () => { showIfAble(); }
+        },
+        {
             label: 'Run on startup',
             type: 'checkbox',
             checked: app.getLoginItemSettings().openAtLogin,
@@ -167,24 +179,77 @@ function createTrayIcon() {
         {
             label: 'Quit',
             click: () => {
-                iohook.unload();
-                iohook.stop();
+                stopKeyListener();
                 app.quit();
             }
         }
     ]);
     tray.setContextMenu(contextMenu);
-    tray.on('click', () => { showIfAble(); });
+    // On Windows, clicking shows the window, while on macOS it shows the context menu
+    if (process.platform != 'darwin') {
+        tray.on('click', () => { showIfAble(); });
+    }
     tray.displayBalloon({
         title: "Animalese Typing",
         content: "Animalese Typing is Running!"
-    });    
+    });
+}
+
+let iohook = null;
+let macKeyListener = null;
+
+async function startKeyListener() {
+    if (process.platform != 'darwin') {
+        if (!iohook) iohook = (await import('iohook')).default;
+        iohook.on('keydown', e => bgwin.webContents.send('keydown', e));
+        iohook.on('keyup', e => bgwin.webContents.send('keyup', e));
+        iohook.start();
+    } else {
+        const listenerPath = isDev
+            ? path.join(__dirname, 'swift-key-listener')
+            : path.join(process.resourcesPath, 'swift-key-listener');
+        macKeyListener = spawn(listenerPath);
+        macKeyListener.stdout.on('data', data => {
+            const lines = data.toString().split('\n').filter(Boolean);
+
+            for (const line of lines) {
+                if (line.toLowerCase().includes('accessibility') || line.toLowerCase().includes('permission')) {
+                    bgwin.webContents.send('permission-error', line);
+                    continue;
+                }
+                try {
+                    const event = JSON.parse(line);
+                    if (event.type === 'keydown' || event.type === 'keyup') {
+                        bgwin.webContents.send(event.type, {
+                            keycode: event.keycode,
+                            shiftKey: event.shift
+                        });
+                    }
+                } catch (err) {
+                    console.error('Invalid JSON from swift-key-listener:', line);
+                }
+            }
+        });
+        macKeyListener.stderr.on('data', data => {
+            console.error('Swift listener error:', data.toString());
+        });
+    }
+}
+
+function stopKeyListener() {
+    if (process.platform != 'darwin' && iohook) {
+        iohook.unload();
+        iohook.stop();
+    } else if (macKeyListener) {
+        macKeyListener.kill();
+    }
 }
 
 app.whenReady().then(() => {
     startActiveWindowMonitoring();
     createMainWin();
     createTrayIcon();
+    if (!disabled) startKeyListener();
     if (process.platform === 'darwin') app.dock.hide();
     bgwin.hide();
 });
@@ -193,24 +258,16 @@ app.on('activate', function () {
     if (bgwin === null) createMainWin();
 });
 
-app.on('ready', () => {
-    if (!disabled) iohook.start();
-    iohook.on('keydown', e => {
-        bgwin.webContents.send('keydown', e);
-    });
-    iohook.on('keyup', e => {
-        bgwin.webContents.send('keyup', e);
-    });
-});
-
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit();
 });
 
 app.on('before-quit', () => {
-    iohook.unload();
-    iohook.stop();
-
+    stopKeyListener();
+    if (macKeyListener) {
+        macKeyListener.kill('SIGKILL');
+        macKeyListener = null;
+    }
     if (bgwin) {
         bgwin.removeAllListeners();
         bgwin.close();
@@ -220,4 +277,11 @@ app.on('before-quit', () => {
     ipcMain.removeAllListeners();
 });
 
-app.on('quit', () =>  app.exit(0) );
+app.on('quit', () => {
+    if (macKeyListener) {
+        macKeyListener.kill('SIGKILL');
+    }
+    app.exit(0);
+});
+
+export default app;

@@ -130,16 +130,132 @@ const standard = {
 /* Num 0 */         82: { key: 'Num 0', sound: '&.sing.Eb5' },
 };
 
-const darwin = JSON.parse(JSON.stringify(standard));
-Object.assign(darwin, {
-  /* Return */      28: { key: 'Return', sound: '' },
-  /* Option */      56: { key: 'Option', sound: '' },
-  /* Clear */       69: { key: 'Clear', sound: '' },
-  /* Option */      3640: { key: 'Option', sound: '' },
-  /* Fn */          3666: { key: 'Fn', sound: '' },
-  /* Command */     3675: { key: 'Command', sound: '' },
-  /* Command */     3676: { key: 'Command', sound: '' },
-});
+const darwin = {
+/* Esc */           53: { key: 'Esc', sound: 'sfx.enter' },
+
+/* F1 */            122: { key: 'F1', sound: '' },
+/* F2 */            120: { key: 'F2', sound: '' },
+/* F3 */            99: { key: 'F3', sound: '' },
+/* F4 */            118: { key: 'F4', sound: '' },
+/* F5 */            96: { key: 'F5', sound: '' },
+/* F6 */            97: { key: 'F6', sound: '' },
+/* F7 */            98: { key: 'F7', sound: '' },
+/* F8 */            100: { key: 'F8', sound: '' },
+/* F9 */            101: { key: 'F9', sound: '' },
+/* F10 */           109: { key: 'F10', sound: '' },
+/* F11 */           103: { key: 'F11', sound: '' },
+/* F12 */           111: { key: 'F12', sound: '' },
+
+/* F13 */           105: { key: 'F13', sound: '' },
+/* F14 */           107: { key: 'F14', sound: '' },
+/* F15 */           113: { key: 'F15', sound: '' },
+
+/* ` */             50: { key: '`', sound: '', shiftKey: '~', shiftSound: 'sfx.tilde' },//TODO: add sound for 'backtick'
+
+/* 1 */             18: { key: '1', sound: '&.sing.C4', shiftKey: '!', shiftSound: 'sfx.exclamation' },
+/* 2 */             19: { key: '2', sound: '&.sing.D4', shiftKey: '@', shiftSound: 'sfx.at' },
+/* 3 */             20: { key: '3', sound: '&.sing.E4', shiftKey: '#', shiftSound: 'sfx.pound' },
+/* 4 */             21: { key: '4', sound: '&.sing.F4', shiftKey: '$', shiftSound: 'sfx.dollar' },
+/* 5 */             23: { key: '5', sound: '&.sing.G4', shiftKey: '%', shiftSound: 'sfx.percent' },
+/* 6 */             22: { key: '6', sound: '&.sing.A4', shiftKey: '^', shiftSound: 'sfx.caret' },
+/* 7 */             26: { key: '7', sound: '&.sing.B4', shiftKey: '&', shiftSound: 'sfx.ampersand' },
+/* 8 */             28: { key: '8', sound: '&.sing.C5', shiftKey: '*', shiftSound: 'sfx.asterisk' },
+/* 9 */             25: { key: '9', sound: '&.sing.D5', shiftKey: '(', shiftSound: 'sfx.parenthesis_open' },
+/* 0 */             29: { key: '0', sound: '&.sing.E5', shiftKey: ')', shiftSound: 'sfx.parenthesis_closed' },
+
+/* - */             27: { key: '-', sound: '&.sing.F5', shiftKey: '_', shiftSound: 'sfx.default' }, //TODO: add sound for 'underscore'
+/* = */             24: { key: '=', sound: '&.sing.G5', shiftKey: '+', shiftSound: 'sfx.default' }, // TODO: add sound for 'plus'
+/* Backspace */     51: { key: 'Backspace', sound: 'sfx.backspace' },
+
+/* Tab */           48: { key: 'Tab', sound: 'sfx.tab' },
+/* Caps Lock */     57: { key: 'Caps Lock', sound: '' },
+
+/* a */             0: { key: 'a', shiftKey: 'A', sound: '&.voice.a' },
+/* b */             11: { key: 'b', shiftKey: 'B', sound: '&.voice.b' },
+/* c */             8: { key: 'c', shiftKey: 'C', sound: '&.voice.c' },
+/* d */             2: { key: 'd', shiftKey: 'D', sound: '&.voice.d' },
+/* e */             14: { key: 'e', shiftKey: 'E', sound: '&.voice.e' },
+/* f */             3: { key: 'f', shiftKey: 'F', sound: '&.voice.f' },
+/* g */             5: { key: 'g', shiftKey: 'G', sound: '&.voice.g' },
+/* h */             4: { key: 'h', shiftKey: 'H', sound: '&.voice.h' },
+/* i */             34: { key: 'i', shiftKey: 'I', sound: '&.voice.i' },
+/* j */             38: { key: 'j', shiftKey: 'J', sound: '&.voice.j' },
+/* k */             40: { key: 'k', shiftKey: 'K', sound: '&.voice.k' },
+/* l */             37: { key: 'l', shiftKey: 'L', sound: '&.voice.l' },
+/* m */             46: { key: 'm', shiftKey: 'M', sound: '&.voice.m' },
+/* n */             45: { key: 'n', shiftKey: 'N', sound: '&.voice.n' },
+/* o */             31: { key: 'o', shiftKey: 'O', sound: '&.voice.o' },
+/* p */             35: { key: 'p', shiftKey: 'P', sound: '&.voice.p' },
+/* q */             12: { key: 'q', shiftKey: 'Q', sound: '&.voice.q' },
+/* r */             15: { key: 'r', shiftKey: 'R', sound: '&.voice.r' },
+/* s */             1: { key: 's', shiftKey: 'S', sound: '&.voice.s' },
+/* t */             17: { key: 't', shiftKey: 'T', sound: '&.voice.t' },
+/* u */             32: { key: 'u', shiftKey: 'U', sound: '&.voice.u' },
+/* v */             9: { key: 'v', shiftKey: 'V', sound: '&.voice.v' },
+/* w */             13: { key: 'w', shiftKey: 'W', sound: '&.voice.w' },
+/* x */             7: { key: 'x', shiftKey: 'X', sound: '&.voice.x' },
+/* y */             16: { key: 'y', shiftKey: 'Y', sound: '&.voice.y' },
+/* z */             6: { key: 'z', shiftKey: 'Z', sound: '&.voice.z' },
+
+/* [ */             33: { key: '[', sound: 'sfx.bracket_open', shiftKey: '{', shiftSound: 'sfx.brace_open' },
+/* ] */             30: { key: ']', sound: 'sfx.bracket_closed', shiftKey: '}', shiftSound: 'sfx.brace_closed' },
+/* \ */             42: { key: '\\', sound: 'sfx.slash_back', shiftKey: '|', shiftSound: 'sfx.default' }, //TODO: add sound for 'pipe'
+/* / */             44: { key: '/', sound: 'sfx.slash_forward', shiftKey: '?', shiftSound: 'sfx.question' },
+
+/* ; */             41: { key: ';', sound: 'sfx.default', shiftKey: ':', shiftSound: 'sfx.default' }, //TODO: add sound for 'colon'/'semicolon'
+/*  */              39: { key: '\'', sound: 'sfx.default', shiftKey: '"', shiftSound: 'sfx.default' }, //TODO: add sound for 'quote'/'apostrophe'
+/* Enter */         36: { key: 'Enter', sound: 'sfx.enter' },
+
+/* , */             43: { key: ',', sound: 'sfx.default', shiftKey: '<', shiftSound: 'sfx.default' },//TODO: add sound for 'comma'/'less than'
+/* . */             47: { key: '.', sound: 'sfx.default', shiftKey: '>', shiftSound: 'sfx.default' },//TODO: add sound for 'period'/'greater than'
+
+/* Space */         49: { key: 'Space', sound: '' },
+
+/* PrintScreen */   3639: { key: 'PrintScreen', sound: '' },
+/* ScrollLock */    70: { key: 'ScrollLock', sound: '' },
+/* Pause */         3653: { key: 'Pause', sound: '' },
+
+/* Delete */        117: { key: 'Delete', sound: '' },
+/* Home */          115: { key: 'Home', sound: '' },
+/* End */           119: { key: 'End', sound: '' },
+/* PageUp */        116: { key: 'PageUp', sound: '' },
+/* PageDown */      121: { key: 'PageDown', sound: '' },
+
+/* ↑ */             126: { key: 'Up', sound: 'sfx.arrow_up' },
+/* ← */             123: { key: 'Left', sound: 'sfx.arrow_left' },
+/* → */             124: { key: 'Right', sound: 'sfx.arrow_right' },
+/* ↓ */             125: { key: 'Down', sound: 'sfx.arrow_down' },
+
+/* Shift */         56: { key: 'Shift', sound: '' },
+/* Shift */         60: { key: 'Shift', sound: '' },
+/* Ctrl */          59: { key: 'Ctrl', sound: '' },
+/* Ctrl */          62: { key: 'Ctrl', sound: '' },
+/* Alt */           58: { key: 'Alt', sound: '' },
+/* Alt */           61: { key: 'Alt', sound: '' },
+/* Command */       55: { key: 'Command', sound: '' },
+/* Command */       54: { key: 'Command', sound: '' },
+/* F18 */           79: { key: 'Command', sound: '' },
+
+// Num
+/* Num / */         75: { key: 'Num /', sound: '' },
+/* Num * */         67: { key: 'Num *', sound: '' },
+/* Num - */         78: { key: 'Num -', sound: '' },
+/* Num = */         81: { key: 'Num =', sound: '' },
+/* Num + */         69: { key: 'Num +', sound: '' },
+/* Num Enter */     76: { key: 'Num Enter', sound: 'sfx.enter' },
+/* Num . */         65: { key: 'Num .', sound: '' },
+    
+/* Num 1 */         83: { key: 'Num 1', sound: '&.sing.C4' },
+/* Num 2 */         84: { key: 'Num 2', sound: '&.sing.D4' },
+/* Num 3 */         85: { key: 'Num 3', sound: '&.sing.Eb4' },
+/* Num 4 */         86: { key: 'Num 4', sound: '&.sing.F4' },
+/* Num 5 */         87: { key: 'Num 5', sound: '&.sing.G4' },
+/* Num 6 */         88: { key: 'Num 6', sound: '&.sing.Ab4' },
+/* Num 7 */         89: { key: 'Num 7', sound: '&.sing.Bb4' },
+/* Num 8 */         91: { key: 'Num 8', sound: '&.sing.C5' },
+/* Num 9 */         92: { key: 'Num 9', sound: '&.sing.D5' },
+/* Num 0 */         82: { key: 'Num 0', sound: '&.sing.Eb5' },
+};
 
 const win32 = JSON.parse(JSON.stringify(standard));
 Object.assign(win32, {

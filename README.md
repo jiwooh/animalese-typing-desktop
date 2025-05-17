@@ -19,4 +19,4 @@ Animalese Typing is a desktop application that plays animalese sound effects as 
 - **Randomized Sound Option** - *This will "disguise" what you type by playing random sounds while typing.*
 - **More Special Character Sounds**
 
-If you want to stay updated on new versions or updates, consider joining the Discord!
+If you want to stay updated on new versions or updates, consider joining the [Discord](discord.gg/XSXU7AaQjx )!

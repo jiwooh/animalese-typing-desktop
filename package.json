@@ -2,43 +2,63 @@
   "name": "animalese-typing",
   "productName": "Animalese Typing",
   "version": "0.0.3",
-  "main": "main.js",
+  "description": "Animalese Typing",
+  "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "author": {
     "name": "joshxviii",
     "email": "dagexviii.dev@gmail.com"
   },
+  "license": "MIT",
   "keywords": [],
+  "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder -wml",
+    "build:win": "electron-builder -w",
+    "build:mac": "electron-builder -m",
+    "build:linux": "electron-builder -l"
   },
   "build": {
     "asar": true,
     "appId": "com.joshxviii.animalese-typing",
     "productName": "Animalese Typing",
-    "files": [
-      "**/*"
-    ],
+    "files": [ "**/*" ],
     "directories": {
       "output": "exports"
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [ "x64" ]
+        }
+      ],
       "icon": "assets/images/icon.png"
     },
     "mac": {
-      "target": "dmg",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [ "arm64", "x64" ]
+        }
+      ],
       "icon": "assets/images/icon.png"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        {
+          "target": "deb",
+          "arch": [ "x64" ]
+        },
+        {
+          "target": "AppImage",
+          "arch": [ "x64" ]
+        }
+      ], 
       "category": "Utility",
       "icon": "assets/images/icon.png"
     }
   },
-  "license": "MIT",
-  "description": "Animalese Typing",
-  "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
     "active-win": "^8.2.1",
     "electron-store": "^6.0.1",
@@ -58,8 +78,6 @@
       "darwin",
       "linux"
     ],
-    "arches": [
-      "x64"
-    ]
+    "arches": [ "x64" ]
   }
 }

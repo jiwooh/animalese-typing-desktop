@@ -65,7 +65,8 @@ ipcMain.on('minimize-window', (e) => {
 ipcMain.on('get-app-info', (e) => {
     e.returnValue = {
         version: app.getVersion(),
-        name: app.getName()
+        name: app.getName(),
+        platform: process.platform
     }
 });
 
@@ -102,8 +103,8 @@ function startActiveWindowMonitoring() {
 function createMainWin() {
     if(bgwin !== null) return;
     bgwin = new BrowserWindow({
-        width: 0,
-        height: 0,
+        width: 720,
+        height: 360,
         icon: ICON,
         resizable: true,
         frame: false,
@@ -112,7 +113,8 @@ function createMainWin() {
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
-            nodeIntegration: false
+            nodeIntegration: false,
+            sandbox: false
         }
     });
     bgwin.removeMenu();

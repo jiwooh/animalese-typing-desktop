@@ -1,9 +1,13 @@
-const { app, Tray, BrowserWindow, Menu, ipcMain } = require('electron');
-const path = require('path');
-const Store = require('electron-store');
-const isDev = require('electron-is-dev');
-const { spawn } = require('child_process');
-const getWindows = require('get-windows');
+import { app, Tray, BrowserWindow, Menu, ipcMain } from 'electron';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import Store from 'electron-store';
+import isDev from 'electron-is-dev';
+import { spawn } from 'child_process';
+import { activeWindow as getActiveWindow } from '@deepfocus/get-windows';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const SYSTRAY_ICON = (process.platform === 'darwin') ? path.join(__dirname, '/assets/images/icon_18x18.png') : path.join(__dirname, '/assets/images/icon.png');
 const SYSTRAY_ICON_OFF = (process.platform === 'darwin') ? path.join(__dirname, '/assets/images/icon_off_18x18.png') : path.join(__dirname, '/assets/images/icon_off.png');
@@ -76,11 +80,10 @@ var tray = null;
 var disabled = !preferences.get('always_enabled');
 let lastActiveWindow = null;
 let activeWindows = [];
-let getActiveWindowFn = getWindows.activeWindow;
 
 // check for active window changes and update `lastActiveWindow` when the window changes
 async function monitorActiveWindow() {
-    const activeWindow = await getActiveWindowFn();
+    const activeWindow = await getActiveWindow();
 
     if (!activeWindow?.owner?.name) return;// return early if invlaid window
 
@@ -114,7 +117,7 @@ function createMainWin() {
         skipTaskbar: false,
         show: false,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload.cjs'),
             contextIsolation: true,
             nodeIntegration: false,
             sandbox: false
@@ -196,9 +199,9 @@ function createTrayIcon() {
 let iohook = null;
 let macKeyListener = null;
 
-function startKeyListener() {
+async function startKeyListener() {
     if (process.platform != 'darwin') {
-        if (!iohook) iohook = require('iohook');
+        if (!iohook) iohook = (await import('iohook')).default;
         iohook.on('keydown', e => bgwin.webContents.send('keydown', e));
         iohook.on('keyup', e => bgwin.webContents.send('keyup', e));
         iohook.start();
@@ -209,13 +212,22 @@ function startKeyListener() {
         macKeyListener = spawn(listenerPath);
         macKeyListener.stdout.on('data', data => {
             const lines = data.toString().split('\n').filter(Boolean);
+
             for (const line of lines) {
-                const event = JSON.parse(line);
-                if (event.type === 'keydown' || event.type === 'keyup') {
-                    bgwin.webContents.send(event.type, {
-                        keycode: event.keycode,
-                        shiftKey: event.shift
-                    });
+                if (line.toLowerCase().includes('accessibility') || line.toLowerCase().includes('permission')) {
+                    bgwin.webContents.send('permission-error', line);
+                    continue;
+                }
+                try {
+                    const event = JSON.parse(line);
+                    if (event.type === 'keydown' || event.type === 'keyup') {
+                        bgwin.webContents.send(event.type, {
+                            keycode: event.keycode,
+                            shiftKey: event.shift
+                        });
+                    }
+                } catch (err) {
+                    console.error('Invalid JSON from swift-key-listener:', line);
                 }
             }
         });
@@ -272,3 +284,5 @@ app.on('quit', () => {
     }
     app.exit(0);
 });
+
+export default app;

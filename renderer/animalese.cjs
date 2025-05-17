@@ -391,3 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checked) checked.dispatchEvent(new Event('change'));
 });
 //#endregion
+
+//#region request Permission
+window.api.onPermissionError((msg) => {
+    alert(`⚠️ Animalese Typing requires Accessibility permission to detect key presses.\n\nPlease allow access in System Settings > Privacy & Security > Accessibility.`);
+  
+    window.open("x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility");
+  });
+//#endregion

@@ -3,6 +3,7 @@
   "productName": "Animalese Typing",
   "version": "0.0.3",
   "main": "main.js",
+  "type": "module",
   "author": {
     "name": "joshxviii",
     "email": "dagexviii.dev@gmail.com"
@@ -46,7 +47,7 @@
       "extraFiles": [
         {
           "from": "swift-key-listener",
-          "to": "swift-key-listener"
+          "to": "Resources/swift-key-listener"
         }
       ]
     },
@@ -63,15 +64,16 @@
   "description": "Animalese Typing",
   "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
+    "@deepfocus/get-windows": "^1.0.21",
     "child_process": "^1.0.2",
     "electron-is-dev": "^3.0.1",
-    "electron-store": "v8.2.0",
-    "get-windows": "^9.2.0",
+    "electron-store": "^10.0.1",
     "howler": "^2.2.4",
-    "iohook": "^0.9.3"
+    "iohook": "^0.9.3",
+    "store": "^2.0.12"
   },
   "devDependencies": {
-    "electron": "^25.9.8",
+    "electron": "^36.2.1",
     "electron-builder": "~24.13.3"
   },
   "iohook": {

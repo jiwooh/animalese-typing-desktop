@@ -1,8 +1,8 @@
 const { app, shell, contextBridge, ipcRenderer } = require('electron');
-const keycodeToSound = require('./keycodeToSound');
-const translator = require('./translator'); 
-const { createAudioManager } = require('./audioManager');
-const { initCapsLockState, isCapsLockActive } = require('./capsLockState');
+const keycodeToSound = require('./keycodeToSound.cjs');
+const translator = require('./translator.cjs'); 
+const { createAudioManager } = require('./audioManager.cjs');
+const { initCapsLockState, isCapsLockActive } = require('./capsLockState.cjs');
 initCapsLockState();
 
 const settingsData = ipcRenderer.sendSync('get-store-data-sync');
@@ -40,7 +40,10 @@ contextBridge.exposeInMainWorld('api', {
     },
     onActiveWindowChanged: (callback) => ipcRenderer.on('active-windows-updated', (_event, e) => callback(e)),
     getAppInfo: () => appInfo,
-    goToUrl: (url) => shell.openExternal(url)
+    goToUrl: (url) => shell.openExternal(url),
+    onPermissionError: (callback) => {
+      ipcRenderer.on('permission-error', (_event, message) => callback(message));
+    }
 });
 
 // translation functions

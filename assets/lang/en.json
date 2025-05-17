@@ -26,6 +26,7 @@
     "m4":"Cranky",
 
     "settings":"settings",
+    "settings.show":"Show Settings",
     "settings.startup":"Run on startup",
     "settings.disable":"Disable",
     "settings.audio_mode":"audio mode",

@@ -3,11 +3,12 @@ const os = require('os');
 const { execSync } = require('child_process');
 const { ipcRenderer } = require('electron');
 
+const capsLockKeycode = (process.platform === 'darwin') ? 57 : 58;
 capsActive = getInitialCapsState();
 
 function initCapsLockState() {
     ipcRenderer.on('keydown', (_event, e) => {
-        if (e.keycode === 58) { // 58 = CapsLock
+        if (e.keycode === capsLockKeycode) {
             capsActive = !capsActive;
         }
     });

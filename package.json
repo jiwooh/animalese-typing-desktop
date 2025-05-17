@@ -10,7 +10,10 @@
   "keywords": [],
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build:swift": "swiftc swift/swift-key-listener.swift -o swift-key-listener",
+    "build:mac": "electron-builder --mac --arm64",
+    "build:mac:x64": "electron-builder --mac --x64"
   },
   "build": {
     "asar": true,
@@ -27,11 +30,31 @@
       "icon": "assets/images/icon.png"
     },
     "mac": {
-      "target": "dmg",
-      "icon": "assets/images/icon.png"
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/images/icon.png",
+      "extendInfo": {
+        "NSInputMonitoringUsageDescription": "This app needs access to detect key presses."
+      },
+      "extraFiles": [
+        {
+          "from": "swift-key-listener",
+          "to": "swift-key-listener"
+        }
+      ]
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "category": "Utility",
       "icon": "assets/images/icon.png"
     }
@@ -40,13 +63,15 @@
   "description": "Animalese Typing",
   "repository": "https://github.com/joshxviii/animalese-typing-desktop",
   "dependencies": {
-    "active-win": "^8.2.1",
-    "electron-store": "^6.0.1",
+    "child_process": "^1.0.2",
+    "electron-is-dev": "^3.0.1",
+    "electron-store": "v8.2.0",
+    "get-windows": "^9.2.0",
     "howler": "^2.2.4",
     "iohook": "^0.9.3"
   },
   "devDependencies": {
-    "electron": "^12.2.3",
+    "electron": "^25.9.8",
     "electron-builder": "~24.13.3"
   },
   "iohook": {

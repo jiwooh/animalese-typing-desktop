@@ -354,7 +354,6 @@ remapIn.addEventListener('focusout', e => isRemapping?undefined:remapMonitor.set
 remapIn.addEventListener('selectstart', e => e.preventDefault());
 remapIn.addEventListener('mousedown', e => e.preventDefault());
 document.addEventListener('keydown', e => {
-    console.log('a');
     if ( !(remapIn === document.activeElement || isRemapping) ) return;
     remapStart();
     

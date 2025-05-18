@@ -21,6 +21,9 @@
     fill: rgb(0, 204, 255);
     color: white;
 }
+.highlighted .key-icon {
+     fill: white;
+}
 
 /*#region KEYBOARD */
 key-board {
@@ -75,24 +78,24 @@ key-button, .key_s, .key_m, .key_l, .key_blank {
 .key_l {min-width: calc(3* var(--key-size) * 2);}
 
 key-button .button-top {
-    transform: translate(0px,0px);
     fill:#ece0d0;
-    stroke: #0d944500;
+    transform: translate(0px,0px);
     transition: all 0.33s ease;
 }
 
 key-button.pressed .button-top {
-    fill:#eedbc2;
-    stroke: #08a74a3d;
+    fill:#a1e19a;
     transform: translate(0px,4px);
     transition: transform 0.07s ease;
 }
 key-button.pressed .key-label {
+    color: #ffffff;
     transform: translate(-50%, calc(-50% + 12.5%));
     transition: transform 0.07s ease;
 }
 
 key-button.pressed .key-icon {
+    fill: #ffffff;
     transform: translate(-50%, calc(-50% + 8%));
     transition: transform 0.07s ease;
 }

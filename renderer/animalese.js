@@ -325,6 +325,7 @@ const remapCancel = document.getElementById('remap_cancel');
 
 function remapStart() {
     if (isRemapping == true) return;
+    remapMonitor.classList.add('remapping');
     isRemapping = true;
     remapCancel.disabled = false;
 }
@@ -332,6 +333,7 @@ function remapStart() {
 function remapStop() {
     isRemapping = false;
     remapMonitor.setAttribute('monitoring', false)
+    remapMonitor.classList.remove('remapping');
     remapMonitor.innerHTML = remapIn.getAttribute('placeholder');
     remapCancel.disabled = true;
     document.querySelector('.highlighted')?.classList.remove('highlighted');

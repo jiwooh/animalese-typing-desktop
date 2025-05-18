@@ -414,8 +414,6 @@ input[type=text]::placeholder {
     flex-direction: row;
 }
 
-
-
 #voice_type_group {
     /* background-color: chartreuse; */
     display: flex;
@@ -543,6 +541,10 @@ input[type=text]::placeholder {
 #remap_monitor[monitoring=true] {
     border: 4px dashed #6cd576ab;
 }
+#remap_monitor.remapping {
+    border-color: rgb(0, 204, 255);
+}
+
 #remap_in {
     width: 0;
     padding: 0;

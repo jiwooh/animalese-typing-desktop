@@ -12,8 +12,10 @@ const appInfo = ipcRenderer.sendSync('get-app-info');
 contextBridge.exposeInMainWorld('api', {
     closeWindow: () => ipcRenderer.send('close-window'),
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
+    sendRemapData: (data) => ipcRenderer.send('remap-key-press', data),
+    onRemapButtonPress: (callback) => ipcRenderer.on('remap-key-set', (_event, data) => callback(data)),
     onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => {
-        const data = keycodeToSound[appInfo.platform][e.keycode];
+        const data = settingsData.remapped_keys[e.keycode] || keycodeToSound[appInfo.platform][e.keycode];
         if (data === undefined) return;
         const keyInfo = {
             data: data,

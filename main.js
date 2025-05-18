@@ -45,7 +45,8 @@ const preferences = new Store({
             pitch_variation: 0.2,
             intonation: 0.0
         },
-        saved_voice_profiles: new Map()
+        saved_voice_profiles: new Map(),
+        remapped_keys: new Map()
     }
 });
 
@@ -61,6 +62,9 @@ ipcMain.on('close-window', (e) => {
 });
 ipcMain.on('minimize-window', (e) => {
     if (bgwin) bgwin.minimize();
+});
+ipcMain.on('remap-key-press', (e, data) => {
+    if (bgwin) bgwin.webContents.send(`remap-key-set`, data);
 });
 ipcMain.on('get-app-info', (e) => {
     e.returnValue = {

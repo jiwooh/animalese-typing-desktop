@@ -91,8 +91,8 @@ const notes_sprite = {
 // (60,000) / 100bpm = 600ms
 const special_sprite = {
     OK:     [600 * 0, 600],
-    Deska:  [600 * 1, 600],
-    Gwah:   [600 * 2, 600]
+    Gwah:   [600 * 1, 600],
+    Deska:      [600 * 2, 600]
 }
 // 60,000 / 100bpm = 600ms
 const sfx_sprite = {

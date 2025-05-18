@@ -3,7 +3,7 @@
  */
 
 const preferences = window.settings;
-let lastKey = {};
+let currentKey = {};
 
 // custom svg button element
 customElements.define('svg-button', class extends HTMLElement {
@@ -226,7 +226,7 @@ function updateAlwaysEnabled(value) {
 
 //#region Key press detect
 window.api.onKeyPress( (keyInfo) => {
-    lastKey = keyInfo;
+    currentKey = keyInfo;
     if (isRemapping || remapIn === document.activeElement) return;
     const path = (keyInfo.isShiftDown && keyInfo.data.shiftSound) || keyInfo.data.sound;
     if (path === undefined) return;
@@ -274,7 +274,7 @@ function deleteVoiceProfile() {
 function saveVoiceProfile() {
     // Get the current voice profile
     const currentVoiceProfile = preferences.get('voice_profile');
-    const selectedSlot = document.getElementById('voice_profile_slots').value;
+    const selectedSlot = parseInt(document.getElementById('voice_profile_slots').value);
     const profileName = document.getElementById('save_profile_name').value.trim();
 
     if (!profileName) {
@@ -282,9 +282,7 @@ function saveVoiceProfile() {
         return;
     }
 
-    let savedVoiceProfiles = preferences.get('saved_voice_profiles');
-
-    savedVoiceProfiles = new Map(Object.entries(savedVoiceProfiles));
+    let savedVoiceProfiles = new Map(Object.entries(preferences.get('saved_voice_profiles')));
     savedVoiceProfiles.set(selectedSlot, { name: profileName, profile: currentVoiceProfile });
     document.getElementById('voice_profile_slots').options[parseInt(selectedSlot)-1].innerHTML = profileName;
     const savedProfilesObject = Object.fromEntries(savedVoiceProfiles);
@@ -316,17 +314,6 @@ function openSettings() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 function isAlpha(str) {return str?(str.length === 1)?(/\p{Letter}/gu).test(str.charAt(0)):false:false;}
 
 //#region Key Remapper
@@ -347,21 +334,44 @@ function remapStop() {
     remapMonitor.setAttribute('monitoring', false)
     remapMonitor.innerHTML = remapIn.getAttribute('placeholder');
     remapCancel.disabled = true;
+    document.querySelector('.highlighted')?.classList.remove('highlighted');
 }
+
+
+window.api.onRemapButtonPress( (remapButton) => {
+    if ( !(remapIn === document.activeElement || isRemapping) ) return;
+
+    if( (currentKey.isShiftDown && currentKey.data.shiftSound != remapButton.sound) ||
+        (!currentKey.isShiftDown && currentKey.data.sound != remapButton.sound)
+    ) {
+        let remappedKeys = new Map(Object.entries(preferences.get('remapped_keys')));
+        if (currentKey.isShiftDown) currentKey.data.shiftSound = remapButton.sound;
+        else currentKey.data.sound = remapButton.sound;
+        remappedKeys.set(currentKey.keycode, currentKey.data);
+        const newRemappedKeys = Object.fromEntries(remappedKeys);
+
+        document.querySelector('.highlighted')?.classList.remove('highlighted');
+        document.querySelector(`[sound="${remapButton.sound}"]`)?.classList.add('highlighted');
+
+        preferences.set('remapped_keys', newRemappedKeys);
+    }
+
+});
 
 remapIn.addEventListener('focusin', e => remapMonitor.setAttribute('monitoring', true));
 remapIn.addEventListener('focusout', e => isRemapping?undefined:remapMonitor.setAttribute('monitoring', false));
 remapIn.addEventListener('selectstart', e => e.preventDefault());
 remapIn.addEventListener('mousedown', e => e.preventDefault());
 document.addEventListener('keydown', e => {
-    console.log('a');
     if ( !(remapIn === document.activeElement || isRemapping) ) return;
     remapStart();
     
-    remapMonitor.innerHTML = ((lastKey.isShiftDown && lastKey.data.key !== "Shift"?"Shift + ":"") + lastKey.data.key).toUpperCase();
+    remapMonitor.innerHTML = ((currentKey.isShiftDown && currentKey.data.key !== "Shift"?"Shift + ":"") + currentKey.data.key).toUpperCase();
 
-    const sound = (lastKey.isShiftDown && lastKey.data.shiftSound) || lastKey.data.sound
-    const tabIndex = !sound||sound===''?0:sound.startsWith('&.voice')?1:sound.startsWith('&.sing')?2:sound.startsWith('sfx')?3:0
+    const sound = (currentKey.isShiftDown && currentKey.data.shiftSound) || currentKey.data.sound
+    const tabIndex = !sound||sound===''?0:sound.startsWith('&.voice')?1:sound.startsWith('&.sing')?2:sound.startsWith('sfx')?3:0        
+    document.querySelector('.highlighted')?.classList.remove('highlighted');
+    document.querySelector(`[sound="${sound}"]`)?.classList.add('highlighted');
 
     document.querySelectorAll('input[name="remap_type"]').forEach( (radio, index) => {
         if (index === tabIndex) {
@@ -369,7 +379,9 @@ document.addEventListener('keydown', e => {
             radio.dispatchEvent(new Event('change'));
         }
     });
-})
+});
+ 
+
 
 document.querySelectorAll('input[name="remap_type"]').forEach( (radio, index) => {
     radio.addEventListener('change', () => {
@@ -380,6 +392,10 @@ document.querySelectorAll('input[name="remap_type"]').forEach( (radio, index) =>
 
         // Show the selected one (index is 0-based)
         const selectedIndex = parseInt(radio.value) - 1;
+        if (selectedIndex == 0) window.api.sendRemapData({
+            label: '',
+            sound: ''
+        });
         if (allTypes[selectedIndex]) {
             allTypes[selectedIndex].setAttribute('show',true);
             allControllers[selectedIndex].setAttribute('show',true);

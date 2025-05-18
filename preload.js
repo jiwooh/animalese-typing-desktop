@@ -1,6 +1,4 @@
 const { app, shell, contextBridge, ipcRenderer } = require('electron');
-const os = require("os");
-const path = require('path');
 const keycodeToSound = require('./keycodeToSound');
 const translator = require('./translator'); 
 const { createAudioManager } = require('./audioManager');
@@ -9,14 +7,15 @@ initCapsLockState();
 
 const settingsData = ipcRenderer.sendSync('get-store-data-sync');
 const appInfo = ipcRenderer.sendSync('get-app-info');
-const platform = os.platform();
 
 // general app messages 
 contextBridge.exposeInMainWorld('api', {
     closeWindow: () => ipcRenderer.send('close-window'),
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
+    sendRemapData: (data) => ipcRenderer.send('remap-key-press', data),
+    onRemapButtonPress: (callback) => ipcRenderer.on('remap-key-set', (_event, data) => callback(data)),
     onKeyPress: (callback) => ipcRenderer.on('keydown', (_event, e) => {
-        const data = keycodeToSound[platform][e.keycode];
+        const data = settingsData.remapped_keys[e.keycode] || keycodeToSound[appInfo.platform][e.keycode];
         if (data === undefined) return;
         const keyInfo = {
             data: data,

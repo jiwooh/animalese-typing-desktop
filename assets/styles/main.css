@@ -198,14 +198,31 @@ input[type=radio] {
 
 input[type=radio]:checked::before {
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     background-color: #6cd576;
     border-radius: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+#remap_type_select input[type=radio] {
+    width: 22px;
+    height: 22px;
+    border-width: 3px;
+}
+
+#remap_type_select input[type=radio]:checked::before {
+    width: 11px;
+    height: 11px;
+}
+
+#remap_type_select label {
+    font-size: 20px;
+    color: transparent;
+    text-shadow: 0px 0px 0px #d9bd96;
 }
 
 .svg-button {
@@ -250,12 +267,13 @@ input[type=radio]:checked::before {
     filter: drop-shadow(0 0 5px #f71bff8c);
 }
 
-#save_profile_buttons {
+.button_row {
     display: flex;
     flex-direction: row;
     gap: 10px;
     margin-top: 6px;
     margin-bottom: 6px;
+    justify-content: center;
 }
 /*#endregion BUTTONS */
 
@@ -396,8 +414,6 @@ input[type=text]::placeholder {
     flex-direction: row;
 }
 
-
-
 #voice_type_group {
     /* background-color: chartreuse; */
     display: flex;
@@ -525,6 +541,10 @@ input[type=text]::placeholder {
 #remap_monitor[monitoring=true] {
     border: 4px dashed #6cd576ab;
 }
+#remap_monitor.remapping {
+    border-color: rgb(0, 204, 255);
+}
+
 #remap_in {
     width: 0;
     padding: 0;

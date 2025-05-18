@@ -105,17 +105,20 @@ author: joshxviii
             <div id="top_row">
                 <div id="remap_controllers">
                     <div class="remap_controller" show="true" ><h3 style="color: #95846d7d;text-align: center;margin-block: 70px;">No Sound</h3></div>
-                    <key-board type="voice" class="remap_controller" show="false"></key-board>
+                    <key-board layout-type="voice" class="remap_controller" show="false"></key-board>
                     <piano-board class="remap_controller" show="false"></piano-board>
-                    <key-board type="sfx" class="remap_controller" show="false"></key-board>
+                    <key-board layout-type="sfx" class="remap_controller" show="false"></key-board>
                 </div>
 
                 <div id="key_remapper">
                     <div style="width: 100%;">
                         <h3 translation="key-remapper" style="margin-block: 0px 4px;">Key Remapper</h3>
-                        <input id="remap_in" type="text" maxlength="1" onclick="this.focus()" translation="click.to.remap"/>
-                        <label id="remap_monitor" for="remap_in" translation="click.to.remap"></label>
-                        <input id="remap_cancel" type="button" onclick="remapStop()" disabled translation="cancel.rebind"/>
+                        <input id="remap_in" type="text" maxlength="1" onclick="this.focus()" translation="remap"/>
+                        <label id="remap_monitor" for="remap_in" translation="remap" class="highlighted"></label>
+                        <div class="button_row">
+                            <input id="remap_cancel" type="button" onclick="remapStop()" disabled style="font-weight: 900;" translation="remap.end"/>
+                            <input id="remap_reset" type="button" onclick="remapReset()" disabled style="font-weight: 900;" translation="remap.reset"/>
+                        </div>
                     </div>
 
 
@@ -131,22 +134,22 @@ author: joshxviii
                         <div class="remap_type"></div>
                         <div class="remap_type"></div>
                     </div>
-                    <div>
+                    <div id="remap_type_select">
                         <div class="labeled_con" style="flex-direction: column;">
                             <input type="radio" name="remap_type" id="remap_type_1" value="1" checked>
-                            <label for="remap_type_1" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">❌</label>
+                            <label for="remap_type_1">❌</label>
                         </div>
                         <div class="labeled_con" style="flex-direction: column;">
                             <input type="radio" name="remap_type" id="remap_type_2" value="2">
-                            <label for="remap_type_2" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">💬</label>
+                            <label for="remap_type_2">💬</label>
                         </div>
                         <div class="labeled_con" style="flex-direction: column;">
                             <input type="radio" name="remap_type" id="remap_type_3" value="3">
-                            <label for="remap_type_3" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">🎵</label>
+                            <label for="remap_type_3">🎵</label>
                         </div>
                         <div class="labeled_con" style="flex-direction: column;">
                             <input type="radio" name="remap_type" id="remap_type_4" value="4">
-                            <label for="remap_type_4" style="color:transparent; text-shadow: 0px 0px 0px #d9bd96;">🔊</label>
+                            <label for="remap_type_4">🔊</label>
                         </div>
                     </div>
                 </div>
@@ -203,7 +206,7 @@ author: joshxviii
                         <option id="save_5" value="5">Empty</option>
                     </select>
                     <input type="text" id="save_profile_name" translation="settings.none"/>
-                    <div id="save_profile_buttons">
+                    <div class="button_row">
                         <input type="button" id="save_profile_button" value="S" onclick="saveVoiceProfile()"/>
                         <input type="button" id="delete_profile_button" value="D" onclick="deleteVoiceProfile()"/>
                     </div>
